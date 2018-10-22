@@ -1,0 +1,5 @@
+1 = Admin
+2 = Pemaju
+3 = Syarikat
+4 = Kontraktor
+5 = Individu
