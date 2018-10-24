@@ -24,89 +24,9 @@
     <div id="main-wrapper">
 
       <header id="header">
-        <div class="header-top-bar">
-
-          <!--
-          HEADER TOP BAR WITH NOTIFICATION FOR REGISTER USER
-          -->
-
-          <div class="header-notification-bar" style="display:none;">
-            <div class="register-user">
-
-              <div class="container">
-                <div class="row">
-
-                  <div class="col-md-3 col-sm-3">
-                    <div class="logo-section">
-                      <a href="index.html"><img src="img/logo-bu.png" alt=""></a>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 col-sm-5">
-                    <div class="search-form">
-
-                      <form action="#">
-                        <button class="dropdown-search"><i class="fa fa-angle-down"></i> <i class="fa fa-bars"></i></button>
-                        <input type="search" placeholder="Search...">
-                        <button class="search-button"><i class="fa fa-search"></i></button>
-                      </form>
-
-                    </div>
-                  </div>
-
-                  <div class="col-md-3 col-sm-4">
-                    <div class="notification-section text-right">
-
-                      <ul class="list-inline">
-                        <li><a href="#"><i class="fa fa-envelope-o"></i></a><span class="new-notification">3</span></li>
-                        <li><a href="#"><i class="fa fa-bell-o"></i></a><span class="new-notification">3</span></li>
-                        <li class="user-profile-pic"><a href="#"><img src="./img/content/agent-img-1.jpg" alt=""></a></li>
-                      </ul>
-                    </div>
-                  </div>
-
-                </div> <!-- end .row -->
-              </div> <!-- end .container -->
-            </div> <!-- end .register-user -->
-          </div> <!-- end. header-notification-bar  -->
-
-          <!--
-          END HEADER NOTIFICATION TOP BAR
-          -->
-
-          <!--
-          HEADER TOP BAR FOR NON REGISTER USER
-          -->
-
-          <div class="header-notification-bar">
-            <div class="non-register-user">
-
-              <div class="container">
-                <div class="row">
-
-                 <div class="col-md-8 col-sm-8">
-                    <div class="logo-section">
-                      <a href="index.php"><img src="img/logo-bu.png" alt=""></a>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 col-sm-4">
-                    <div class="notification-section text-right">
-
-                      <ul class="list-inline">
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="#">Login</a></li>
-                        <li><a href="register.php">Register</a></li>
-                      </ul>
-                    </div>
-                  </div>
-
-                </div> <!-- end .row -->
-              </div> <!-- end .container -->
-            </div> <!-- end .visitors-top-bar -->
-          </div> <!-- end. header-notification-bar  -->
-        </div>
+        <?php include 'header.php'; ?>
       </header>
+      
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
         <div class="container">
@@ -200,11 +120,7 @@
       </div> <!-- end #page-content -->
 
       <footer id="footer">
-        <div class="copyright">
-          <div class="container">
-            <p>2018 &copy; All rights reserved. Powered by <a href="#">Tuition Center</a></p>
-          </div>
-        </div>
+        <?php include 'footer.php'; ?>
       </footer> <!-- end #footer -->
 
     </div> <!-- end #main-wrapper -->

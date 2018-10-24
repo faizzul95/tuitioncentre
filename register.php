@@ -25,36 +25,7 @@
 
       <!-- HEADER -->
       <header id="header">
-        <div class="header-top-bar">
-
-          <div class="header-notification-bar">
-            <div class="non-register-user">
-
-              <div class="container">
-                <div class="row">
-
-                  <div class="col-md-8 col-sm-8">
-                    <div class="logo-section">
-                      <a href="index.php"><img src="img/logo-bu.png" alt=""></a>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4 col-sm-4">
-                    <div class="notification-section text-right">
-
-                      <ul class="list-inline">
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="#">Login</a></li>
-                        <li class="active"><a href="#">Register</a></li>
-                      </ul>
-                    </div>
-                  </div>
-
-                </div> <!-- end .row -->
-              </div> <!-- end .container -->
-            </div> <!-- end .visitors-top-bar -->
-          </div> <!-- end. header-notification-bar  -->
-        </div>
+        <?php include 'header.php'; ?>
       </header>
       <!-- end #header -->
 
@@ -86,11 +57,7 @@
 
       <!-- Footer Start -->
       <footer id="footer">
-        <div class="copyright">
-          <div class="container">
-            <p>2018 &copy; All rights reserved. Powered by <a href="#">Tuition Center</a></p>
-          </div>
-        </div>
+        <?php include 'footer.php'; ?>
       </footer>
       <!-- end #footer -->
 

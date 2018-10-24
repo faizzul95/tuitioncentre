@@ -54,21 +54,21 @@ $_SESSION['level'] = $row['level'];
 if ($_SESSION['level']=='1' )
 
 {
-echo "<script type='text/javascript'> document.location='System/Page/Admin/dashboard.php'; </script>";
+echo "<script type='text/javascript'> document.location='index.php'; </script>";
 // exit();
 }
 
 else	
 if ($_SESSION['level']=='2' )
 {
-echo "<script type='text/javascript'> document.location='System/Page/User/settings.php'; </script>";
+echo "<script type='text/javascript'> document.location='index.php'; </script>";
 // exit();
 }
 
 else	
 if ($_SESSION['level']=='3' )
 {
-echo "<script type='text/javascript'> document.location='System/Page/User/settings.php'; </script>";
+echo "<script type='text/javascript'> document.location='index.php'; </script>";
 // exit();
 }
 
