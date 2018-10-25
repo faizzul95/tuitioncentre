@@ -28,7 +28,7 @@
               <label>
                 Identity Card (IC No)<span class="req">*</span>
               </label>
-              <input style="color: #C0C0C0;" type="text" name="ic_no" required autocomplete="off" required />
+              <input style="color: #C0C0C0;" type="text" name="ic_no" required autocomplete="off" />
             </div>
         
             <div class="field-wrap">
