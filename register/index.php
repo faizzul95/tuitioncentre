@@ -26,24 +26,24 @@
           <div class="top-row">
             <div class="field-wrap">
               <label>
-                Identity Card (IC No)<span class="req">*</span>
+                Full Name<span class="req">*</span>
               </label>
-              <input style="color: #C0C0C0;" type="text" name="ic_no" required autocomplete="off" />
+              <input style="color: #C0C0C0;" type="text" name="user_fullname" required autocomplete="off" />
             </div>
         
             <div class="field-wrap">
               <label>
                 Phone Number <span class="req">*</span>
               </label>
-              <input style="color: #C0C0C0;" type="text" name="phone_number" required autocomplete="off"/>
+              <input style="color: #C0C0C0;" type="text" name="user_telno" required autocomplete="off"/>
             </div>
           </div>
 
           <div class="field-wrap">
             <label>
-              Name <span class="req">*</span>
+              Address <span class="req">*</span>
             </label>
-            <input style="color: #C0C0C0;" type="text" name="name" required autocomplete="off"/>
+            <input style="color: #C0C0C0;" type="text" name="user_address" required autocomplete="off"/>
           </div>
           
           <div class="field-wrap">
@@ -76,7 +76,7 @@
               <label>
                 Email <span class="req">*</span>
               </label>
-              <input style="color: #C0C0C0;" type="text" name="email" required autocomplete="off" required />
+              <input style="color: #C0C0C0;" type="text" name="tuition_email" required autocomplete="off" required />
             </div>
         
             <div class="field-wrap">
@@ -91,21 +91,21 @@
             <label>
               Name <span class="req">*</span>
             </label>
-            <input style="color: #C0C0C0;" type="text" name="name" required autocomplete="off"/>
+            <input style="color: #C0C0C0;" type="text" name="username" required autocomplete="off"/>
           </div>
           
           <div class="field-wrap">
             <label>
               Phone Number <span class="req">*</span>
             </label>
-            <input style="color: #C0C0C0;" type="text" name="phone_number" required autocomplete="off"/>
+            <input style="color: #C0C0C0;" type="text" name="tuition_telno" required autocomplete="off"/>
           </div>
 
           <div class="field-wrap">
             <label>
               Tuition Centre Name<span class="req">*</span>
             </label>
-            <input style="color: #C0C0C0;" type="text" name="tuition_centre_name" required autocomplete="off"/>
+            <input style="color: #C0C0C0;" type="text" name="tuition_name" required autocomplete="off"/>
           </div>
 
            <div class="top-row">

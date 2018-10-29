@@ -6,18 +6,19 @@ error_reporting(0);
 //register student
 if (isset($_POST['register_student'])) 
 {
-    $ic_no = $_POST['ic_no'];
-    $phone_number = $_POST['phone_number'];
-    $name = $_POST['name'];
     $username = $_POST['username'];
+    $user_type = $_POST['user_type'];
     $password = $_POST['password'];
-    
-    $sql_ic = "SELECT * FROM user WHERE ic_no='$ic_no' ";
-    $res_ic = mysqli_query($myConnection,$sql_ic) or die(mysqli_error($myConnection));
+    $user_fullname = $_POST['user_fullname'];
+    $user_telno = $_POST['user_telno'];
+    $user_address = $_POST['user_address'];
 
-    if (mysqli_num_rows($res_ic)==1) 
+    $sql_usr = "SELECT * FROM user WHERE username='$username' ";
+    $res_usr = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
+
+    if (mysqli_num_rows($res_usr)==1) 
     {
-        echo "<script type='text/javascript'>alert('Fail. This user already exist in system.Please use other IC');</script>";
+        echo "<script type='text/javascript'>alert('Fail. This user already exist in system.Please use other username');</script>";
         echo "<script type='text/javascript'> document.location='register.php'; </script>";
     }
     else
@@ -26,8 +27,8 @@ if (isset($_POST['register_student']))
         // $username = htmlspecialchars($username1, ENT_QUOTES);
         // $password = htmlspecialchars($password1, ENT_QUOTES);
         
-        $query_user="INSERT INTO user (level, ic_no, username, user_type, password, name, phone_number)
-                    VALUES ('3', '$ic_no', '$username', 'user', '$password', '$name', '$phone_number')";
+        $query_user="INSERT INTO user (username, user_type, password, user_fullname, user_telno, user_address)
+                    VALUES ('$username', '$user_type', '$password', '$user_fullname', '$user_telno', '$user_address')";
         $res_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
 
         if( $res_user )
@@ -46,34 +47,38 @@ if (isset($_POST['register_student']))
 
 if (isset($_POST['register_tuition'])) 
 {
-    $ic_no = $_POST['ic_no'];
-    $phone_number = $_POST['phone_number'];
-    $name = $_POST['name'];
     $username = $_POST['username'];
+    $user_type = $_POST['user_type'];
     $password = $_POST['password'];
-    $tuition_centre_name = $_POST['tuition_centre_name'];
-    $state = $_POST['state'];
-    $area = $_POST['area'];
-    
-    $sql_ic = "SELECT * FROM user WHERE ic_no='$ic_no' ";
-    $res_ic = mysqli_query($myConnection,$sql_ic) or die(mysqli_error($myConnection));
+    $user_fullname = $_POST['user_fullname'];
+    $user_telno = $_POST['user_telno'];
+    $user_address = $_POST['user_address'];
 
-    if (mysqli_num_rows($res_ic)==1) 
+    $tuition_name = $_POST['tuition_name'];
+    $tuition_telno = $_POST['tuition_name'];
+    $tuition_email = $_POST['tuition_email'];
+    $tuition_address = $_POST['tuition_address'];
+
+    $sql_usr = "SELECT * FROM user WHERE username='$username' ";
+    $res_usr = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
+
+    if (mysqli_num_rows($res_usr)==1) 
     {
-        echo "<script type='text/javascript'>alert('Fail. This user already exist in system.Please use other IC');</script>";
+        echo "<script type='text/javascript'>alert('Fail. This user already exist in system.Please use other username');</script>";
         echo "<script type='text/javascript'> document.location='register.php'; </script>";
     }
     else
     {   
-        $query_user="INSERT INTO user (level, ic_no, username, user_type, password, name, phone_number)
-                    VALUES ('2', '$ic_no', '$username', 'user', '$password', '$name', '$phone_number')";
+
+        $query_user="INSERT INTO user (username, user_type, password, user_fullname, user_telno, user_address)
+                    VALUES ('$username', '$user_type', '$password', '$user_fullname', '$user_telno', '$user_address')";
         $res_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
 
-        $query_user="INSERT INTO tuition_list (tuition_centre_name, tuition_phone, tuition_email, address, area, state, available subjects)
-                    VALUES ()";
-        $res_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
+        $query_tuition="INSERT INTO tuition (tuition_name, tuition_telno, tuition_email, tuition_address)
+                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address')";
+        $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
 
-        if( $res_user && $res_tuition )
+        if( $res_user && $res_tuition)
         {
             echo "<script type='text/javascript'>alert('Successfully Registered.Please Login');</script>";
             echo "<script type='text/javascript'> document.location='login.php'; </script>";
@@ -88,6 +93,31 @@ if (isset($_POST['register_tuition']))
 }
 
 
+if ( isset($_POST['signin']) )
+{
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM user where username = $username AND password = $password";
+    $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+    if(mysqli_num_rows($res)==0)
+    {
+        echo "<script type='text/javascript'>alert('Wrong username/password. Make sure you are registered and please enter the correct username and password.');</script>";
+    }
+    else
+    {
+        if($res['user_type'] == 'user' || $res['user_type'] == 'parent')
+        {    
+            echo "<script type='text/javascript'> document.location='index.php'; </script>";
+        }
+        else //tuition
+        {
+            echo "<script type='text/javascript'> document.location='index.php'; </script>";
+        }
+
+    }
+}
 
 
 
@@ -97,6 +127,7 @@ if (isset($_POST['register_tuition']))
 
 
 
+die;
 //uncheck--- check code n change to mysqli
 function begin(){
     mysql_query("BEGIN");
