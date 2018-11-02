@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en" >
 
 <head>
@@ -20,10 +20,10 @@
       
       <div class="tab-content">
         <div id="signup">   
-          <h1>REGISTER AS STUDENT</h1>
+          <h1>REGISTER AS STUDENT/PARENT</h1>
           
           <form action="controller.php" method="post">
-          <div class="top-row">
+          <!-- <div class="top-row">
             <div class="field-wrap">
               <label>
                 Full Name<span class="req">*</span>
@@ -37,33 +37,41 @@
               </label>
               <input style="color: #C0C0C0;" type="text" name="user_telno" required autocomplete="off"/>
             </div>
-          </div>
+          </div> -->
 
-          <div class="field-wrap">
+          <!-- <div class="field-wrap">
             <label>
               Address <span class="req">*</span>
             </label>
             <input style="color: #C0C0C0;" type="text" name="user_address" required autocomplete="off"/>
-          </div>
+          </div> -->
           
-          <div class="field-wrap">
-            <label>
-              Username<span class="req">*</span>
-            </label>
-            <input style="color: #C0C0C0;" type="text" name="username" required autocomplete="off"/>
-          </div>
+              <div class="field-wrap">
+                <label>
+                  Username<span class="req">*</span>
+                </label>
+                <input style="color: #C0C0C0;" type="text" name="username" required autocomplete="off"/>
+              </div>
 
-          <div class="field-wrap">
-            <label>
-              Set A Password<span class="req">*</span>
-            </label>
-            <input style="color: #C0C0C0;" type="password" name="password" required autocomplete="off"/>
-          </div>
-          
-          <button type="submit" name="register_student" class="button button-block"/>REGISTER</button>
-          
+              <div class="field-wrap">
+                <label>
+                  Set A Password<span class="req">*</span>
+                </label>
+                <input style="color: #C0C0C0;" type="password" name="password" required autocomplete="off"/>
+              </div>
+
+              <div class="field-wrap">
+                <label>
+                  User Type <span class="req">*</span>
+                </label>
+                <select style="color: #C0C0C0;" name="user_type" required>
+                    <option value="student">User</option>
+                    <option value="parent">Parent</option>
+                </select>
+              </div>
+              
+              <button type="submit" name="register_student" class="button button-block"/>REGISTER</button>      
           </form>
-
         </div>
         
         <div id="login">   
@@ -108,13 +116,20 @@
             <input style="color: #C0C0C0;" type="text" name="tuition_name" required autocomplete="off"/>
           </div>
 
+          <div class="field-wrap">
+            <label>
+              Tuition Address<span class="req">*</span>
+            </label>
+            <input style="color: #C0C0C0;" type="text" name="tuition_address" required autocomplete="off"/>
+          </div>
+
            <div class="top-row">
             <div class="field-wrap">
               <label>
                 State <span class="req">*</span>
               </label>
               <!-- <input  type="text" name="ic_no" required autocomplete="off" required /> -->
-              <select style="color: #C0C0C0;" name="state" id="location">
+              <select style="color: #C0C0C0;" name="tuition_state" id="location">
                   <option value="">Choose State</option>
                   <option value="JOHOR">JOHOR</option>
                   <option value="KEDAH">KEDAH</option>
@@ -137,7 +152,7 @@
               <label>
                 Area <span class="req">*</span>
               </label>
-              <input style="color: #C0C0C0;" type="text" name="area" required autocomplete="off"/>
+              <input style="color: #C0C0C0;" type="text" name="tuition_area" required autocomplete="on"/>
             </div>
           </div>
 

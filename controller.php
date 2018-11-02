@@ -9,11 +9,8 @@ if (isset($_POST['register_student']))
     $username = $_POST['username'];
     $user_type = $_POST['user_type'];
     $password = $_POST['password'];
-    $user_fullname = $_POST['user_fullname'];
-    $user_telno = $_POST['user_telno'];
-    $user_address = $_POST['user_address'];
-
-    $sql_usr = "SELECT * FROM user WHERE username='$username' ";
+    
+    $sql_usr = "SELECT * FROM user WHERE user_username='$username' ";
     $res_usr = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
 
     if (mysqli_num_rows($res_usr)==1) 
@@ -23,18 +20,29 @@ if (isset($_POST['register_student']))
     }
     else
     {   
-
-        // $username = htmlspecialchars($username1, ENT_QUOTES);
-        // $password = htmlspecialchars($password1, ENT_QUOTES);
-        
-        $query_user="INSERT INTO user (username, user_type, password, user_fullname, user_telno, user_address)
-                    VALUES ('$username', '$user_type', '$password', '$user_fullname', '$user_telno', '$user_address')";
+    
+        $query_user="INSERT INTO user (user_username, user_type, user_password)
+                    VALUES ('$username', '$user_type', '$password')";
         $res_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
 
         if( $res_user )
         {
-            echo "<script type='text/javascript'>alert('Successfully Registered.Please Login');</script>";
-            echo "<script type='text/javascript'> document.location='login.php'; </script>";
+            $sql = "SELECT user_id FROM user WHERE user_username = $username";
+            $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+            $row = mysqli_fetch_array($sql_usr);
+
+            $id = $row['user_id'];
+            
+            if($user_type == 'student')
+            {
+                echo "<script type='text/javascript'> document.location='registerStudent.php?id=$id'; </script>";
+            }
+            else
+            {
+                echo "<script type='text/javascript'> document.location='registerParent.php?id=$id'; </script>";
+            }
+            // echo "<script type='text/javascript'>alert('Successfully Registered.Please Login');</script>";
+            // echo "<script type='text/javascript'> document.location='login.php'; </script>";
         }
         else 
         {
@@ -42,22 +50,45 @@ if (isset($_POST['register_student']))
             echo "<script type='text/javascript'> document.location='register.php'; </script>";
         }
     }
-
 }
+
+if (isset($_POST['reg_std_info']))
+{
+    $student_name = $_POST['std_name'];
+    $student_ic = $_POST['std_ic'];
+    $student_telno = $_POST['std_telno'];
+    $student_email = $_POST['std_email'];
+    $user_id = $_POST['user_id'];
+
+    $query_std="INSERT INTO student (student_name, student_ic, student_telno, student_email, user_id)
+                    VALUES ('$student_name', '$student_ic', '$student_telno', '$student_email', '$user_id')";
+    $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));
+
+    if( $res_std )
+    {
+        echo "<script type='text/javascript'>alert('Successfully Registered.Please Login');</script>";
+        echo "<script type='text/javascript'> document.location='login.php'; </script>";
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='registerStudent.php?id=$user_id'; </script>";
+    }
+}
+
 
 if (isset($_POST['register_tuition'])) 
 {
     $username = $_POST['username'];
-    $user_type = $_POST['user_type'];
     $password = $_POST['password'];
-    $user_fullname = $_POST['user_fullname'];
-    $user_telno = $_POST['user_telno'];
-    $user_address = $_POST['user_address'];
+    $user_type = 'tuition';
 
     $tuition_name = $_POST['tuition_name'];
     $tuition_telno = $_POST['tuition_name'];
     $tuition_email = $_POST['tuition_email'];
     $tuition_address = $_POST['tuition_address'];
+    $tuition_state = $_POST['tuition_state'];
+    $tuition_area = $_POST['tuition_area'];
 
     $sql_usr = "SELECT * FROM user WHERE username='$username' ";
     $res_usr = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
@@ -69,13 +100,17 @@ if (isset($_POST['register_tuition']))
     }
     else
     {   
-
-        $query_user="INSERT INTO user (username, user_type, password, user_fullname, user_telno, user_address)
-                    VALUES ('$username', '$user_type', '$password', '$user_fullname', '$user_telno', '$user_address')";
+        $query_user="INSERT INTO user (user_username, user_type, password)
+                    VALUES ('$username', '$user_type', '$password')";
         $res_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
 
-        $query_tuition="INSERT INTO tuition (tuition_name, tuition_telno, tuition_email, tuition_address)
-                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address')";
+        $sql = "SELECT user_id FROM user WHERE user_username = $username";
+        $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+        $row = mysqli_fetch_array($sql_usr);
+        $id = $row['user_id'];
+
+        $query_tuition="INSERT INTO tuition (tuition_name, tuition_telno, tuition_email, tuition_address, tuition_state, tuition_area, user_id)
+                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_area', '$user_id')";
         $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
 
         if( $res_user && $res_tuition)
@@ -92,9 +127,11 @@ if (isset($_POST['register_tuition']))
 
 }
 
-
+//log in
 if ( isset($_POST['signin']) )
 {
+    session_start();
+
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -107,13 +144,19 @@ if ( isset($_POST['signin']) )
     }
     else
     {
-        if($res['user_type'] == 'user' || $res['user_type'] == 'parent')
+        $_SESSION['user_id'] = $res['user_id'];
+
+        if($res['user_type'] == 'student')
         {    
             echo "<script type='text/javascript'> document.location='index.php'; </script>";
         }
-        else //tuition
+        else if ( $res['user_type'] == 'parent')
         {
-            echo "<script type='text/javascript'> document.location='index.php'; </script>";
+            echo "<script type='text/javascript'> document.location='studentList.php'; </script>";
+        }
+        else  //tuition
+        {
+            echo "<script type='text/javascript'> document.location='packageList.php'; </script>";
         }
 
     }
