@@ -27,8 +27,6 @@
             </label>
             <input style="color: #C0C0C0;" type="text" name="username" required autocomplete="off"/>
           </div>
-          
-              
 
           <div class="field-wrap">
             <label>

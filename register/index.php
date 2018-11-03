@@ -14,13 +14,13 @@
   <div class="form">
       
       <ul class="tab-group">
-        <li class="tab active"><a href="#signup">FOR STUDENT</a></li>
+        <li class="tab active"><a href="#signup">FOR COMMUNITY</a></li>
         <li class="tab"><a href="#login">FOR TUITION CENTRE</a></li>
       </ul>
       
       <div class="tab-content">
         <div id="signup">   
-          <h1>REGISTER AS STUDENT/PARENT</h1>
+          <h1>REGISTER AS STUDENT / PARENT</h1>
           
           <form action="controller.php" method="post">
           <!-- <div class="top-row">
@@ -65,7 +65,8 @@
                   User Type <span class="req">*</span>
                 </label>
                 <select style="color: #C0C0C0;" name="user_type" required>
-                    <option value="student">User</option>
+                    <option value="">-- Please Select --</option>
+                    <option value="student">Student</option>
                     <option value="parent">Parent</option>
                 </select>
               </div>

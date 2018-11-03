@@ -13,7 +13,7 @@
                     </div>
                   </div>
 
-                  <?php  if(!isset($_SESSION['id'])) { ?>
+                  <?php  if(!isset($_SESSION['user_id'])) { ?>
                         <div class="col-md-5 col-sm-5">
                           <div class="notification-section text-right">
 

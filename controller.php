@@ -1,7 +1,8 @@
-<?php error_reporting(0);
+<?php 
+// error_reporting(0);
 include_once("connection.php");
-session_start();
-error_reporting(0); 
+// session_start();
+// error_reporting(0); 
 
 //register student
 if (isset($_POST['register_student'])) 
@@ -10,10 +11,11 @@ if (isset($_POST['register_student']))
     $user_type = $_POST['user_type'];
     $password = $_POST['password'];
     
-    $sql_usr = "SELECT * FROM user WHERE user_username='$username' ";
+    $sql_usr = "SELECT * FROM `user` WHERE `user_username`='$username'";
     $res_usr = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
+    // $row = mysqli_fetch_array($res_usr);
 
-    if (mysqli_num_rows($res_usr)==1) 
+    if (mysqli_num_rows($res_usr)>0) 
     {
         echo "<script type='text/javascript'>alert('Fail. This user already exist in system.Please use other username');</script>";
         echo "<script type='text/javascript'> document.location='register.php'; </script>";
@@ -21,13 +23,15 @@ if (isset($_POST['register_student']))
     else
     {   
     
-        $query_user="INSERT INTO user (user_username, user_type, user_password)
+        $query_user="INSERT INTO `user` (`user_username`, `user_type`, `user_password`)
                     VALUES ('$username', '$user_type', '$password')";
-        $res_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
+        $reg_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
 
-        if( $res_user )
+        // var_dump($reg_user);die;
+
+        if($reg_user)
         {
-            $sql = "SELECT user_id FROM user WHERE user_username = $username";
+            $sql = "SELECT `user_id` FROM `user` WHERE `user_username` = '$username'";
             $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
             $row = mysqli_fetch_array($sql_usr);
 
@@ -41,8 +45,6 @@ if (isset($_POST['register_student']))
             {
                 echo "<script type='text/javascript'> document.location='registerParent.php?id=$id'; </script>";
             }
-            // echo "<script type='text/javascript'>alert('Successfully Registered.Please Login');</script>";
-            // echo "<script type='text/javascript'> document.location='login.php'; </script>";
         }
         else 
         {
@@ -127,39 +129,51 @@ if (isset($_POST['register_tuition']))
 
 }
 
-//log in
-if ( isset($_POST['signin']) )
+//log in user
+if(isset($_POST['signin']))   // it checks whether the user clicked login button or not 
 {
-    session_start();
+   
+     $username=mysqli_real_escape_string($myConnection, $_POST['username']);
+     $password = mysqli_real_escape_string($myConnection, $_POST['password']);
+    
+     $sql = "SELECT * FROM `user` WHERE `user_username` = '$username' AND `user_password` = '$password'";
+     $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+     $row = mysqli_fetch_array($res);
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+     $username = $row['user_username'];
+     $usr_id = $row['user_id'];
+     $user_type = $row['user_type'];
+     	
 
-    $sql = "SELECT * FROM user where username = $username AND password = $password";
-    $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+     if (mysqli_num_rows($res)==0) { 
 
-    if(mysqli_num_rows($res)==0)
-    {
-        echo "<script type='text/javascript'>alert('Wrong username/password. Make sure you are registered and please enter the correct username and password.');</script>";
-    }
-    else
-    {
-        $_SESSION['user_id'] = $res['user_id'];
+     	   echo ("<SCRIPT LANGUAGE='JavaScript'>
+          window.alert('Wrong Username or Password, Please Try Again')
+          window.location = 'index.php';
+          </SCRIPT>");
+         
+     }
+     else { 
+              
+        session_start();
+        $_SESSION['user_id'] = $usr_id;
+        $_SESSION['username'] = $username;
+        $_SESSION['user_type'] = $user_type;
 
-        if($res['user_type'] == 'student')
+        if($_SESSION['user_type'] == 'student')
         {    
             echo "<script type='text/javascript'> document.location='index.php'; </script>";
         }
-        else if ( $res['user_type'] == 'parent')
+        else if ($_SESSION['user_type'] == 'parent')
         {
             echo "<script type='text/javascript'> document.location='studentList.php'; </script>";
         }
         else  //tuition
         {
-            echo "<script type='text/javascript'> document.location='packageList.php'; </script>";
+            echo "<script type='text/javascript'> document.location='tuition/index.php'; </script>";
         }
+     }
 
-    }
 }
 
 
@@ -169,64 +183,20 @@ if ( isset($_POST['signin']) )
 
 
 
+// die;
+// //uncheck--- check code n change to mysqli
+// function begin(){
+//     mysql_query("BEGIN");
+// }
 
-die;
-//uncheck--- check code n change to mysqli
-function begin(){
-    mysql_query("BEGIN");
-}
+// function commit(){
+//     mysql_query("COMMIT");
+// }
 
-function commit(){
-    mysql_query("COMMIT");
-}
+// function rollback(){
+//     mysql_query("ROLLBACK");
+// }
 
-function rollback(){
-    mysql_query("ROLLBACK");
-}
-
-if (isset($_POST['signin'])) 
-{       
-    $username1 = $_POST['username'];
-    $username = htmlspecialchars($username1, ENT_QUOTES);
-
-    $password1 = $_POST['password'];
-    $password = htmlspecialchars($password1, ENT_QUOTES);
-            
-    $sql = "SELECT * FROM user 
-    WHERE username='$username' 
-    AND password='$password' 
-    AND status='1' LIMIT 1";
-    $res = mysql_query($sql) or die(mysql_error());
-
-    if (mysql_num_rows($res)==1) 
-    {
-        $row = mysql_fetch_assoc($res);
-
-        $_SESSION['id'] = $row['id'];
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['name'] = $row['name'];
-        $_SESSION['refer_code'] = $row['refer_code'];
-        $_SESSION['level'] = $row['level'];
-
-        if ($_SESSION['level']=='1' )
-        {
-            echo "<script type='text/javascript'> document.location='index.php'; </script>";
-        }
-        else if ($_SESSION['level']=='2' )
-        {
-            echo "<script type='text/javascript'> document.location='index.php'; </script>";
-        }
-        else if ($_SESSION['level']=='3' )
-        {
-            echo "<script type='text/javascript'> document.location='index.php'; </script>";
-        }
-    }
-    else 
-    {
-        echo "<script type='text/javascript'>alert('Wrong Username or Password,Please Try Again');</script>";
-        echo "<script type='text/javascript'> document.location='login.php'; </script>";
-    }
-}
 
 
         //deprecated

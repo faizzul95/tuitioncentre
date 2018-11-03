@@ -16,7 +16,7 @@
 // $ok = mysql_connect($host, $username, $password) or die(mysql_error());
 // mysql_select_db($db) or die(mysql_error());
 
-$myConnection = new mysqli("localhost","root","","tuition_community_portal");
+$myConnection = new mysqli("localhost","root","","tuition_community");
 
 // Check connection
 if (mysqli_connect_errno()) {
