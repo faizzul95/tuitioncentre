@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <title>Student Registration</title>
+    <?php
+      include_once("connection.php");
+    ?>  
+    <title>Register Package</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -30,11 +32,11 @@
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
         <div class="container">
-          <h1>Student Information</h1>
+          <h1>Register Package</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li class="active">Student Registration</li>
+            <li class="active">Register Package</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -49,60 +51,49 @@
                 <div class="tab-pane active" id="agency-profile-tab">
 
 
-                  <h4 class=" client-registration-title">Student registration
+                  <h4 class=" client-registration-title">Register Package
                     <span>Information</span>
 
                   </h4>
 
                   <div class="information-form">
                     <div class="table-responsive">
-                      <form action="#" class="default-form">
+                      <form action="controller.php" class="default-form" method="post">
 
                         <div class="single-content">
-                          <label><span>*</span>Student Name</label>
+                          <label><span>*</span>Package Name</label>
                           <div class="company-name">
-                            <input type="text" placeholder="">
+                            <input type="text" name="package_name" placeholder="">
                           </div>
                         </div> <!-- end .single-content -->
 
                         <div class="single-content">
-                          <label><span>*</span>Age</label>
+                          <label><span>*</span>Package Capacity</label>
                           <div class="company-name">
-                            <input type="text" placeholder="">
-                          </div>
-                        </div> <!-- end .single-content -->
-
-
-                        <div class="single-content">
-                          <label ><span>*</span>Phone Number</label>
-                          <div class="company-name">
-                            <input type="text" placeholder="">
+                            <input type="text" name="package_capacity" placeholder="">
                           </div>
                         </div> <!-- end .single-content -->
 
                         <div class="single-content">
-                          <label ><span>*</span>Start Date</label>
+                          <label><span>*</span>Package Price</label>
                           <div class="company-name">
-                            <input type="date" placeholder="" class="form-control">
+                            <input type="text" name="package_price" placeholder="">
                           </div>
                         </div> <!-- end .single-content -->
 
-                        <div class="single-content">
-                          <label ><span>*</span>Package Date</label>
-                          <div class="company-name">
-                            <input type="text" placeholder="" class="form-control">
-                          </div>
-                        </div> <!-- end .single-content -->
+                        <?php 
+                          $sql = "SELECT * FROM `master_subject`";
+                          $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
-                        <div class="single-content">
-                          <label ><span>*</span>Price</label>
-                          <div class="company-name">
-                            <input type="text" placeholder="" class="form-control">
-                          </div>
-                        </div> <!-- end .single-content -->
+                          while( $row = mysqli_fetch_array($sql_subject) )
+                          {
+                            ?>
+                              <input type="checkbox" name="<?php echo $row['subject_name']; ?>" value="<?php echo $row['subject_name']; ?>"><?php echo $row['subject_name']; ?><br>
+                            <?php
+                          }
+                        ?>
 
-
-                        
+                        <input type="submit" name="add_package" value="Add Package">
                       </form> <!-- end form -->
                     </div>
                   </div> <!-- end information-form -->

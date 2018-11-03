@@ -104,33 +104,34 @@ if (isset($_POST['register_tuition']))
     $user_type = 'tuition';
 
     $tuition_name = $_POST['tuition_name'];
-    $tuition_telno = $_POST['tuition_name'];
+    $tuition_telno = $_POST['tuition_telno'];
     $tuition_email = $_POST['tuition_email'];
     $tuition_address = $_POST['tuition_address'];
     $tuition_state = $_POST['tuition_state'];
     $tuition_area = $_POST['tuition_area'];
 
-    $sql_usr = "SELECT * FROM user WHERE username='$username' ";
+
+    $sql_usr = "SELECT * FROM `user` WHERE `user_username`='$username' ";
     $res_usr = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
 
-    if (mysqli_num_rows($res_usr)==1) 
+    if (mysqli_num_rows($res_usr)>1) 
     {
         echo "<script type='text/javascript'>alert('Fail. This user already exist in system.Please use other username');</script>";
         echo "<script type='text/javascript'> document.location='register.php'; </script>";
     }
     else
     {   
-        $query_user="INSERT INTO user (user_username, user_type, password)
+        $query_user="INSERT INTO `user` (`user_username`, `user_type`, `user_password`)
                     VALUES ('$username', '$user_type', '$password')";
         $res_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
 
-        $sql = "SELECT user_id FROM user WHERE user_username = $username";
+        $sql = "SELECT `user_id` FROM `user` WHERE `user_username` = '$username'";
         $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
         $row = mysqli_fetch_array($sql_usr);
         $id = $row['user_id'];
 
-        $query_tuition="INSERT INTO tuition (tuition_name, tuition_telno, tuition_email, tuition_address, tuition_state, tuition_area, user_id)
-                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_area', '$user_id')";
+        $query_tuition="INSERT INTO `tuition` (`tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_area`, `user_id`)
+                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_area', '$id')";
         $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
 
         if( $res_user && $res_tuition)
@@ -167,7 +168,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
 
      	   echo ("<SCRIPT LANGUAGE='JavaScript'>
           window.alert('Wrong Username or Password, Please Try Again')
-          window.location = 'index.php';
+          window.location = 'login.php';
           </SCRIPT>");
          
      }
@@ -180,23 +181,62 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
 
         if($_SESSION['user_type'] == 'student')
         {    
-            echo "<script type='text/javascript'> document.location='student_profile.php?id=$usr_id'; </script>";
+            echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
         }
         else if ($_SESSION['user_type'] == 'parent')
         {
-            echo "<script type='text/javascript'> document.location='parent_profile.php?id=$usr_id'; </script>";
+            echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
         }
         else  //tuition
         {
-            echo "<script type='text/javascript'> document.location='tuition/index.php?id=$usr_id'; </script>";
+            $sql = "SELECT `tuition_id` FROM `tuition` WHERE `user_id` = '$usr_id'";
+            $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+            $row = mysqli_fetch_array($sql_tuition);
+            $_SESSION['tuition_id'] = $row['tuition_id'];
+
+            echo "<script type='text/javascript'> document.location='packageList.php'; </script>";
         }
      }
 
 }
 
 
+if(isset($_POST['add_package']))
+{
+    $tuition_id = $_SESSION['tuition_id'];
+    $package_name = $_POST['package_name'];
+    $package_capacity = $_POST['package_capacity'];
+    $package_price = $_POST['package_price'];
 
+    $sql = "SELECT * FROM `master_subject`";
+    $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
+    while( $row = mysqli_fetch_array($sql_subject) )
+    {
+        if( isset($_POST[$row['subject_name']]) )
+        {
+            $subject .= ",".$row['subject_name'];
+            // $subject .= ",".$row['subject_id'];
+        }
+    }
+    $subject = substr($subject, 1);
+
+    $query_package = "INSERT INTO `tuition_package` (`package_name`, `package_capacity`, `package_price`, `package_subject`, `tuition_id`)
+                    VALUES ('$package_name', '$package_capacity', '$package_price', '$subject', '$tuition_id')";
+    $res_package = mysqli_query($myConnection,$query_package) or die(mysqli_error($myConnection));
+
+    if( $res_package )
+    {
+        echo "<script type='text/javascript'>alert('Package added Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='packageList.php'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='register_package.php'; </script>";
+    }
+    
+}
 
 
 

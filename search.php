@@ -126,8 +126,8 @@ include("connection.php");
               if(isset($_POST['view_tuition_center'])){
             
               $area = $_POST['area'] ;
-          $avg_rating = $_POST['avg_rating'] ;
-          $available_subjects = $_POST['available_subjects'] ;
+              $avg_rating = $_POST['avg_rating'] ;
+              $available_subjects = $_POST['available_subjects'] ;
           }
           
           $q = "SELECT * 

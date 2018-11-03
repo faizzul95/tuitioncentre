@@ -50,19 +50,30 @@
               <div id="header-search">
                 <div class="header-search-bar">
                   <div class="">
-                    <form method="post" action="search.php">
+                    <form method="post" action="searchTuition.php">
                       <div class="basic-form clearfix">
                         <div class="hsb-input-1">
                           <select name="area" required>
-                            <option value="">Choose Location In Shah Alam</option>
+                            <?php
+                              $sql = "SELECT * FROM `tuition`";
+                              $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                              
+                              while( $row = mysqli_fetch_array($sql_tuition) )
+                              {
+                                ?>
+                                <option value="<?php echo $row['tuition_area']; ?>"><?php echo $row['tuition_area']; ?></option>
+                                <?php
+                              }
+                            ?>
+                            <!-- <option value="">Choose Location In Shah Alam</option>
                             <option value="Seksyen 7">Seksyen 7</option>
                             <option value="Sekyesn 13">Sekyesn 13</option>
-                            <option value="Seksyen 9">Seksyen 9</option>
+                            <option value="Seksyen 9">Seksyen 9</option> -->
                           </select>
                         </div>
                         <div class="hsb-container">
                           <div class="hsb-input-2">
-                            <select name="avg_rating" required>
+                            <select name="avg_rating">
                                   <option value="">Choose Rating</option>
                                   <option value="0">No Star Yet</option>
                                   <option value="1">1 Star</option>
@@ -74,15 +85,26 @@
                           </div>
                           <div class="hsb-select">
                             <select name="available_subjects" class="form-control" required>
-                              <option value="">Choose Subject</option>
-                              <option value="Bahasa Melayu">Bahasa Melayu</option>
+                              <?php
+                              $sql = "SELECT * FROM `master_subject`";
+                              $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                              
+                              while( $row = mysqli_fetch_array($sql_subject) )
+                              {
+                                ?>
+                                <option value="<?php echo $row['subject_name']; ?>"><?php echo $row['subject_name']; ?></option>
+                                <?php
+                              }
+                              ?>
+
+                             <!--  <option value="Bahasa Melayu">Bahasa Melayu</option>
                               <option value="Bahasa Inggeris">Bahasa Inggeris</option>
                               <option value="Sains">Sains </option>
                               <option value="Matematik">Matematik</option>
                               <option value="Sejarah">Sejarah </option>
                               <option value="Geografi">Geografi </option>
                               <option value="Pendidikan Islam">Pendidikan Islam </option>
-                              <option value="Kemahiran Hidup">Kemahiran Hidup</option>
+                              <option value="Kemahiran Hidup">Kemahiran Hidup</option> -->
                             </select>
                           </div>
                         </div>
