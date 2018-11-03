@@ -1,4 +1,28 @@
-<?php session_start(); ?>
+<?php 
+
+ session_start(); 
+
+ $usid = $_SESSION['user_id'];
+ include_once("connection.php");
+ $sql = "SELECT * FROM `student` WHERE `user_id` = '$usid'";
+ $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+ $row = mysqli_fetch_array($sql_usr);
+
+ $lastupdate = $row['student_last_update'];
+ $name = $row['student_name'];
+ $ic = $row['student_ic'];
+ $no = $row['student_telno'];
+ $email = $row['student_email'];
+ $gender = $row['student_gender'];
+ $dob = $row['student_dob'];
+
+ if($lastupdate == NULL) // If session is not set then redirect to Login Page
+       {
+           header("Location:profile_update.php?id=$usid");  
+       }
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,7 +30,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Profile</title>
+    <title>Student Profile</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -34,7 +58,7 @@
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
         <div class="container">
-          <h1>Profile - Mohd Fahmy</h1>
+          <h1>Student Profile</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
@@ -56,9 +80,11 @@
                   <div class="col-md-4">
                     <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
-                        <img src="img/content/candidate-profile.jpg" alt="">
+                        <!-- <img src="img/content/candidate-profile.jpg" alt=""> -->
+                        <div class="upload-img-field">
 
-                        <a href="#">M Fahmy Izwan Bin Zulkhafri</a>
+                        </div>
+                        <a href="#"><?php echo $name; ?></a>
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">
@@ -68,10 +94,10 @@
                           </div> <!-- end .end .title -->
 
                         <ul class="list-unstyled">
-                          <li><strong>Birthday:</strong>June 17, 1986</li>
-                          <li><strong>Address:</strong>New York City, United States</li>
-                          <li><strong>Phone:</strong>+6 012-4567890</li>
-                          <li><strong>Email:</strong>email@example.com</li>
+                          <li><strong>Birthday:</strong><?php echo $dob; ?></li>
+                          <li><strong>Gender:</strong><?php echo $gender; ?></li>
+                          <li><strong>Phone:</strong><?php echo $no; ?></li>
+                          <li><strong>Email:</strong><?php echo $email; ?></li>
                         </ul>
 
                       </div> <!-- end .candidate-general-info -->
@@ -92,7 +118,7 @@
                                         <tr class="bg-primary">
                                           <th scope="col"><center>#</center></th>
                                           <th scope="col"><center>Package Name</center></th>
-                                          <th scope="col"><center>Package Status</center></th>
+                                          <th scope="col"><center>Package Register Date</center></th>
                                           <th scope="col"><center>Package Price</center></th>
                                           <th scope="col"><center>Action</center></th>
                                         </tr>
