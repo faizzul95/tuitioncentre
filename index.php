@@ -54,6 +54,7 @@
                       <div class="basic-form clearfix">
                         <div class="hsb-input-1">
                           <select name="area" required>
+                            <option value="">Select Area</option>
                             <?php
                               $sql = "SELECT * FROM `tuition`";
                               $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -85,6 +86,7 @@
                           </div>
                           <div class="hsb-select">
                             <select name="available_subjects" class="form-control" required>
+                              <option value="">Select Subject</option>
                               <?php
                               $sql = "SELECT * FROM `master_subject`";
                               $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));

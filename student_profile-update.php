@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Profile Update</title>
+    <title>Profile Update || Student</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -70,7 +70,7 @@
 
                         </div>
 
-                        <!-- <a class="btn btn-default" href="#">Upload a Picture</a> -->
+                        <a class="btn btn-default" href="#">Upload a Picture</a>
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">

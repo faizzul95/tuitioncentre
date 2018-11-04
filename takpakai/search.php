@@ -126,8 +126,8 @@ include("connection.php");
               if(isset($_POST['view_tuition_center'])){
             
               $area = $_POST['area'] ;
-              $avg_rating = $_POST['avg_rating'] ;
-              $available_subjects = $_POST['available_subjects'] ;
+          $avg_rating = $_POST['avg_rating'] ;
+          $available_subjects = $_POST['available_subjects'] ;
           }
           
           $q = "SELECT * 
@@ -137,8 +137,8 @@ include("connection.php");
           and available_subjects LIKE '%{$available_subjects}%'
           and status='1'
           ";
-          $r = mysql_query("$q");
-          if (mysql_num_rows($r)==0) 
+          $r = @mysql_query("$q");
+          if (@mysql_num_rows($r)==0) 
                     {
             echo "No result found";
           }
@@ -146,7 +146,7 @@ include("connection.php");
           {
           if($r)
           {
-          while($row=mysql_fetch_array($r))
+          while($row=@mysql_fetch_array($r))
           { 
          ?>
           <?php do { ;?>

@@ -16,9 +16,9 @@
  $gender = $row['student_gender'];
  $dob = $row['student_dob'];
 
- if($lastupdate == NULL) // If session is not set then redirect to Login Page
+ if($lastupdate == NULL) 
        {
-           header("Location:profile_update.php?id=$usid");  
+           header("Location:student_profile-update.php?id=$usid");  
        }
 
 ?>
@@ -30,7 +30,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Student Profile</title>
+    <title>Profile || Student</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">

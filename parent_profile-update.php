@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Profile Update</title>
+    <title>Profile Update || Parent</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -108,22 +108,22 @@
                               <div class="col-md-8">
                                 <div class="candidate-skill-single clearfix">
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="std_name" placeholder="Full Name" required>
+                                      <input type="text" name="prt_name" placeholder="Full Name" required>
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="std_ic" placeholder="Identity Card" required>
+                                      <input type="text" name="prt_ic" placeholder="Identity Card" required>
                                     </div> <!-- end .skill-selectbox -->
                                      <div class="skill-selectbox mb10">
-                                      <input type="date" name="std_dob" placeholder="Date Of Birth" class="form-control" required>
+                                      <input type="date" name="prt_dob" placeholder="Date Of Birth" class="form-control" required>
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="std_telno" placeholder="Phone Number" required>
+                                      <input type="text" name="prt_telno" placeholder="Phone Number" required>
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="std_email" placeholder="Email Address" required>
+                                      <input type="text" name="prt_email" placeholder="Email Address" required>
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <select name="student_gender">
+                                      <select name="prt_gender">
                                         <option value="">-- Please Select --</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -138,7 +138,7 @@
 
                           <div class="save-cancel-button ml20">
                             <!-- <a href="#" class="btn btn-default">Save</a> -->
-                            <input type="submit" name="reg_std_info" value="Submit" class="form-control btn btn-default">
+                            <input type="submit" name="reg_prt_info" value="Submit" class="form-control btn btn-default">
                           </div> <!-- end .save-cancel-button -->
                         </form>
                       </div> <!-- end .candidate-reg-form -->
@@ -146,22 +146,6 @@
 
                   </div> <!-- end .row -->
                 </div> <!-- end .tabe pane -->
-
-
-                <div class="tab-pane" id="candidate-cv">
-                  <h3 class="tab-title">Profile</h3>
-                  <p>Here goes the content</p>
-                </div> <!-- end .tab-pane -->
-
-                <div class="tab-pane" id="candidate-documents">
-                  <h3 class="tab-title">Products/Services</h3>
-                  <p>Here goes the content</p>
-                </div> <!-- end .tab-pane -->
-
-                <div class="tab-pane" id="candidate-protfolio">
-                  <h3 class="tab-title">Portfolio</h3>
-                  <p>Here goes the content</p>
-                </div> <!-- end .tab-pane -->
 
               </div> <!-- end .tab-content -->
             </div> <!-- end .responsive-tabs.dashboard-tabs -->

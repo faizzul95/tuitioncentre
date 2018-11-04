@@ -1,5 +1,6 @@
 <?php 
 include_once("connection.php");
+date_default_timezone_set("Asia/Kuala_Lumpur");
 // session_start();
 // error_reporting(0); 
 
@@ -41,7 +42,7 @@ if (isset($_POST['register_student']))
   
             if($user_type == 'student')
             {
-                echo "<script type='text/javascript'> document.location='profile_update.php?id=$id'; </script>";
+                echo "<script type='text/javascript'> document.location='student_profile-update.php?id=$id'; </script>";
             }
             else
             {
@@ -56,6 +57,8 @@ if (isset($_POST['register_student']))
     }
 }
 
+
+// reg student info (after sign up)
 if (isset($_POST['reg_std_info']))
 {
     $student_name = $_POST['std_name'];
@@ -91,12 +94,54 @@ if (isset($_POST['reg_std_info']))
 	    else
 	    {
 	        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
-	        echo "<script type='text/javascript'> document.location='profile_update.php?id=$user_id'; </script>";
+	        echo "<script type='text/javascript'> document.location='student_profile-update.php?id=$user_id'; </script>";
+	    }
+	}
+}
+
+// reg parent info (after sign up)
+if (isset($_POST['reg_prt_info']))
+{
+    $student_name = $_POST['prt_name'];
+    $student_ic = $_POST['prt_ic'];
+    $student_telno = $_POST['prt_telno'];
+    $student_email = $_POST['prt_email'];
+    $user_id = $_POST['user_id'];
+    $student_gender = $_POST['prt_gender'];
+    $std_dob = $_POST['prt_dob'];
+    $date = mysqli_real_escape_string($myConnection, date('Y-m-d'));
+    
+
+    $sql_usr = "SELECT * FROM `parent` WHERE `user_id`='$user_id'";
+    $check_stud = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
+    
+    if (mysqli_num_rows($check_stud)>0) 
+    {
+        echo "<script type='text/javascript'>alert('Fail to register parent info. please try again');</script>";
+        echo "<script type='text/javascript'> document.location='register.php'; </script>";
+    }
+    else
+    {   
+
+	    $query_std="INSERT INTO `parent` (`parent_name`, `parent_ic`, `parent_telno`,`parent_dob`, `parent_gender`, `parent_email`,`parent_last_update`, `user_id`)
+	                    VALUES ('$student_name', '$student_ic', '$student_telno','$std_dob','$student_gender','$student_email','$date','$user_id')";
+	    $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));
+
+	    if($res_std)
+	    {
+	        echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
+	        echo "<script type='text/javascript'> document.location='index.php'; </script>";
+	    }
+	    else
+	    {
+	        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+	        echo "<script type='text/javascript'> document.location='parent_profile-update.php?id=$user_id'; </script>";
 	    }
 	}
 }
 
 
+// reg tuition
 if (isset($_POST['register_tuition'])) 
 {
     $username = $_POST['username'];
@@ -362,7 +407,7 @@ if(isset($_POST['add_package']))
 if (isset($_POST['apply_package'])) {
 
 $ic_no = $_POST['ic_no'];
-$package_refer_code = $_POST['package_refer_code'];
+// $package_refer_code = $_POST['package_refer_code'];
 
 $sql = "SELECT * FROM tuition_package WHERE package_refer_code='$package_refer_code' ";
 $res = mysql_query($sql) or die(mysql_error());

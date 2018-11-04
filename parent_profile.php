@@ -4,22 +4,22 @@
 
  $usid = $_SESSION['user_id'];
  include_once("connection.php");
- $sql = "SELECT * FROM `student` WHERE `user_id` = '$usid'";
+ $sql = "SELECT * FROM `parent` WHERE `user_id` = '$usid'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);
 
- $lastupdate = $row['student_last_update'];
- $name = $row['student_name'];
- $ic = $row['student_ic'];
- $no = $row['student_telno'];
- $email = $row['student_email'];
- $gender = $row['student_gender'];
- $dob = $row['student_dob'];
+ $lastupdate = $row['parent_last_update'];
+ $name = $row['parent_name'];
+ $ic = $row['parent_ic'];
+ $no = $row['parent_telno'];
+ $email = $row['parent_email'];
+ $gender = $row['parent_gender'];
+ $dob = $row['parent_dob'];
 
- // if($lastupdate == NULL) // If session is not set then redirect to Login Page
- //       {
- //           header("Location:profile_update.php?id=$usid");  
- //       }
+ if($lastupdate == NULL) 
+       {
+           header("Location:parent_profile-update.php?id=$usid");  
+       }
 
 ?>
 
@@ -30,7 +30,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Parent Profile</title>
+    <title>Profile || Parent</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
