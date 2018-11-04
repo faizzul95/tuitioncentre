@@ -4,7 +4,7 @@
 <div class="container">	
 	<?php
 	include("db_connect.php");
-	$ratingDetails = "SELECT ratingNumber FROM item_rating";
+	$ratingDetails = "SELECT ratingNumber FROM tuition_review";
 	$rateResult = mysqli_query($conn, $ratingDetails) or die("database error:". mysqli_error($conn));
 	$ratingNumber = 0;
 	$count = 0;
@@ -146,7 +146,7 @@
 				<hr/>
 				<div class="review-block">		
 				<?php
-				$ratinguery = "SELECT ratingId, itemId, userId, ratingNumber, title, comments, created, modified FROM item_rating";
+				$ratinguery = "SELECT ratingId, itemId, userId, ratingNumber, title, comments, created, modified FROM tuition_review";
 				$ratingResult = mysqli_query($conn, $ratinguery) or die("database error:". mysqli_error($conn));
 				while($rating = mysqli_fetch_assoc($ratingResult)){
 					$date=date_create($rating['created']);

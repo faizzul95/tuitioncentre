@@ -2,15 +2,7 @@
 
  $usid = $_SESSION['user_id'];
  include_once("connection.php");
- // $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$usid'";
- // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
- // $row = mysqli_fetch_array($sql_usr);
-
- $id = $_GET['package_id'];
-
-$sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition` 
-  INNER JOIN  `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
-  WHERE `package_id` = '$id'";
+ $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$usid'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);
 
@@ -29,7 +21,7 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Package View</title>
+    <title>Profile || Tuition</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -57,12 +49,11 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
         <div class="container">
-          <h1>Package View</h1>
+          <h1>Tuition Profil</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li href="searchTuition.php">Tuition Search</li>
-            <li class="active">Package View</li>
+            <li class="active">Tuition Profil</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -84,11 +75,13 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
                         <div class="upload-img-field">
 
                         </div>
+                        <a href="#"><?php echo $name; ?></a>
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">
                         <div class="title clearfix">
-                           <center><h6>Tuition Information</h6></center>
+                            <h6>General Information</h6>
+                            <a class="pull-right" href="profile_update.php"><i class="fa fa-edit"></i>Update</a>
                           </div> <!-- end .end .title -->
 
                         <ul class="list-unstyled">
@@ -102,75 +95,75 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
                     </div>
                   </div> <!-- end .3col grid layout -->
 
-                  <div class="col-sm-8 page-content">
-              <?php 
+                  <div class="col-md-8">
+                    <div class="candidate-description">
 
-              $id = $_GET['package_id'];
+                      <div class="candidate-details">
+                        <div class="candidate-title">
+                          <h5>List Of Package</h5>
+                        </div>
 
-              $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition` 
-                          INNER JOIN  `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
-                          WHERE `package_id` = '$id'";
+                        <div class="form-banner-button">
+                            <div class="pRemove-import pull-right">
+                              <a class="btn btn-default" href='register_package.php'>Register Package</a>
+                            </div> <!-- end .pRemove-import -->
+                          </div> <!-- end .form-banner-button -->
 
-              $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                          <br><br>
 
-              if (mysqli_num_rows($sql_tuition)==0){
-                     echo "No result found";
-               }
+                          <?php 
+                          include_once("connection.php");
+                           $user_id = $_SESSION['user_id'];
+                           $tuition_id = $_SESSION['tuition_id'];
+
+                          $sql = "SELECT * FROM `tuition_package` WHERE `tuition_id` = '$tuition_id'";
+                          $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+                            if (mysqli_num_rows($sql_tuition)==0){
+                                   echo "No package found";
+                             }
              
-             while($row = mysqli_fetch_assoc($sql_tuition))
-                { 
-                   $area = $row['tuition_area'];
-                   $id = $row['package_id'];
-                   $name = $row['package_name'];
-                   $capacity = $row['package_capacity'];
-                   $price = $row['package_price'];
-                   $subject = $row['package_subject'];
-                   $telno = $row['tuition_telno'];
-                   $tuitionName = $row['tuition_name'];
-               ?>
-         
-              <div class="candidate-description client-description applicants-content">
-
-                <div class="language-print client-des clearfix">
-                  <!-- end .aplicants-pic -->
-                  <div class="clearfix">
-                    <div class="pull-left">
-                      <h5><?php echo $name ?></h5>
-                      <b>Address :</b> <?php echo $area ?><br>
-                      <b>Phone No :</b> <?php echo $telno ?><br>
-                      <b>Package Include :</b> <?php echo $subject ?><br>
-                      <b>Price :</b> RM <?php echo $price ?><br>
-                    </div>
+                             ?>
 
 
-                  </div>
-                  <!-- end .aplicant-details-show -->
-                  <button type="button" onclick="window.location='package_register.php?package_id=<?php echo $row['package_id'] ?>';" class="btn btn-info pull-right">Apply</button>
-                </div> <!-- end .language-print -->
+                                <table class="table table-bordered">
+                                      <thead>
+                                        <tr class="bg-primary">
+                                          <th scope="col"><center>No</center></th>
+                                          <th scope="col"><center>Package Name</center></th>
+                                          <th scope="col"><center>Package Price</center></th>
+                                          <th scope="col"><center>Package Capacity</center></th>
+                                          <th scope="col"><center>Action</center></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <?php 
+                                          $no = 1;
+                                         while($row = mysqli_fetch_assoc($sql_tuition))
+                                          { 
+                                             $id = $row['package_id'];
+                                             $name = $row['package_name'];
+                                             $capacity = $row['package_capacity'];
+                                             $price = $row['package_price'];
 
-                
-              </div> <!-- end .candidate-description -->
+                                            ?>
+                                        <tr>
+                                          <th scope="row"><center><?php echo $no; ?></center></th>
+                                          <td><center><?php echo $name; ?></center></td>
+                                          <td><center><?php echo $price; ?></center></td>
+                                          <td><center><?php echo $capacity; ?></center></td>
+                                          <td><center><button class="btn btn-default">Edit</button> &nbsp; <button class="btn btn-danger">Remove</button> </center></td>
+                                        </tr>
+                                         <?php $no ++;  } ?>
+                                      </tbody>
+                                    </table>
 
-              <?php }  ?>
-              <!-- end loop here -->
 
-            </div> <!-- end .page-content -->
 
-                    <div class="container">
-                      <div class="page-content mt50">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="candidate-description">
-                              <div class="candidate-details">
-                                <div class="candidate-title">
-                                <?php include 'review/index.php'; ?>
-                                </div>
-                              </div>
-                            </div>
-                          </div> <!-- end .3col grid layout -->
-                        </div> <!-- end .row -->
-                      </div> <!-- end .page-content -->
-                    </div> <!-- end .container -->
+                      </div> <!-- end .candidate-details -->
+
+                    </div> <!-- end .candidate-description -->
+                  </div> <!-- end .9col grid layout -->
 
                 </div> <!-- end .row -->
               </div> <!-- end .tabe pane -->
@@ -181,8 +174,6 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
 
           </div> <!-- end .page-content -->
         </div> <!-- end .container -->
-
-
       </div> <!-- end #page-content -->
 
       <?php include 'footer.php'; ?>

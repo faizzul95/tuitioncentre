@@ -156,9 +156,6 @@ $user_id = $_SESSION['user_id'];
                    $subject = $row['package_subject'];
                    $telno = $row['tuition_telno'];
                    $tuitionName = $row['tuition_name'];
-                   // $tuitionName = $row['avg_rating'];
-
-                   // var_dump($telno);die;
                ?>
          
               <div class="candidate-description client-description applicants-content">
@@ -167,18 +164,16 @@ $user_id = $_SESSION['user_id'];
                   <!-- end .aplicants-pic -->
                   <div class="clearfix">
                     <div class="pull-left">
-                      <h5><?php echo $name ?></h5>
+                      <h5><?php echo $tuitionName ?></h5>
                       <b>Address :</b> <?php echo $area ?><br>
                       <b>Phone No :</b> <?php echo $telno ?><br>
-                      <b>Package Include :</b> <?php echo $subject ?><br>
-                      <b>Price :</b> RM <?php echo $price ?><br>
                       <b>Rating :</b> <?php echo $rate ?>
                     </div>
 
 
                   </div>
                   <!-- end .aplicant-details-show -->
-                  <button type="button" onclick="window.location='package_view.php?tuition_refer_code=<?php echo $row['tuition_refer_code'] ?>';" class="btn btn-default pull-right">View Package</button>
+                  <button type="button" onclick="window.location='package_view.php?package_id=<?php echo $row['package_id'] ?>';" class="btn btn-default pull-right">View Package</button>
 
                   <!-- <button class="btn btn-default pull-right">Apply</button> -->
                 </div> <!-- end .language-print -->
@@ -186,9 +181,7 @@ $user_id = $_SESSION['user_id'];
                 
               </div> <!-- end .candidate-description -->
 
-              <?php }
-      // }
-           ?>
+              <?php }  ?>
               <!-- end loop here -->
 
              <!--  <div class="pagination-content clearfix">

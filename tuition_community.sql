@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 04, 2018 at 07:54 AM
+-- Generation Time: Nov 04, 2018 at 09:37 AM
 -- Server version: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -33,15 +33,20 @@ CREATE TABLE IF NOT EXISTS `master_subject` (
   `subject_id` int(11) NOT NULL AUTO_INCREMENT,
   `subject_name` varchar(255) NOT NULL,
   PRIMARY KEY (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_subject`
 --
 
 INSERT INTO `master_subject` (`subject_id`, `subject_name`) VALUES
-(1, 'BM'),
-(2, 'BI');
+(1, 'Bahasa Melayu'),
+(2, 'English'),
+(3, 'Science'),
+(4, 'Sejarah'),
+(5, 'Mathematic'),
+(6, 'Additional Mathematic'),
+(7, 'Geography');
 
 -- --------------------------------------------------------
 
@@ -61,14 +66,7 @@ CREATE TABLE IF NOT EXISTS `parent` (
   `parent_last_update` date DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `parent`
---
-
-INSERT INTO `parent` (`parent_id`, `parent_name`, `parent_ic`, `parent_telno`, `parent_dob`, `parent_gender`, `parent_email`, `parent_last_update`, `user_id`) VALUES
-(1, 'Fa', '12', '2313', '2018-11-12', 'male', '13123', '2018-11-04', 2);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -104,15 +102,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `student_last_update` date DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`student_id`, `student_name`, `student_ic`, `student_start_date`, `student_telno`, `student_dob`, `student_gender`, `student_email`, `student_last_update`, `user_id`) VALUES
-(1, 'Mohd Fahmy Izwan Bin Zulkhafri', '950514025299', NULL, '01111019984', '2018-11-01', 'male', 'fahmy_izwan@yahoo.com', '2018-11-03', 1),
-(2, 'Mohd Fahmy Izwan Bin Zulkhafri', '950514025299', NULL, '01111019984', '2018-11-15', 'male', 'fahmy_izwan@yahoo.com', '2018-11-04', 2);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -131,15 +121,7 @@ CREATE TABLE IF NOT EXISTS `tuition` (
   `tuition_area` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`tuition_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tuition`
---
-
-INSERT INTO `tuition` (`tuition_id`, `tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_area`, `user_id`) VALUES
-(1, 'aaa', '123456', 'aaa', 'aaa', 'SELANGOR', 'TEST', 3),
-(2, 'bb', 'bb', 'aaabbb', 'aaa', 'SELANGOR', 'TEST 1', 3);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -156,15 +138,7 @@ CREATE TABLE IF NOT EXISTS `tuition_package` (
   `package_price` float NOT NULL,
   `package_subject` varchar(255) NOT NULL,
   PRIMARY KEY (`package_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tuition_package`
---
-
-INSERT INTO `tuition_package` (`package_id`, `tuition_id`, `package_name`, `package_capacity`, `package_price`, `package_subject`) VALUES
-(1, 2, '1111', 11, 130, 'SC'),
-(2, 1, 'Math Package', 50, 200, 'BM, BI');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -174,14 +148,17 @@ INSERT INTO `tuition_package` (`package_id`, `tuition_id`, `package_name`, `pack
 
 DROP TABLE IF EXISTS `tuition_review`;
 CREATE TABLE IF NOT EXISTS `tuition_review` (
-  `review_id` int(11) NOT NULL AUTO_INCREMENT,
-  `review_comm` varchar(255) NOT NULL,
-  `review_rate` int(11) NOT NULL,
-  `review_date` date NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL,
-  PRIMARY KEY (`review_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ratingId` int(11) NOT NULL AUTO_INCREMENT,
+  `package_taken` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tuition_id` int(11) NOT NULL,
+  `ratingNumber` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `comments` text COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `posted_by` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1 = Block, 0 = Unblock',
+  PRIMARY KEY (`ratingId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -211,16 +188,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_type` varchar(100) NOT NULL,
   `user_password` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`user_id`, `user_username`, `user_type`, `user_password`) VALUES
-(1, '123', 'student', '123'),
-(2, 'faizzul123', 'parent', 'faizzul123'),
-(3, 'aaa', 'tuition', 'aaa');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

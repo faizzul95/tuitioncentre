@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -36,6 +37,7 @@
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
+            <li><a href="tuition_profile.php">Tuition Profile</a></li>
             <li class="active">Register Package</li>
           </ol>
 
@@ -59,52 +61,56 @@
                   <div class="information-form">
                     <div class="table-responsive">
                       <form action="controller.php" class="default-form" method="post">
-
+                       <input type="hidden" name="tuition_id" value="<?php echo $_SESSION['user_id']; ?>" >
                         <div class="single-content">
                           <label><span>*</span>Package Name</label>
                           <div class="company-name">
-                            <input type="text" name="package_name" placeholder="">
+                            <input type="text" name="package_name" placeholder="" required>
                           </div>
                         </div> <!-- end .single-content -->
 
                         <div class="single-content">
                           <label><span>*</span>Package Capacity</label>
                           <div class="company-name">
-                            <input type="text" name="package_capacity" placeholder="">
+                            <input type="text" name="package_capacity" placeholder="" required>
                           </div>
                         </div> <!-- end .single-content -->
 
                         <div class="single-content">
                           <label><span>*</span>Package Price</label>
                           <div class="company-name">
-                            <input type="text" name="package_price" placeholder="">
+                            <input type="text" name="package_price" placeholder="" required>
                           </div>
                         </div> <!-- end .single-content -->
 
-                        <?php 
+                         <div class="single-content">
+                          <label><span>*</span>Package Subject</label>
+                          <div class="company-name">
+                            <?php 
                           $sql = "SELECT * FROM `master_subject`";
                           $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
                           while( $row = mysqli_fetch_array($sql_subject) )
                           {
                             ?>
-                              <input type="checkbox" name="<?php echo $row['subject_name']; ?>" value="<?php echo $row['subject_name']; ?>"><?php echo $row['subject_name']; ?><br>
+                              <input type="checkbox" name="<?php echo $row['subject_name']; ?>" value="<?php echo $row['subject_name']; ?>"> <?php echo $row['subject_name']; ?><br>
                             <?php
                           }
                         ?>
+                          </div>
+                        </div> <!-- end .single-content -->
 
-                        <input type="submit" name="add_package" value="Add Package">
+                        <!-- <input type="submit" name="add_package" value="Add Package"> -->
+                         <div class="submit-preview-buttons">
+                            <!-- <a href="#" >Confirm</a> -->
+                            <input type="submit" name="add_package" class="btn btn-default pull-right" value="Add Package"
+                        </div> <!-- end .submit-preview-buttons -->
                       </form> <!-- end form -->
                     </div>
                   </div> <!-- end information-form -->
                 </div> <!-- end .tabe pane -->
               </div>
-
-              <hr>
-
-              <div class="submit-preview-buttons">
-                  <a href="#" class="btn btn-default pull-right">Confirm</a>
-              </div> <!-- end .submit-preview-buttons -->
+             
             </div> <!-- end .page-content -->
           </div>
         </div> <!-- end .container -->

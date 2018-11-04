@@ -102,13 +102,13 @@ if (isset($_POST['reg_std_info']))
 // reg parent info (after sign up)
 if (isset($_POST['reg_prt_info']))
 {
-    $student_name = $_POST['prt_name'];
-    $student_ic = $_POST['prt_ic'];
-    $student_telno = $_POST['prt_telno'];
-    $student_email = $_POST['prt_email'];
+    $prt_name = $_POST['prt_name'];
+    $prt_ic = $_POST['prt_ic'];
+    $prt_telno = $_POST['prt_telno'];
+    $prt_email = $_POST['prt_email'];
     $user_id = $_POST['user_id'];
-    $student_gender = $_POST['prt_gender'];
-    $std_dob = $_POST['prt_dob'];
+    $prt_gender = $_POST['prt_gender'];
+    $prt_dob = $_POST['prt_dob'];
     $date = mysqli_real_escape_string($myConnection, date('Y-m-d'));
     
 
@@ -124,7 +124,7 @@ if (isset($_POST['reg_prt_info']))
     {   
 
 	    $query_std="INSERT INTO `parent` (`parent_name`, `parent_ic`, `parent_telno`,`parent_dob`, `parent_gender`, `parent_email`,`parent_last_update`, `user_id`)
-	                    VALUES ('$student_name', '$student_ic', '$student_telno','$std_dob','$student_gender','$student_email','$date','$user_id')";
+	                    VALUES ('$prt_name', '$prt_ic', '$prt_telno','$prt_dob','$prt_gender','$prt_email','$date','$user_id')";
 	    $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));
 
 	    if($res_std)
@@ -239,7 +239,9 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
             $row = mysqli_fetch_array($sql_tuition);
             $_SESSION['tuition_id'] = $row['tuition_id'];
 
-            echo "<script type='text/javascript'> document.location='packageList.php'; </script>";
+            $id = $row['tuition_id'];
+
+            echo "<script type='text/javascript'> document.location='tuition_profile.php?id=$id'; </script>";
         }
      }
 
@@ -248,7 +250,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
 
 if(isset($_POST['add_package']))
 {
-    $tuition_id = $_SESSION['tuition_id'];
+    $tuition_id = $_POST['tuition_id'];
     $package_name = $_POST['package_name'];
     $package_capacity = $_POST['package_capacity'];
     $package_price = $_POST['package_price'];
@@ -273,12 +275,12 @@ if(isset($_POST['add_package']))
     if( $res_package )
     {
         echo "<script type='text/javascript'>alert('Package added Successfully');</script>";
-        echo "<script type='text/javascript'> document.location='packageList.php'; </script>";
+        echo "<script type='text/javascript'> document.location='register_package.php'; </script>";
     }
     else 
     {
         echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
-        echo "<script type='text/javascript'> document.location='register_package.php'; </script>";
+        echo "<script type='text/javascript'> document.location='tuition_profile.php'; </script>";
     }
     
 }

@@ -6,9 +6,9 @@
 <div class="review/container">	
 	<?php
 	include("connection.php");
-	$status = $_GET['tuition_refer_code'];
-	$ratingDetails = "SELECT ratingNumber FROM item_rating WHERE tuition_refer_code = '$status'";
-	$rateResult = @mysql_query($ratingDetails) or die("database error:". @mysql_error());
+	$status = $_GET['tuition_id'];
+	$ratingDetails = "SELECT ratingNumber FROM tuition_review WHERE tuition_id = '$status'";
+	$rateResult = mysqli_query($myConnection,$ratingDetails) or die("database error:". mysqli_error($myConnection));
 	$ratingNumber = 0;
 	$count = 0;
 	$fiveStarRating = 0;
@@ -16,7 +16,7 @@
 	$threeStarRating = 0;
 	$twoStarRating = 0;
 	$oneStarRating = 0;
-	while($rate = @mysql_fetch_assoc($rateResult)) {
+	while($rate = mysqli_fetch_assoc($rateResult)) {
 		$ratingNumber+= $rate['ratingNumber'];
 		$count += 1;
 		if($rate['ratingNumber'] == 5) {
@@ -146,10 +146,10 @@
 				<hr/>
 				<div class="review-block">		
 				<?php
-				$status = $_GET['tuition_refer_code'];
-				$ratinguery = "SELECT ratingId, package_taken, tuition_refer_code, ratingNumber, title, comments, created, posted_by FROM item_rating WHERE tuition_refer_code = '$status'";
-				$ratingResult = @mysql_query($ratinguery) or die("database error:". @mysql_error());
-				while($rating = @mysql_fetch_array($ratingResult)){
+				$status = $_GET['tuition_id'];
+				$ratinguery = "SELECT ratingId, package_taken, tuition_id, ratingNumber, title, comments, created, posted_by FROM tuition_review WHERE tuition_id = '$status'";
+				$ratingResult = mysqli_query($myConnection,$ratinguery) or die("database error:". mysqli_error($myConnection));
+				while($rating = mysqli_fetch_array($ratingResult)){
 					$posted_by = $rating['posted_by'];
 					$package_taken = $rating['package_taken'];	
 					$date=date_create($rating['created']);
