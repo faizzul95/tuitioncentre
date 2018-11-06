@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+$user_id = $_SESSION['user_id'];
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -130,7 +132,7 @@
                                       </select>
                                     </div> <!-- end .skill-selectbox -->
                                 </div> <!-- end .candidate-skills-single -->
-
+                                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
 
                               </div> <!-- end .8th grid layout -->
                             </div> <!-- end nasted .row -->

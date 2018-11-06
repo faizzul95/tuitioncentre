@@ -1,10 +1,10 @@
 <?php 
 include_once("connection.php");
 date_default_timezone_set("Asia/Kuala_Lumpur");
-// session_start();
+session_start();
 // error_reporting(0); 
 
-//register student
+//register student/parent
 if (isset($_POST['register_student'])) 
 {
     $username = $_POST['username'];
@@ -37,16 +37,15 @@ if (isset($_POST['register_student']))
             
             session_start();
 	        $_SESSION['user_id'] = $id;
-	        $_SESSION['student_id']= $last_id;
-
   
             if($user_type == 'student')
             {
-                echo "<script type='text/javascript'> document.location='student_profile-update.php?id=$id'; </script>";
+	           $_SESSION['student_id']= $last_id;
+               echo "<script type='text/javascript'> document.location='student_profile-update.php?id=$id'; </script>";
             }
             else
             {
-                echo "<script type='text/javascript'> document.location='profile_update.php?id=$id'; </script>";
+                echo "<script type='text/javascript'> document.location='parent_profile-update.php?id=$id'; </script>";
             }
         }
         else 
@@ -110,34 +109,21 @@ if (isset($_POST['reg_prt_info']))
     $prt_gender = $_POST['prt_gender'];
     $prt_dob = $_POST['prt_dob'];
     $date = mysqli_real_escape_string($myConnection, date('Y-m-d'));
-    
+     
+    $query_prt="INSERT INTO `parent` (`parent_name`, `parent_ic`, `parent_telno`,`parent_dob`, `parent_gender`, `parent_email`,`parent_last_update`, `user_id`)
+                    VALUES ('$prt_name', '$prt_ic', '$prt_telno','$prt_dob','$prt_gender','$prt_email','$date','$user_id')";
+    $res_prt = mysqli_query($myConnection,$query_prt) or die(mysqli_error($myConnection));
 
-    $sql_usr = "SELECT * FROM `parent` WHERE `user_id`='$user_id'";
-    $check_stud = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
-    
-    if (mysqli_num_rows($check_stud)>0) 
+    if($res_prt)
     {
-        echo "<script type='text/javascript'>alert('Fail to register parent info. please try again');</script>";
-        echo "<script type='text/javascript'> document.location='register.php'; </script>";
+        echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
+        echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
     }
     else
-    {   
-
-	    $query_std="INSERT INTO `parent` (`parent_name`, `parent_ic`, `parent_telno`,`parent_dob`, `parent_gender`, `parent_email`,`parent_last_update`, `user_id`)
-	                    VALUES ('$prt_name', '$prt_ic', '$prt_telno','$prt_dob','$prt_gender','$prt_email','$date','$user_id')";
-	    $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));
-
-	    if($res_std)
-	    {
-	        echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
-	        echo "<script type='text/javascript'> document.location='index.php'; </script>";
-	    }
-	    else
-	    {
-	        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
-	        echo "<script type='text/javascript'> document.location='parent_profile-update.php?id=$user_id'; </script>";
-	    }
-	}
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='parent_profile-update.php?id=$user_id'; </script>";
+    }
 }
 
 
@@ -225,7 +211,12 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
         $_SESSION['user_type'] = $user_type;
 
         if($_SESSION['user_type'] == 'student')
-        {    
+        {   
+            $sql = "SELECT `student_id` FROM `student` WHERE `user_id` = '$usr_id'";
+            $sql_std = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+            $row = mysqli_fetch_array($sql_std);
+            $_SESSION['student_id'] = $row['student_id'];
+
             echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
         }
         else if ($_SESSION['user_type'] == 'parent')
@@ -250,6 +241,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
 
 if(isset($_POST['add_package']))
 {
+	$user_id = $_SESSION['user_id'];
     $tuition_id = $_POST['tuition_id'];
     $package_name = $_POST['package_name'];
     $package_capacity = $_POST['package_capacity'];
@@ -275,7 +267,7 @@ if(isset($_POST['add_package']))
     if( $res_package )
     {
         echo "<script type='text/javascript'>alert('Package added Successfully');</script>";
-        echo "<script type='text/javascript'> document.location='register_package.php'; </script>";
+        echo "<script type='text/javascript'> document.location='tuition_profile.php?id=$user_id'; </script>";
     }
     else 
     {
@@ -285,7 +277,28 @@ if(isset($_POST['add_package']))
     
 }
 
+if(isset($_POST['std_register_package']))
+{
+    $student_id = $_SESSION['student_id'];
+    $package_id = $_POST['package_id'];
+    $start_date = $_POST['start_date'];
 
+    $query_package = "INSERT INTO `tuition_student_list` (`package_id`, `student_id`, `start_date`)
+                    VALUES ('$package_id', '$student_id', '$start_date')";
+    $res_package = mysqli_query($myConnection,$query_package) or die(mysqli_error($myConnection));
+
+    if( $res_package )
+    {
+        echo "<script type='text/javascript'>alert('Registered Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='register_package.php?package_id=$package_id'; </script>";
+    }
+    
+}
 
 
 // die;

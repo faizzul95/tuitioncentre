@@ -2,9 +2,9 @@
 
  session_start(); 
 
- $usid = $_SESSION['user_id'];
+ $user_id = $_SESSION['user_id'];
  include_once("connection.php");
- $sql = "SELECT * FROM `parent` WHERE `user_id` = '$usid'";
+ $sql = "SELECT * FROM `parent` WHERE `user_id` = '$user_id'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);
 
@@ -18,7 +18,7 @@
 
  if($lastupdate == NULL) 
        {
-           header("Location:parent_profile-update.php?id=$usid");  
+           header("Location:parent_profile-update.php?id=$user_id");  
        }
 
 ?>
@@ -131,34 +131,38 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+                                         
+                                        <?php
+                                       $sql = "SELECT `tuition_student_list`.*, `student`.*, `tuition_package`.*
+                                                FROM `student` 
+                                                INNER JOIN  `tuition_student_list` ON `student`.`student_id` = `tuition_student_list`.`student_id` 
+                                                INNER JOIN `tuition_package` ON `tuition_student_list`.`package_id` = `tuition_package`.`package_id`
+                                                WHERE `user_id` = '$user_id'";
+
+                                                
+
+
+                                      $sql_child = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+                                      // if (mysqli_num_rows($sql_tuition)==0){
+                                      //        echo "No result found";
+                                      //  }
+                                      $count = 1;
+                                     while($row = mysqli_fetch_assoc($sql_child))
+                                      { 
+                                          ?>
                                         <tr>
-                                          <th scope="row"><center>1</center></th>
-                                          <td><center>Math Pro</center></td>
-                                          <td><center>Ongoing</center></td>
-                                          <td><center>150.00</center></td>
-                                          <td><center><button class="btn btn-danger">Remove</button> </center></td>
+                                          <th scope="row"><center><?php echo $count; ?></center></th>
+                                          <td><center><?php echo $row['student_name']; ?></center></td>
+                                          <td><center><?php echo $row['student_ic']; ?></center></td>
+                                          <td><center><?php echo $row['package_name']; ?></center></td>
+                                          <td><center><button class="btn btn-default">Review</button> </center></td>
                                         </tr>
-                                        <tr>
-                                          <th scope="row"><center>1</center></th>
-                                          <td><center>Biology</center></td>
-                                          <td><center>Done</center></td>
-                                          <td><center>350.00</center></td>
-                                          <td><center><button class="btn btn-danger">Remove</button> </center></td>
-                                        </tr>
-                                        <tr>
-                                          <th scope="row"><center>1</center></th>
-                                          <td><center>Math Pro</center></td>
-                                          <td><center>Ongoing</center></td>
-                                          <td><center>150.00</center></td>
-                                          <td><center><button class="btn btn-danger">Remove</button> </center></td>
-                                        </tr>
-                                        <tr>
-                                          <th scope="row"><center>1</center></th>
-                                          <td><center>Math Pro</center></td>
-                                          <td><center>Ongoing</center></td>
-                                          <td><center>150.00</center></td>
-                                          <td><center><button class="btn btn-danger">Remove</button> </center></td>
-                                        </tr>
+                                        <?php
+                                        $count++;
+                                      }
+                                      ?>
+
                                       </tbody>
                                     </table>
 

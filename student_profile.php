@@ -1,10 +1,10 @@
 <?php 
-
+ include_once("connection.php");
  session_start(); 
 
  $usid = $_SESSION['user_id'];
- include_once("connection.php");
- $sql = "SELECT * FROM `student` WHERE `user_id` = '$usid'";
+ $student_id = $_SESSION['student_id'];
+ $sql = "SELECT * FROM `student` WHERE `student_id` = '$student_id'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);
 
@@ -124,34 +124,33 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+
+                                      <?php
+                                       $sql = "SELECT `tuition_student_list`.*,`tuition_package`.* FROM `tuition_package` 
+                                                INNER JOIN  `tuition_student_list` ON `tuition_package`.`package_id` = `tuition_student_list`.`package_id`
+                                                WHERE `student_id` = '$student_id'";
+
+                                      $sql_package = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+                                      // if (mysqli_num_rows($sql_tuition)==0){
+                                      //        echo "No result found";
+                                      //  }
+                                      $count = 1;
+                                     while($row = mysqli_fetch_assoc($sql_package))
+                                      { 
+                                          ?>
                                         <tr>
-                                          <th scope="row"><center>1</center></th>
-                                          <td><center>Math Pro</center></td>
-                                          <td><center>Ongoing</center></td>
-                                          <td><center>150.00</center></td>
+                                          <th scope="row"><center><?php echo $count; ?></center></th>
+                                          <td><center><?php echo $row['package_name']; ?></center></td>
+                                          <td><center><?php echo $row['start_date']; ?></center></td>
+                                          <td><center><?php echo $row['package_price']; ?></center></td>
                                           <td><center><button class="btn btn-default">Review</button> </center></td>
                                         </tr>
-                                        <tr>
-                                          <th scope="row"><center>1</center></th>
-                                          <td><center>Biology</center></td>
-                                          <td><center>Done</center></td>
-                                          <td><center>350.00</center></td>
-                                          <td><center><button class="btn btn-default">Review</button> </center></td>
-                                        </tr>
-                                        <tr>
-                                          <th scope="row"><center>1</center></th>
-                                          <td><center>Math Pro</center></td>
-                                          <td><center>Ongoing</center></td>
-                                          <td><center>150.00</center></td>
-                                          <td><center><button class="btn btn-default">Review</button> </center></td>
-                                        </tr>
-                                        <tr>
-                                          <th scope="row"><center>1</center></th>
-                                          <td><center>Math Pro</center></td>
-                                          <td><center>Ongoing</center></td>
-                                          <td><center>150.00</center></td>
-                                          <td><center><button class="btn btn-default">Review</button> </center></td>
-                                        </tr>
+                                        <?php
+                                        $count++;
+                                      }
+                                      ?>
+                                       
                                       </tbody>
                                     </table>
 

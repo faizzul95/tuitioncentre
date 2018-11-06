@@ -141,12 +141,12 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
                       <b>Package Include :</b> <?php echo $subject ?><br>
                       <b>Price :</b> RM <?php echo $price ?><br>
                     </div>
-
-
                   </div>
+
+                </div>
                   <!-- end .aplicant-details-show -->
-                  <button type="button" onclick="window.location='package_register.php?package_id=<?php echo $row['package_id'] ?>';" class="btn btn-info pull-right">Apply</button>
-                </div> <!-- end .language-print -->
+                  <button onclick="location.href='register_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
+              </div> <!-- end .language-print -->
 
                 
               </div> <!-- end .candidate-description -->

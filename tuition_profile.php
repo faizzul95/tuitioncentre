@@ -152,7 +152,7 @@
                                           <td><center><?php echo $name; ?></center></td>
                                           <td><center><?php echo $price; ?></center></td>
                                           <td><center><?php echo $capacity; ?></center></td>
-                                          <td><center><button class="btn btn-default">Edit</button> &nbsp; <button class="btn btn-danger">Remove</button> </center></td>
+                                          <td><center><button class="btn btn-default" onclick="location.href = 'edit_package.php?p_id=<?php echo $id; ?>';">Edit</button> &nbsp; <button class="btn btn-danger" onclick=''>Remove</button> </center></td>
                                         </tr>
                                          <?php $no ++;  } ?>
                                       </tbody>
