@@ -34,15 +34,12 @@ if (isset($_POST['register_student']))
 
             $id = $row['user_id'];
             $type = $row['user_type'];
-            $last_id = mysqli_insert_id($myConnection);
-            
             
 	        $_SESSION['user_id'] = $id;
 	        $_SESSION['user_type'] = $type;
   
             if($user_type == 'student')
             {
-	           $_SESSION['student_id']= $last_id;
                echo "<script type='text/javascript'> document.location='student_profile-update.php?id=$id'; </script>";
             }
             else
@@ -70,7 +67,6 @@ if (isset($_POST['reg_std_info']))
     $student_gender = $_POST['student_gender'];
     $std_dob = $_POST['std_dob'];
     $date = mysqli_real_escape_string($myConnection, date('Y-m-d'));
-    
 
     $sql_usr = "SELECT * FROM `student` WHERE `user_id`='$user_id'";
     $check_stud = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
@@ -89,8 +85,11 @@ if (isset($_POST['reg_std_info']))
 
 	    if($res_std)
 	    {
+
+            $last_id = mysqli_insert_id($myConnection);
+            $_SESSION['student_id'] = $last_id;
 	        echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
-	        echo "<script type='text/javascript'> document.location='index.php'; </script>";
+	        echo "<script type='text/javascript'> document.location='student_profile.php?id=$user_id'; </script>";
 	    }
 	    else
 	    {
@@ -195,7 +194,6 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
      $username = $row['user_username'];
      $usr_id = $row['user_id'];
      $user_type = $row['user_type'];
-     	
 
      if (mysqli_num_rows($res)==0) { 
 
@@ -249,7 +247,7 @@ if(isset($_POST['add_package']))
     $package_name = $_POST['package_name'];
     $package_capacity = $_POST['package_capacity'];
     $package_price = $_POST['package_price'];
-    $package_description = $_POST['package_description'];
+    // $package_description = $_POST['package_description'];
 
     $sql = "SELECT * FROM `master_subject`";
     $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));

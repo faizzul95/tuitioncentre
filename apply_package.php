@@ -1,6 +1,10 @@
 <?php session_start(); 
 include_once("connection.php");
 
+// echo '<pre>';
+// var_dump($_SESSION);
+// echo '</pre>';
+
  if(isset($_SESSION['student_id'])) 
     {
        $student_id = $_SESSION['student_id'];
@@ -13,7 +17,6 @@ if (isset($_GET['package_id']))
   $sql = "SELECT * FROM `tuition_package` WHERE `package_id` = '$package_id'";
   $sql_package = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
   $row = mysqli_fetch_array($sql_package);
-
   $package_name = $row['package_name'];
   $package_capacity = $row['package_capacity'];
   $package_price = $row['package_price'];
