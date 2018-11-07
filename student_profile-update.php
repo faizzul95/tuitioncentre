@@ -4,16 +4,16 @@
 
  $user_id = $_SESSION['user_id'];
  include_once("connection.php");
- $sql = "SELECT * FROM `student` WHERE `user_id` = '$user_id'";
- $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
- $row = mysqli_fetch_array($sql_usr);
+ // $sql = "SELECT * FROM `student` WHERE `user_id` = '$user_id'";
+ // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+ // $row = mysqli_fetch_array($sql_usr);
 
- $lastupdate = $row['student_last_update'];
+ // $lastupdate = $row['student_last_update'];
 
- if($lastupdate == NULL) 
-       {
-           header("Location:student_profile.php?id=$user_id");  
-       }
+ // if($lastupdate == NULL) 
+ //       {
+ //           header("Location:student_profile.php?id=$user_id");  
+ //       }
 
 ?>
 <!doctype html>
@@ -163,22 +163,6 @@
 
                   </div> <!-- end .row -->
                 </div> <!-- end .tabe pane -->
-
-
-                <div class="tab-pane" id="candidate-cv">
-                  <h3 class="tab-title">Profile</h3>
-                  <p>Here goes the content</p>
-                </div> <!-- end .tab-pane -->
-
-                <div class="tab-pane" id="candidate-documents">
-                  <h3 class="tab-title">Products/Services</h3>
-                  <p>Here goes the content</p>
-                </div> <!-- end .tab-pane -->
-
-                <div class="tab-pane" id="candidate-protfolio">
-                  <h3 class="tab-title">Portfolio</h3>
-                  <p>Here goes the content</p>
-                </div> <!-- end .tab-pane -->
 
               </div> <!-- end .tab-content -->
             </div> <!-- end .responsive-tabs.dashboard-tabs -->

@@ -28,15 +28,17 @@ if (isset($_POST['register_student']))
 
         if($reg_user)
         {
-            $sql = "SELECT `user_id` FROM `user` WHERE `user_username` = '$username'";
+            $sql = "SELECT * FROM `user` WHERE `user_username` = '$username'";
             $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
             $row = mysqli_fetch_array($sql_usr);
 
             $id = $row['user_id'];
+            $type = $row['user_type'];
             $last_id = mysqli_insert_id($myConnection);
             
             
 	        $_SESSION['user_id'] = $id;
+	        $_SESSION['user_type'] = $type;
   
             if($user_type == 'student')
             {
