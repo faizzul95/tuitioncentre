@@ -145,7 +145,7 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
 
                 </div>
                   <!-- end .aplicant-details-show -->
-                  <button onclick="location.href='register_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
+                  <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
               </div> <!-- end .language-print -->
 
                 

@@ -105,7 +105,7 @@
 
                         <div class="form-banner-button">
                             <div class="pRemove-import pull-right">
-                              <a class="btn btn-default" href='register_package.php'>Register Package</a>
+                              <a class="btn btn-default" href='register_package.php?'>Add Package</a>
                             </div> <!-- end .pRemove-import -->
                           </div> <!-- end .form-banner-button -->
 
@@ -133,6 +133,7 @@
                                           <th scope="col"><center>Package Name</center></th>
                                           <th scope="col"><center>Package Price</center></th>
                                           <th scope="col"><center>Package Capacity</center></th>
+                                          <th scope="col"><center>Package Description</center></th>
                                           <th scope="col"><center>Action</center></th>
                                         </tr>
                                       </thead>
@@ -145,6 +146,7 @@
                                              $name = $row['package_name'];
                                              $capacity = $row['package_capacity'];
                                              $price = $row['package_price'];
+                                             $desc = $row['package_description'];
 
                                             ?>
                                         <tr>
@@ -152,6 +154,7 @@
                                           <td><center><?php echo $name; ?></center></td>
                                           <td><center><?php echo $price; ?></center></td>
                                           <td><center><?php echo $capacity; ?></center></td>
+                                          <td><center><?php echo $desc; ?></center></td>
                                           <td><center><button class="btn btn-default" onclick="location.href = 'edit_package.php?p_id=<?php echo $id; ?>';">Edit</button> &nbsp; <button class="btn btn-danger" onclick=''>Remove</button> </center></td>
                                         </tr>
                                          <?php $no ++;  } ?>

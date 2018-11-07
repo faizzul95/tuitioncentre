@@ -241,18 +241,20 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
 
 if(isset($_POST['add_package']))
 {
-	$user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id'];
     $tuition_id = $_POST['tuition_id'];
     $package_name = $_POST['package_name'];
     $package_capacity = $_POST['package_capacity'];
     $package_price = $_POST['package_price'];
+    $package_description = $_POST['package_description'];
 
     $sql = "SELECT * FROM `master_subject`";
     $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
+    $subject = '';
     while( $row = mysqli_fetch_array($sql_subject) )
     {
-        if( isset($_POST[$row['subject_name']]) )
+        if( isset($_POST[$row['subject_id']]) )
         {
             $subject .= ",".$row['subject_name'];
             // $subject .= ",".$row['subject_id'];
@@ -260,8 +262,8 @@ if(isset($_POST['add_package']))
     }
     $subject = substr($subject, 1);
 
-    $query_package = "INSERT INTO `tuition_package` (`package_name`, `package_capacity`, `package_price`, `package_subject`, `tuition_id`)
-                    VALUES ('$package_name', '$package_capacity', '$package_price', '$subject', '$tuition_id')";
+    $query_package = "INSERT INTO `tuition_package` (`package_name`, `package_capacity`, `package_price`, `package_subject`, `tuition_id`,`package_description`)
+                    VALUES ('$package_name', '$package_capacity', '$package_price', '$subject', '$tuition_id', '$package_description')";
     $res_package = mysqli_query($myConnection,$query_package) or die(mysqli_error($myConnection));
 
     if( $res_package )
@@ -273,6 +275,46 @@ if(isset($_POST['add_package']))
     {
         echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
         echo "<script type='text/javascript'> document.location='tuition_profile.php'; </script>";
+    }
+    
+}
+
+
+if(isset($_POST['update_package']))
+{
+    $user_id = $_SESSION['user_id'];
+    $package_id = $_POST['package_id'];
+    $package_name = $_POST['package_name'];
+    $package_capacity = $_POST['package_capacity'];
+    $package_price = $_POST['package_price'];
+    $package_description = $_POST['package_description'];
+
+    $sql = "SELECT * FROM `master_subject`";
+    $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+    $subject = '';
+    while( $row = mysqli_fetch_array($sql_subject) )
+    {
+        if( isset($_POST[$row['subject_id']]) )
+        {
+            $subject .= ",".$row['subject_name'];
+            // $subject .= ",".$row['subject_id'];
+        }
+    }
+    $subject = substr($subject, 1);
+
+    $query_package = "UPDATE `tuition_package` SET `package_name`='$package_name', `package_capacity`='$package_capacity', `package_price`='$package_price', `package_description`='$package_description', `package_subject`='$subject' WHERE `package_id`='$package_id'";
+    $res_package = mysqli_query($myConnection,$query_package) or die(mysqli_error($myConnection));
+
+    if( $res_package )
+    {
+        echo "<script type='text/javascript'>alert('Package Updated Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='tuition_profile.php?id=$user_id'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='edit_package.php?p_id=$package_id'; </script>";
     }
     
 }
@@ -295,7 +337,7 @@ if(isset($_POST['std_register_package']))
     else 
     {
         echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
-        echo "<script type='text/javascript'> document.location='register_package.php?package_id=$package_id'; </script>";
+        echo "<script type='text/javascript'> document.location='apply_package.php?package_id=$package_id'; </script>";
     }
     
 }

@@ -1,17 +1,26 @@
 <?php session_start(); 
 include_once("connection.php");
 
-if(isset($_SESSION['tuition_id']))
+if (isset($_GET['package_id']))
 {
-  $tuition_id = $_SESSION['tuition_id'];
-}
-else
-{
-  session_destroy();
-  echo "<script type='text/javascript'>alert('Please Log In');</script>";
-  echo "<script type='text/javascript'> document.location='login.php'; </script>";
-}
+  $package_id = $_GET['package_id'];
 
+  $sql = "SELECT * FROM `tuition_package` WHERE `package_id` = '$package_id'";
+  $sql_package = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $row = mysqli_fetch_array($sql_package);
+
+  $package_name = $row['package_name'];
+  $package_capacity = $row['package_capacity'];
+  $package_price = $row['package_price'];
+
+  $student_id = $_SESSION['student_id'];
+  $sql = "SELECT * FROM `student` WHERE `student_id` = '$student_id'";
+  $sql_std = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $row = mysqli_fetch_array($sql_std);
+
+  $student_name = $row['student_name'];
+  $student_telno = $row['student_telno'];
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -77,57 +86,46 @@ else
                       <form action="controller.php" class="default-form" method="post">
                        <input type="hidden" name="tuition_id" value="<?php echo $_SESSION['user_id']; ?>" >
                         <div class="single-content">
-                          <label><span>*</span>Package Name</label>
+                          <label><span>*</span>Student Name</label>
                           <div class="company-name">
-                            <input type="text" name="package_name" placeholder="" required="" >
+                            <input type="text" name="student_name" placeholder="" disabled value="<?php echo $student_name; ?>">
                           </div>
                         </div> <!-- end .single-content -->
 
                         <div class="single-content">
-                          <label><span>*</span>Package Capacity</label>
+                          <label><span>*</span>Student Phone Number</label>
                           <div class="company-name">
-                            <input type="text" name="package_capacity" placeholder="" required="">
+                            <input type="text" name="student_telno" placeholder="" disabled value="<?php echo $student_telno; ?>">
+                          </div>
+                        </div> <!-- end .single-content -->
+
+                        <div class="single-content">
+                          <label><span>*</span>Start Date</label>
+                          <div class="company-name">
+                            <input type="Date" name="start_date" placeholder="" required>
+                          </div>
+                        </div> <!-- end .single-content -->
+
+                        <div class="single-content">
+                          <label><span>*</span>Package Name</label>
+                          <div class="company-name">
+                            <input type="text" name="package_name" placeholder="" disabled value="<?php echo $package_name; ?>">
                           </div>
                         </div> <!-- end .single-content -->
 
                         <div class="single-content">
                           <label><span>*</span>Package Price</label>
                           <div class="company-name">
-                            <input type="text" name="package_price" placeholder="" required>
+                            <input type="text" name="package_price" placeholder="" disabled value="<?php echo $package_price; ?>">
                           </div>
                         </div> <!-- end .single-content -->
 
-                        <div class="single-content">
-                          <label><span>*</span>Package Description</label>
-                          <div class="company-name">
-                            <input type="text" name="package_description" placeholder="">
-                          </div>
-                        </div> <!-- end .single-content -->
-
-                        <div class="single-content">
-                          <label><span>*</span>Package Subject</label>
-                          <div class="company-name">
-                            <?php
-                            $sql = "SELECT * FROM `master_subject`";
-                            $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-
-                            while( $row = mysqli_fetch_array($sql_subject) )
-                            {
-                              ?>
-                                <input type="checkbox" name="<?php echo $row['subject_id']; ?>" value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?><br>
-                              <?php
-                            }
-                            ?>
-                          </div>
-                        </div> <!-- end .single-content -->
-
-
-                        <input type="hidden" name="tuition_id" value="<?php echo $tuition_id; ?>">
+                        <input type="text" name="package_id" value="<?php echo $package_id; ?>">
 
                         <!-- <input type="submit" name="add_package" value="Add Package"> -->
                          <div class="submit-preview-buttons">
                             <!-- <a href="#" >Confirm</a> -->
-                            <input type="submit" name="add_package" class="btn btn-default pull-right" value="Add Package">
+                            <input type="submit" name="std_register_package" class="btn btn-default pull-right" value="Register Package">
                         </div> <!-- end .submit-preview-buttons -->
                       </form> <!-- end form -->
                     </div>
