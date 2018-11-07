@@ -1,7 +1,7 @@
 <?php 
 include_once("connection.php");
 date_default_timezone_set("Asia/Kuala_Lumpur");
-session_start();
+ session_start();
 // error_reporting(0); 
 
 //register student/parent
@@ -35,7 +35,7 @@ if (isset($_POST['register_student']))
             $id = $row['user_id'];
             $last_id = mysqli_insert_id($myConnection);
             
-            session_start();
+            
 	        $_SESSION['user_id'] = $id;
   
             if($user_type == 'student')
@@ -205,7 +205,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
      }
      else { 
               
-        session_start();
+        
         $_SESSION['user_id'] = $usr_id;
         $_SESSION['username'] = $username;
         $_SESSION['user_type'] = $user_type;
@@ -217,11 +217,11 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
             $row = mysqli_fetch_array($sql_std);
             $_SESSION['student_id'] = $row['student_id'];
 
-            echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
+            echo "<script type='text/javascript'> document.location='student_profile.php?studid=$usr_id'; </script>";
         }
         else if ($_SESSION['user_type'] == 'parent')
         {
-            echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
+            echo "<script type='text/javascript'> document.location='parent_profile.php?parentid=$usr_id'; </script>";
         }
         else  //tuition
         {
@@ -241,6 +241,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
 
 if(isset($_POST['add_package']))
 {
+    
     $user_id = $_SESSION['user_id'];
     $tuition_id = $_POST['tuition_id'];
     $package_name = $_POST['package_name'];
@@ -282,6 +283,7 @@ if(isset($_POST['add_package']))
 
 if(isset($_POST['update_package']))
 {
+
     $user_id = $_SESSION['user_id'];
     $package_id = $_POST['package_id'];
     $package_name = $_POST['package_name'];
@@ -324,6 +326,7 @@ if(isset($_POST['std_register_package']))
     $student_id = $_SESSION['student_id'];
     $package_id = $_POST['package_id'];
     $start_date = $_POST['start_date'];
+    $email = $_POST['student_email'];
 
     $query_package = "INSERT INTO `tuition_student_list` (`package_id`, `student_id`, `start_date`)
                     VALUES ('$package_id', '$student_id', '$start_date')";
@@ -331,6 +334,16 @@ if(isset($_POST['std_register_package']))
 
     if( $res_package )
     {
+        
+        // mail function
+         $title = "TUITION CENTER";
+         $message = "Kelas anda akan bermula pada : ".$start_date;
+        
+         $to = $email;
+         $subject = "PENDAFTARAN TUITION TELAH BERJAYA";
+
+         mail($to, $subject, $message);
+
         echo "<script type='text/javascript'>alert('Registered Successfully');</script>";
         echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
     }
@@ -691,7 +704,7 @@ echo "<script type='text/javascript'> document.location='../User/settings.php'; 
 
 <?php
 error_reporting(0); 
-session_start();
+
 
 if (isset($_POST['register_packages'])) {
 

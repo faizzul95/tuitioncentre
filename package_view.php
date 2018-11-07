@@ -1,6 +1,10 @@
 <?php session_start(); 
 
- $usid = $_SESSION['user_id'];
+  if(isset($_SESSION['user_id'])) 
+    {
+       $usid = $_SESSION['user_id'];
+    }
+
  include_once("connection.php");
  // $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$usid'";
  // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -138,8 +142,22 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
                       <h5><?php echo $name ?></h5>
                       <b>Address :</b> <?php echo $area ?><br>
                       <b>Phone No :</b> <?php echo $telno ?><br>
-                      <b>Package Include :</b> <?php echo $subject ?><br>
-                      <b>Price :</b> RM <?php echo $price ?><br>
+                      <b>Student :</b> <?php //Open php
+
+                                     $count = 0;
+
+                                      $pkid = $_GET['package_id'];
+                                       $sql = mysqli_query($myConnection,"SELECT * FROM tuition_student_list WHERE package_id = '$pkid'") or die (mysqli_error());//Select table from database
+
+                                       while($row=mysqli_fetch_array($sql))//loop the data
+                                       {
+                                          $count ++;
+                                       }
+
+                                       echo $count;
+                                       ?> / <?php echo $capacity ?><br>
+                      <b>Description :</b> <?php echo $subject ?><br><br>
+                      <h4>PRICE :</h4> RM <?php echo $price ?><br>
                     </div>
                   </div>
 

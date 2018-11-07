@@ -97,14 +97,14 @@ else
                           </div>
                         </div> <!-- end .single-content -->
 
-                        <div class="single-content">
+                       <!--  <div class="single-content">
                           <label><span>*</span>Package Description</label>
                           <div class="company-name">
                             <input type="text" name="package_description" placeholder="">
                           </div>
-                        </div> <!-- end .single-content -->
+                        </div> --> <!-- end .single-content -->
 
-                        <div class="single-content">
+                       <!--  <div class="single-content">
                           <label><span>*</span>Package Subject</label>
                           <div class="company-name">
                             <?php
@@ -119,7 +119,7 @@ else
                             }
                             ?>
                           </div>
-                        </div> <!-- end .single-content -->
+                        </div>  --><!-- end .single-content -->
 
 
                         <input type="hidden" name="tuition_id" value="<?php echo $tuition_id; ?>">

@@ -1,7 +1,12 @@
 <?php 
 session_start();
 include("connection.php");
-$user_id = $_SESSION['user_id'];
+
+if(isset($_SESSION['user_id'])) 
+    {
+       $user_id = $_SESSION['user_id'];
+    }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -167,7 +172,7 @@ $user_id = $_SESSION['user_id'];
                       <h5><?php echo $tuitionName ?></h5>
                       <b>Address :</b> <?php echo $area ?><br>
                       <b>Phone No :</b> <?php echo $telno ?><br>
-                      <b>Rating :</b> <?php echo $rate ?>
+                      <b>Rating :</b> <?php //echo $rate ?>
                     </div>
 
 

@@ -3,6 +3,7 @@
  session_start(); 
 
  $user_id = $_SESSION['user_id'];
+
  include_once("connection.php");
  $sql = "SELECT * FROM `parent` WHERE `user_id` = '$user_id'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -62,7 +63,7 @@
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li class="active">Profil</li>
+            <li class="active">Profil (Parent)</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -114,7 +115,7 @@
 
                         <div class="form-banner-button">
                             <div class="pRemove-import pull-right">
-                              <a class="btn btn-default" href="#">Add Children</a>
+                              <a class="btn btn-default" href='register_children.php'>Add Children</a>
                             </div> <!-- end .pRemove-import -->
                           </div> <!-- end .form-banner-button -->
 
@@ -133,20 +134,20 @@
                                       <tbody>
                                          
                                         <?php
-                                       $sql = "SELECT `tuition_student_list`.*, `student`.*, `tuition_package`.*
-                                                FROM `student` 
-                                                INNER JOIN  `tuition_student_list` ON `student`.`student_id` = `tuition_student_list`.`student_id` 
-                                                INNER JOIN `tuition_package` ON `tuition_student_list`.`package_id` = `tuition_package`.`package_id`
-                                                WHERE `user_id` = '$user_id'";
+                                       // $sql = "SELECT `tuition_student_list`.*, `student`.*, `tuition_package`.*
+                                       //          FROM `student` 
+                                       //          INNER JOIN  `tuition_student_list` ON `student`.`student_id` = `tuition_student_list`.`student_id` 
+                                       //          INNER JOIN `tuition_package` ON `tuition_student_list`.`package_id` = `tuition_package`.`package_id`
+                                       //          WHERE `user_id` = '$user_id'";
 
-                                                
-
-
+                                      
+                                      $sql = "SELECT * FROM `student` WHERE `user_id` = '$user_id'";
+                                              
                                       $sql_child = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
-                                      // if (mysqli_num_rows($sql_tuition)==0){
-                                      //        echo "No result found";
-                                      //  }
+                                      if (mysqli_num_rows($sql_child)==0){
+                                             echo "No result found";
+                                       }
                                       $count = 1;
                                      while($row = mysqli_fetch_assoc($sql_child))
                                       { 
@@ -155,8 +156,8 @@
                                           <th scope="row"><center><?php echo $count; ?></center></th>
                                           <td><center><?php echo $row['student_name']; ?></center></td>
                                           <td><center><?php echo $row['student_ic']; ?></center></td>
-                                          <td><center><?php echo $row['package_name']; ?></center></td>
-                                          <td><center><button class="btn btn-default">Review</button> </center></td>
+                                          <td><center><button class="btn btn-default">View</button></center></td>
+                                          <td><center><button onclick="location.href='index.php?student_id=<?php echo $row['student_id']; ?>';" class="btn btn-info">Apply</button></center></td>
                                         </tr>
                                         <?php
                                         $count++;

@@ -1,4 +1,14 @@
-<?php session_start(); ?>
+<?php session_start(); 
+
+if(isset($_SESSION['user_id'])) 
+    {
+      if($_SESSION['user_type']=="parent") 
+      {
+         $_SESSION['student_id'] = $_GET['student_id'];
+      }
+    }
+
+?>
 <!doctype html>
 <html lang="en">
   <head>

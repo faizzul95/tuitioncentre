@@ -1,6 +1,11 @@
 <?php session_start(); 
 include_once("connection.php");
 
+ if(isset($_SESSION['student_id'])) 
+    {
+       $student_id = $_SESSION['student_id'];
+    }
+
 if (isset($_GET['package_id']))
 {
   $package_id = $_GET['package_id'];
@@ -13,13 +18,13 @@ if (isset($_GET['package_id']))
   $package_capacity = $row['package_capacity'];
   $package_price = $row['package_price'];
 
-  $student_id = $_SESSION['student_id'];
   $sql = "SELECT * FROM `student` WHERE `student_id` = '$student_id'";
   $sql_std = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
   $row = mysqli_fetch_array($sql_std);
 
   $student_name = $row['student_name'];
   $student_telno = $row['student_telno'];
+  $student_email = $row['student_email'];
 }
 ?>
 <!doctype html>
@@ -31,7 +36,7 @@ if (isset($_GET['package_id']))
     <?php
       include_once("connection.php");
     ?>  
-    <title>Register Package</title>
+    <title>Apply Package</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -56,12 +61,12 @@ if (isset($_GET['package_id']))
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
         <div class="container">
-          <h1>Register Package</h1>
+          <h1>Apply Package</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li><a href="tuition_profile.php">Tuition Profile</a></li>
-            <li class="active">Register Package</li>
+            <li><a href="#">Tuition Profile</a></li>
+            <li class="active">Apply Package</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -98,6 +103,14 @@ if (isset($_GET['package_id']))
                             <input type="text" name="student_telno" placeholder="" disabled value="<?php echo $student_telno; ?>">
                           </div>
                         </div> <!-- end .single-content -->
+
+                        <div class="single-content">
+                          <label><span>*</span>Student Email</label>
+                          <div class="company-name">
+                            <input type="text" name="student_email" value="<?php echo $student_email; ?>">
+                          </div>
+                        </div> <!-- end .single-content -->
+
 
                         <div class="single-content">
                           <label><span>*</span>Start Date</label>

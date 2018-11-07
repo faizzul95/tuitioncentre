@@ -30,7 +30,11 @@
                   <div class="col-md-5 col-sm-5">
                     <div class="notification-section text-right">
                       <ul class="list-inline">
-                        <li><a href="index.php">Home</a></li>
+
+                         <?php  if($_SESSION['user_type'] != 'parent' && $_SESSION['user_type'] != 'tuition') { ?>
+                          <li><a href="index.php">Home</a></li>
+                          <?php }  ?>
+
                         <li><a href="">Forum</a></li>
                         <?php  if($_SESSION['user_type'] == 'parent') { ?>
                           <li><a href="parent_profile.php?id=$usid">Profil</a></li>

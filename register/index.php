@@ -23,29 +23,7 @@
           <h1>REGISTER AS STUDENT / PARENT</h1>
           
           <form action="controller.php" method="post">
-          <!-- <div class="top-row">
-            <div class="field-wrap">
-              <label>
-                Full Name<span class="req">*</span>
-              </label>
-              <input style="color: #C0C0C0;" type="text" name="user_fullname" required autocomplete="off" />
-            </div>
-        
-            <div class="field-wrap">
-              <label>
-                Phone Number <span class="req">*</span>
-              </label>
-              <input style="color: #C0C0C0;" type="text" name="user_telno" required autocomplete="off"/>
-            </div>
-          </div> -->
 
-          <!-- <div class="field-wrap">
-            <label>
-              Address <span class="req">*</span>
-            </label>
-            <input style="color: #C0C0C0;" type="text" name="user_address" required autocomplete="off"/>
-          </div> -->
-          
               <div class="field-wrap">
                 <label>
                   Username<span class="req">*</span>
@@ -98,7 +76,7 @@
 
           <div class="field-wrap">
             <label>
-              Name <span class="req">*</span>
+             Owner Name <span class="req">*</span>
             </label>
             <input style="color: #C0C0C0;" type="text" name="username" required autocomplete="off"/>
           </div>

@@ -6,7 +6,7 @@
 <div class="review/container">	
 	<?php
 	include("connection.php");
-	$status = $_GET['tuition_id'];
+	$status = $_GET['package_id'];
 	$ratingDetails = "SELECT ratingNumber FROM tuition_review WHERE tuition_id = '$status'";
 	$rateResult = mysqli_query($myConnection,$ratingDetails) or die("database error:". mysqli_error($myConnection));
 	$ratingNumber = 0;
@@ -146,12 +146,12 @@
 				<hr/>
 				<div class="review-block">		
 				<?php
-				$status = $_GET['tuition_id'];
-				$ratinguery = "SELECT ratingId, package_taken, tuition_id, ratingNumber, title, comments, created, posted_by FROM tuition_review WHERE tuition_id = '$status'";
+				$status = $_GET['package_id'];
+				$ratinguery = "SELECT * FROM tuition_review WHERE tuition_id = '$status'";
 				$ratingResult = mysqli_query($myConnection,$ratinguery) or die("database error:". mysqli_error($myConnection));
 				while($rating = mysqli_fetch_array($ratingResult)){
 					$posted_by = $rating['posted_by'];
-					$package_taken = $rating['package_taken'];	
+					$package_taken = $rating['package_id'];	
 					$date=date_create($rating['created']);
 					$reviewDate = date_format($date,"M d, Y");
 				?>				
