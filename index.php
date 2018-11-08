@@ -104,7 +104,7 @@ if(isset($_SESSION['user_id']))
                               while( $row = mysqli_fetch_array($sql_subject) )
                               {
                                 ?>
-                                <option value="<?php echo $row['subject_name']; ?>"><?php echo $row['subject_name']; ?></option>
+                                <option value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?></option>
                                 <?php
                               }
                               ?>

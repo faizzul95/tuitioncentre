@@ -1,15 +1,9 @@
 <?php session_start(); 
 include_once("connection.php");
 
-if(isset($_SESSION['tuition_id']))
+if(isset($_GET['p_id']))
 {
-  $tuition_id = $_SESSION['tuition_id'];
-}
-else
-{
-  session_destroy();
-  echo "<script type='text/javascript'>alert('Please Log In');</script>";
-  echo "<script type='text/javascript'> document.location='login.php'; </script>";
+  $package_id = $_GET['p_id'];
 }
 
 ?>
@@ -22,7 +16,7 @@ else
     <?php
       include_once("connection.php");
     ?>  
-    <title>Register Package</title>
+    <title>Register Package Subject</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -47,12 +41,12 @@ else
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
         <div class="container">
-          <h1>Register Package</h1>
+          <h1>Register Package Subject</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
             <li><a href="tuition_profile.php">Tuition Profile</a></li>
-            <li class="active">Register Package</li>
+            <li class="active">Register Package Subject</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -67,7 +61,7 @@ else
                 <div class="tab-pane active" id="agency-profile-tab">
 
 
-                  <h4 class=" client-registration-title">Register Package
+                  <h4 class=" client-registration-title">Register Package Subject
                     <span>Information</span>
 
                   </h4>
@@ -76,37 +70,11 @@ else
                     <div class="table-responsive">
                       <form action="controller.php" class="default-form" method="post">
                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" >
-                        <div class="single-content">
-                          <label><span>*</span>Package Name</label>
-                          <div class="company-name">
-                            <input type="text" name="package_name" placeholder="" required="" >
-                          </div>
-                        </div> <!-- end .single-content -->
 
                         <div class="single-content">
-                          <label><span>*</span>Package Capacity</label>
-                          <div class="company-name">
-                            <input type="text" name="package_capacity" placeholder="" required="">
-                          </div>
-                        </div> <!-- end .single-content -->
-
-                        <div class="single-content">
-                          <label><span>*</span>Package Price</label>
-                          <div class="company-name">
-                            <input type="text" name="package_price" placeholder="" required>
-                          </div>
-                        </div> <!-- end .single-content -->
-
-                       <!--  <div class="single-content">
-                          <label><span>*</span>Package Description</label>
-                          <div class="company-name">
-                            <input type="text" name="package_description" placeholder="">
-                          </div>
-                        </div> --> <!-- end .single-content -->
-
-                       <!--  <div class="single-content">
                           <label><span>*</span>Package Subject</label>
                           <div class="company-name">
+                            <select name="subject_id">
                             <?php
                             $sql = "SELECT * FROM `master_subject`";
                             $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -114,20 +82,50 @@ else
                             while( $row = mysqli_fetch_array($sql_subject) )
                             {
                               ?>
-                                <input type="checkbox" name="<?php echo $row['subject_id']; ?>" value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?><br>
+                              <option value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?></option>
                               <?php
                             }
                             ?>
+                            </select>
                           </div>
-                        </div>  --><!-- end .single-content -->
+                        </div>
+
+                        <div class="single-content">
+                          <label><span>*</span>Subject Day :</label>
+                          <div class="company-name">
+                            Subject Day : 
+                                <select name="day">
+                                  
+                                  <option value="mon">Monday</option>
+                                  <option value="tue">Tuesday</option>
+                                  <option value="wed">Wednesday</option>
+                                  <option value="thu">Thursday</option>
+                                  <option value="fri">Friday</option>
+                                  <option value="sat">Saturday</option>
+                                </select><br>
+                          </div>
+                        </div>
+
+                        <div class="single-content">
+                          <label><span>*</span>Start Time :</label>
+                          <div class="company-name">
+                            <input type="Time" name="start_time">
+                          </div>
+                        </div>
+
+                        <div class="single-content">
+                          <label><span>*</span>End Time :</label>
+                          <div class="company-name">
+                            <input type="time" name="end_time">
+                          </div>
+                        </div>
 
 
-                        <input type="hidden" name="tuition_id" value="<?php echo $tuition_id; ?>">
-
-                        <!-- <input type="submit" name="add_package" value="Add Package"> -->
+                        <input type="hidden" name="package_id" value="<?php echo $package_id; ?>">
+                        <!-- <input type="submit" name="add_package" value="Add Package">  -->
                          <div class="submit-preview-buttons">
                             <!-- <a href="#" >Confirm</a> -->
-                            <input type="submit" name="add_package" class="btn btn-default pull-right" value="Add Package">
+                            <input type="submit" name="add_subject" class="btn btn-default pull-right" value="Add Subject"><br><br><br>
                         </div> <!-- end .submit-preview-buttons -->
                       </form> <!-- end form -->
                     </div>

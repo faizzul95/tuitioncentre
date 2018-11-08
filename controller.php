@@ -249,22 +249,22 @@ if(isset($_POST['add_package']))
     $package_price = $_POST['package_price'];
     // $package_description = $_POST['package_description'];
 
-    $sql = "SELECT * FROM `master_subject`";
-    $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+    // $sql = "SELECT * FROM `master_subject`";
+    // $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
-    $subject = '';
-    while( $row = mysqli_fetch_array($sql_subject) )
-    {
-        if( isset($_POST[$row['subject_id']]) )
-        {
-            $subject .= ",".$row['subject_name'];
-            // $subject .= ",".$row['subject_id'];
-        }
-    }
-    $subject = substr($subject, 1);
+    // $subject = '';
+    // while( $row = mysqli_fetch_array($sql_subject) )
+    // {
+    //     if( isset($_POST[$row['subject_id']]) )
+    //     {
+    //         $subject .= ",".$row['subject_name'];
+    //         // $subject .= ",".$row['subject_id'];
+    //     }
+    // }
+    // $subject = substr($subject, 1);
 
-    $query_package = "INSERT INTO `tuition_package` (`package_name`, `package_capacity`, `package_price`, `package_subject`, `tuition_id`,`package_description`)
-                    VALUES ('$package_name', '$package_capacity', '$package_price', '$subject', '$tuition_id', '$package_description')";
+    $query_package = "INSERT INTO `tuition_package` (`package_name`, `package_capacity`, `package_price`, `tuition_id`)
+                    VALUES ('$package_name', '$package_capacity', '$package_price', '$tuition_id')";
     $res_package = mysqli_query($myConnection,$query_package) or die(mysqli_error($myConnection));
 
     if( $res_package )
@@ -281,9 +281,10 @@ if(isset($_POST['add_package']))
 }
 
 
+
+
 if(isset($_POST['update_package']))
 {
-
     $user_id = $_SESSION['user_id'];
     $package_id = $_POST['package_id'];
     $package_name = $_POST['package_name'];
@@ -320,6 +321,33 @@ if(isset($_POST['update_package']))
     }
     
 }
+
+if(isset($_POST['add_subject']))
+{
+    $user_id = $_SESSION['user_id'];
+    $subject_id = $_POST['subject_id'];
+    $day = $_POST['day'];
+    $start_time = $_POST['start_time'];
+    $end_time = $_POST['end_time'];
+    $package_id = $_POST['package_id'];
+
+    $query_package = "INSERT INTO `tuition_package_subject` (`subject_id`, `subject_day`, `subject_start_hour`, `subject_end_hour`, `package_id`)
+                    VALUES ('$subject_id', '$day', '$start_time', '$end_time', '$package_id')";
+    $res_package = mysqli_query($myConnection,$query_package) or die(mysqli_error($myConnection));
+
+    if( $res_package )
+    {
+        echo "<script type='text/javascript'>alert('Package Updated Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='tuition_profile.php?id=$user_id'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='add_package_subject.php?p_id=$package_id'; </script>";
+    }
+    
+}
+
 
 if(isset($_POST['std_register_package']))
 {

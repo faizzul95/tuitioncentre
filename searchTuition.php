@@ -140,10 +140,11 @@ if(isset($_SESSION['user_id']))
 
               // $sql = "SELECT * FROM `tuition` a INNER JOIN `tuition_package` b ON a.`tuition_id` = b.`tuition_id` WHERE `tuition_area` = '$area'";
 
-
-              $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition` 
-                          INNER JOIN  `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
-                          WHERE `tuition_area` = '$area' AND package_subject LIKE '%{$available_subjects}%'";
+              $sql = "SELECT * FROM `tuition`
+                          INNER JOIN `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
+                          INNER JOIN `tuition_package_subject` ON `tuition_package_subject`.`package_id` = `tuition_package`.`package_id`
+                          INNER JOIN `master_subject` ON `tuition_package_subject`.`subject_id` = `master_subject`.`subject_id`
+                          WHERE `tuition_area` = '$area' AND `tuition_package_subject`.`subject_id` = '$available_subjects'";
 
               $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
