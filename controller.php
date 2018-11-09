@@ -281,7 +281,62 @@ if(isset($_POST['add_package']))
 }
 
 
+if(isset($_POST['review_package']))
+{    
+    $package_id = $_POST['package_id'];
+    $tuition_id = $_POST['tuition_id'];
+    $student_id = $_SESSION['student_id'];
+    $review_star = $_POST['starRate'];
+    $review_title = $_POST['review_title'];
+    $review_comments = $_POST['review_comments'];
+    
+    $sql_review = "SELECT * FROM `tuition_review` WHERE `package_id`='$package_id' AND `student_id`='$student_id'";
+    $res_review = mysqli_query($myConnection,$sql_review) or die(mysqli_error($myConnection));
 
+    if (mysqli_num_rows($res_review)>0)
+    {
+        echo "<script type='text/javascript'>alert('Package already reviewed');</script>";
+        echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
+    }
+    else
+    {
+        $query_review = "INSERT INTO `tuition_review` (`package_id`, `tuition_id`, `review_star`, `review_title`, `review_comments`, `student_id`)
+                        VALUES ('$package_id', '$tuition_id', '$review_star', '$review_title', '$review_comments', '$student_id')";
+        $res_review = mysqli_query($myConnection,$query_review) or die(mysqli_error($myConnection));
+
+        if( $res_review )
+        {
+            $sql = "SELECT * FROM `tuition_review` WHERE `tuition_id` = '$tuition_id'";
+            $sql_rate = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+            $tot_rate = $count = 0;
+            while( $row = mysqli_fetch_array($sql_rate) )
+            {
+                $tot_rate += $row['review_star'];
+                $count++;
+            }
+
+            $avg_rate = $tot_rate/$count;
+
+            $query_tuition = "UPDATE `tuition` SET `tuition_rating`='$avg_rate' WHERE `tuition_id`='$tuition_id'";
+            $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
+
+            if(!$res_tuition)
+            {
+                echo "<script type='text/javascript'>alert('Fail to update tuition rating.');</script>";
+            }
+
+            echo "<script type='text/javascript'>alert('Review added Successfully');</script>";
+            echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
+        }
+        else 
+        {
+            echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+            echo "<script type='text/javascript'> document.location='review_package.php?package_id=$package_id'; </script>";
+        }
+    }
+    
+}
 
 if(isset($_POST['update_package']))
 {

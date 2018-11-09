@@ -84,7 +84,7 @@ if(isset($_SESSION['user_id']))
                         </div>
                         <div class="hsb-container">
                           <div class="hsb-input-2">
-                            <select name="avg_rating">
+                            <select name="avg_rating" required>
                                   <option value="">Choose Rating</option>
                                   <option value="0">No Star Yet</option>
                                   <option value="1">1 Star</option>

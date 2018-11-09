@@ -1,9 +1,14 @@
 <?php session_start(); 
 include_once("connection.php");
 
-if(isset($_GET['p_id']))
+if(isset($_GET['package_id']))
 {
-  $package_id = $_GET['p_id'];
+  $package_id = $_GET['package_id'];
+
+  $sql = "SELECT `tuition_id` FROM `tuition_package` WHERE `package_id` = '$package_id'";
+  $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $row = mysqli_fetch_array($sql_tuition); 
+  $tuition_id = $row['tuition_id'];
 }
 
 ?>
@@ -16,7 +21,7 @@ if(isset($_GET['p_id']))
     <?php
       include_once("connection.php");
     ?>  
-    <title>Register Package Subject</title>
+    <title>Review Package</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -41,12 +46,12 @@ if(isset($_GET['p_id']))
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
         <div class="container">
-          <h1>Register Package Subject</h1>
+          <h1>Review Package</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li><a href="tuition_profile.php">Tuition Profile</a></li>
-            <li class="active">Register Package Subject</li>
+            <li><a href="student_profile.php">Student Profile</a></li>
+            <li class="active">Review Package</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -61,69 +66,55 @@ if(isset($_GET['p_id']))
                 <div class="tab-pane active" id="agency-profile-tab">
 
 
-                  <h4 class=" client-registration-title">Register Package Subject
-                    <span>Information</span>
-
-                  </h4>
+                  <h4 class=" client-registration-title">Review Package</h4>
 
                   <div class="information-form">
                     <div class="table-responsive">
                       <form action="controller.php" class="default-form" method="post">
-                       <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" >
-
+                       
                         <div class="single-content">
-                          <label><span>*</span>Package Subject</label>
+                          <label><span>*</span>Rate this Package</label>
                           <div class="company-name">
-                            <select name="subject_id">
-                            <?php
-                            $sql = "SELECT * FROM `master_subject`";
-                            $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-
-                            while( $row = mysqli_fetch_array($sql_subject) )
-                            {
-                              ?>
-                              <option value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?></option>
-                              <?php
-                            }
-                            ?>
-                            </select>
+                            <button type="button" class="btn-sm" aria-label="Left Align" id="1" onclick="star(1)">
+                              <span class="fa fa-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn-sm" aria-label="Left Align" id="2" onclick="star(2)">
+                              <span class="fa fa-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn-sm" aria-label="Left Align" id="3" onclick="star(3)">
+                              <span class="fa fa-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn-sm" aria-label="Left Align" id="4" onclick="star(4)">
+                              <span class="fa fa-star" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn-sm" aria-label="Left Align" id="5" onclick="star(5)">
+                              <span class="fa fa-star" aria-hidden="true"></span>
+                            </button>
+                            <input type="hidden" name="starRate" id="starRate">
                           </div>
                         </div>
 
                         <div class="single-content">
-                          <label><span>*</span>Subject Day :</label>
+                          <label><span>*</span>Title :</label>
                           <div class="company-name">
-                                <select name="day">
-                                  <option value="Monday">Monday</option>
-                                  <option value="Tuesday">Tuesday</option>
-                                  <option value="Wednesday">Wednesday</option>
-                                  <option value="Thursday">Thursday</option>
-                                  <option value="Friday">Friday</option>
-                                  <option value="Saturday">Saturday</option>
-                                </select><br>
+                            <input type="text" name="review_title" required>
                           </div>
                         </div>
 
                         <div class="single-content">
-                          <label><span>*</span>Start Time :</label>
+                          <label><span>*</span>Comment :</label>
                           <div class="company-name">
-                            <input type="Time" name="start_time">
+                            <!-- <textarea rows="5" name="review_comment" required></textarea> -->
+                            <input type="text" name="review_comments">
                           </div>
                         </div>
 
-                        <div class="single-content">
-                          <label><span>*</span>End Time :</label>
-                          <div class="company-name">
-                            <input type="time" name="end_time">
-                          </div>
-                        </div>
-
-
+                        <input type="hidden" name="tuition_id" value="<?php echo $tuition_id; ?>" >
                         <input type="hidden" name="package_id" value="<?php echo $package_id; ?>">
                         <!-- <input type="submit" name="add_package" value="Add Package">  -->
                          <div class="submit-preview-buttons">
                             <!-- <a href="#" >Confirm</a> -->
-                            <input type="submit" name="add_subject" class="btn btn-default pull-right" value="Add Subject"><br><br><br>
+                            <input type="submit" name="review_package" class="btn btn-default pull-right" value="Review Package"><br><br><br>
                         </div> <!-- end .submit-preview-buttons -->
                       </form> <!-- end form -->
                     </div>
@@ -135,6 +126,7 @@ if(isset($_GET['p_id']))
           </div>
         </div> <!-- end .container -->
       </div> <!-- end #page-content -->
+    </div><
 
       <footer id="footer">
         <?php include 'footer.php'; ?>
@@ -159,6 +151,25 @@ if(isset($_GET['p_id']))
       $('#tags').tagsInput();
 
       bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+
+      function star(starNo)
+      {
+        var i;
+        for(i=1; i<=5; i++)
+        {
+          if (i <= starNo)
+          {
+            e = document.getElementById(i);
+            e.className = "btn-sm active btn-warning";
+          }
+          else
+          {
+            e = document.getElementById(i);
+            e.className = "btn-sm"; 
+          }
+        }
+        document.getElementById("starRate").value = starNo;
+      }
     </script>
 
   </body>

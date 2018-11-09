@@ -144,7 +144,7 @@
                                           <td><center><?php echo $row['package_name']; ?></center></td>
                                           <td><center><?php echo $row['start_date']; ?></center></td>
                                           <td><center><?php echo $row['package_price']; ?></center></td>
-                                          <td><center><button class="btn btn-default">Review</button> </center></td>
+                                          <td><center><button class="btn btn-default" onclick="location.href='review_package.php?package_id=<?php echo $row['package_id']; ?>';">Review</button> </center></td>
                                         </tr>
                                         <?php
                                         $count++;

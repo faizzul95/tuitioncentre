@@ -65,7 +65,7 @@ if(isset($_SESSION['user_id']))
                     <div class="widget-content">
                       <span class="search-tex">I'm looking for a ...</span>
                     <form method="post" action="searchTuition.php">
-                       <select name="area" class="form-control mt10 mb10" required>
+                       <select name="area" class="form-control mt10 mb10">
                         <option value="">Select Area</option>
                             <?php
                               $sql = "SELECT * FROM `tuition`";
@@ -81,7 +81,7 @@ if(isset($_SESSION['user_id']))
                           </select>
                       <br>
 
-                      <select name="avg_rating" class="form-control mt10 mb10" required>
+                      <select name="avg_rating" class="form-control mt10 mb10">
                         <option value="">Choose Rating</option>
                         <option value="0">No Star Yet</option>
                         <option value="1">1 Star</option>
@@ -93,7 +93,7 @@ if(isset($_SESSION['user_id']))
 
                       <br>
 
-                      <select name="available_subjects" class="form-control mt10 mb10" required>
+                      <select name="available_subjects" class="form-control mt10 mb10">
                         <option value="">Select Subject</option>
                               <?php
                               $sql = "SELECT * FROM `master_subject`";
@@ -102,7 +102,7 @@ if(isset($_SESSION['user_id']))
                               while( $row = mysqli_fetch_array($sql_subject) )
                               {
                                 ?>
-                                <option value="<?php echo $row['subject_name']; ?>"><?php echo $row['subject_name']; ?></option>
+                                <option value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?></option>
                                 <?php
                               }
                               ?>
@@ -110,7 +110,7 @@ if(isset($_SESSION['user_id']))
 
                       <br>
 
-                      <input type="submit" name="view_tuition_center" class="btn btn-default" value="Search">
+                      <input type="submit" name="view_tuition_center" value="Search" class="btn btn-default">
                     </div>
                     </form>
                   </div>
@@ -135,8 +135,8 @@ if(isset($_SESSION['user_id']))
               <?php 
 
               $area = $_POST['area'];
-              $avg_rating = $_POST['avg_rating'];
               $available_subjects = $_POST['available_subjects'];
+              $avg_rating = $_POST['avg_rating'];
 
               // $sql = "SELECT * FROM `tuition` a INNER JOIN `tuition_package` b ON a.`tuition_id` = b.`tuition_id` WHERE `tuition_area` = '$area'";
 
@@ -144,7 +144,7 @@ if(isset($_SESSION['user_id']))
                           INNER JOIN `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
                           INNER JOIN `tuition_package_subject` ON `tuition_package_subject`.`package_id` = `tuition_package`.`package_id`
                           INNER JOIN `master_subject` ON `tuition_package_subject`.`subject_id` = `master_subject`.`subject_id`
-                          WHERE `tuition_area` = '$area' AND `tuition_package_subject`.`subject_id` = '$available_subjects'";
+                          WHERE `tuition_area` = '$area' AND `tuition_package_subject`.`subject_id` = '$available_subjects' AND round(`tuition_rating`) = '$avg_rating'";
 
               $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
@@ -159,9 +159,9 @@ if(isset($_SESSION['user_id']))
                    $name = $row['package_name'];
                    $capacity = $row['package_capacity'];
                    $price = $row['package_price'];
-                   $subject = $row['package_subject'];
                    $telno = $row['tuition_telno'];
                    $tuitionName = $row['tuition_name'];
+                   $rate = $row['tuition_rating'];
                ?>
          
               <div class="candidate-description client-description applicants-content">
@@ -173,7 +173,7 @@ if(isset($_SESSION['user_id']))
                       <h5><?php echo $tuitionName ?></h5>
                       <b>Address :</b> <?php echo $area ?><br>
                       <b>Phone No :</b> <?php echo $telno ?><br>
-                      <b>Rating :</b> <?php //echo $rate ?>
+                      <b>Rating :</b> <?php echo $rate ?>
                     </div>
 
 

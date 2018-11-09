@@ -128,7 +128,6 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
                    $name = $row['package_name'];
                    $capacity = $row['package_capacity'];
                    $price = $row['package_price'];
-                   $subject = $row['package_subject'];
                    $telno = $row['tuition_telno'];
                    $tuitionName = $row['tuition_name'];
                ?>
@@ -147,23 +146,44 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
                                      $count = 0;
 
                                       $pkid = $_GET['package_id'];
-                                       $sql = mysqli_query($myConnection,"SELECT * FROM tuition_student_list WHERE package_id = '$pkid'") or die (mysqli_error());//Select table from database
+                                       $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_student_list` WHERE `package_id` = '$pkid'") or die (mysqli_error());//Select table from database
 
                                        while($row=mysqli_fetch_array($sql))//loop the data
                                        {
                                           $count ++;
                                        }
 
-                                       echo $count;
-                                       ?> / <?php echo $capacity ?><br>
-                      <b>Description :</b> <?php echo $subject ?><br><br>
-                      <h4>PRICE :</h4> RM <?php echo $price ?><br>
+                                       echo "{$count} / {$capacity}<br>";
+                                       ?>
+                      <b>Description :</b><br> 
+                      <?php 
+                        $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_package_subject` INNER JOIN `master_subject` ON `master_subject`.`subject_id` = `tuition_package_subject`.`subject_id` WHERE `package_id` = '$id'") or die (mysqli_error());
+
+                        while($row=mysqli_fetch_array($sql))
+                        {
+                            echo "<span style='margin-left: 40px'>{$row['subject_name']} : {$row['subject_day']}  ({$row['subject_start_hour']} to {$row['subject_end_hour']})</span><br>";
+                        }
+                      ?><br>
+                      <b>PRICE :</b> RM <?php echo $price ?><br>
                     </div>
                   </div>
 
                 </div>
                   <!-- end .aplicant-details-show -->
-                  <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
+                  <?php
+                  if ($count < $capacity)
+                  {
+                  ?>
+                    <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
+                  <?php
+                  }
+                  else
+                  {
+                    ?>
+                    <button disabled class="btn btn-info pull-right">Full</button>
+                    <?php
+                  }
+                  ?>
               </div> <!-- end .language-print -->
 
                 
