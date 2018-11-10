@@ -10,11 +10,10 @@
  // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  // $row = mysqli_fetch_array($sql_usr);
 
- $id = $_GET['package_id'];
+ $tuition_id = $_GET['tuition_id'];
+ $subject_id = $_GET['subject_id'];
 
-$sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition` 
-  INNER JOIN  `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
-  WHERE `package_id` = '$id'";
+$sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);
 
@@ -109,11 +108,10 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
                   <div class="col-sm-8 page-content">
               <?php 
 
-              $id = $_GET['package_id'];
-
-              $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition` 
-                          INNER JOIN  `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
-                          WHERE `package_id` = '$id'";
+              $sql = "SELECT `tuition`.*, `tuition_package`.* FROM `tuition`
+                      INNER JOIN `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
+                      INNER JOIN  `tuition_package_subject` ON `tuition_package`.`package_id` = `tuition_package_subject`.`package_id`
+                      WHERE `tuition_package`.`tuition_id` = '$tuition_id' AND `tuition_package_subject`.`subject_id` = '$subject_id'";
 
               $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
@@ -145,8 +143,7 @@ $sql = "SELECT `tuition`.*,`tuition_package`.* FROM `tuition`
 
                                      $count = 0;
 
-                                      $pkid = $_GET['package_id'];
-                                       $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_student_list` WHERE `package_id` = '$pkid'") or die (mysqli_error());//Select table from database
+                                      $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_student_list` WHERE `package_id` = '$id'") or die (mysqli_error());//Select table from database
 
                                        while($row=mysqli_fetch_array($sql))//loop the data
                                        {

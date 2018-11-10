@@ -146,7 +146,7 @@
                                              $name = $row['package_name'];
                                              $capacity = $row['package_capacity'];
                                              $price = $row['package_price'];
-                                             $desc = $row['package_description'];
+                                             // $desc = $row['package_description'];
 
                                             ?>
                                         <tr>

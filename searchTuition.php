@@ -140,7 +140,7 @@ if(isset($_SESSION['user_id']))
 
               // $sql = "SELECT * FROM `tuition` a INNER JOIN `tuition_package` b ON a.`tuition_id` = b.`tuition_id` WHERE `tuition_area` = '$area'";
 
-              $sql = "SELECT * FROM `tuition`
+              $sql = "SELECT distinct `tuition`.* FROM `tuition`
                           INNER JOIN `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
                           INNER JOIN `tuition_package_subject` ON `tuition_package_subject`.`package_id` = `tuition_package`.`package_id`
                           INNER JOIN `master_subject` ON `tuition_package_subject`.`subject_id` = `master_subject`.`subject_id`
@@ -154,14 +154,11 @@ if(isset($_SESSION['user_id']))
              
              while($row = mysqli_fetch_assoc($sql_tuition))
                 { 
-                   $area = $row['tuition_area'];
-                   $id = $row['package_id'];
-                   $name = $row['package_name'];
-                   $capacity = $row['package_capacity'];
-                   $price = $row['package_price'];
-                   $telno = $row['tuition_telno'];
-                   $tuitionName = $row['tuition_name'];
-                   $rate = $row['tuition_rating'];
+                  $tuition_id = $row['tuition_id'];
+                  $tuitionName = $row['tuition_name'];
+                  $telno = $row['tuition_telno'];
+                  $tuition_address = $row['tuition_address'];
+                  $rate = $row['tuition_rating'];
                ?>
          
               <div class="candidate-description client-description applicants-content">
@@ -171,7 +168,7 @@ if(isset($_SESSION['user_id']))
                   <div class="clearfix">
                     <div class="pull-left">
                       <h5><?php echo $tuitionName ?></h5>
-                      <b>Address :</b> <?php echo $area ?><br>
+                      <b>Address :</b> <?php echo $tuition_address ?><br>
                       <b>Phone No :</b> <?php echo $telno ?><br>
                       <b>Rating :</b> <?php echo $rate ?>
                     </div>
@@ -179,7 +176,7 @@ if(isset($_SESSION['user_id']))
 
                   </div>
                   <!-- end .aplicant-details-show -->
-                  <button type="button" onclick="window.location='package_view.php?package_id=<?php echo $row['package_id'] ?>';" class="btn btn-default pull-right">View Package</button>
+                  <button type="button" onclick="window.location='package_view.php?tuition_id=<?php echo $row['tuition_id'] ?>&subject_id=<?php echo $available_subjects; ?>';" class="btn btn-default pull-right">View Package</button>
 
                   <!-- <button class="btn btn-default pull-right">Apply</button> -->
                 </div> <!-- end .language-print -->
