@@ -6,10 +6,10 @@
 <div class="review/container">	
 	<?php
 	include("connection.php");
-	$status = $_GET['package_id'];
-	$ratingDetails = "SELECT ratingNumber FROM tuition_review WHERE tuition_id = '$status'";
+	$tuition_id = $_GET['tuition_id'];
+	$ratingDetails = "SELECT review_star FROM tuition_review WHERE tuition_id = '$tuition_id'";
 	$rateResult = mysqli_query($myConnection,$ratingDetails) or die("database error:". mysqli_error($myConnection));
-	$ratingNumber = 0;
+	$review_star = 0;
 	$count = 0;
 	$fiveStarRating = 0;
 	$fourStarRating = 0;
@@ -17,23 +17,23 @@
 	$twoStarRating = 0;
 	$oneStarRating = 0;
 	while($rate = mysqli_fetch_assoc($rateResult)) {
-		$ratingNumber+= $rate['ratingNumber'];
-		$count += 1;
-		if($rate['ratingNumber'] == 5) {
+		$review_star+= $rate['review_star'];
+		$count++;
+		if($rate['review_star'] == 5) {
 			$fiveStarRating +=1;
-		} else if($rate['ratingNumber'] == 4) {
+		} else if($rate['review_star'] == 4) {
 			$fourStarRating +=1;
-		} else if($rate['ratingNumber'] == 3) {
+		} else if($rate['review_star'] == 3) {
 			$threeStarRating +=1;
-		} else if($rate['ratingNumber'] == 2) {
+		} else if($rate['review_star'] == 2) {
 			$twoStarRating +=1;
-		} else if($rate['ratingNumber'] == 1) {
+		} else if($rate['review_star'] == 1) {
 			$oneStarRating +=1;
 		}
 	}
 	$average = 0.0;
-	if($ratingNumber && $count) {
-		$average = $ratingNumber/$count;
+	if($review_star != 0 && $count != 0) {
+		$average = $review_star/$count;
 	}	
 	?>		
 	<br>		
@@ -57,19 +57,19 @@
 			</div>
 			<div class="col-sm-3">
 				<?php
-				$fiveStarRatingPercent = round(($fiveStarRating/5)*100);
+				$fiveStarRatingPercent = round(($fiveStarRating/$count)*100);
 				$fiveStarRatingPercent = !empty($fiveStarRatingPercent)?$fiveStarRatingPercent.'%':'0%';	
 				
-				$fourStarRatingPercent = round(($fourStarRating/5)*100);
+				$fourStarRatingPercent = round(($fourStarRating/$count)*100);
 				$fourStarRatingPercent = !empty($fourStarRatingPercent)?$fourStarRatingPercent.'%':'0%';
 				
-				$threeStarRatingPercent = round(($threeStarRating/5)*100);
+				$threeStarRatingPercent = round(($threeStarRating/$count)*100);
 				$threeStarRatingPercent = !empty($threeStarRatingPercent)?$threeStarRatingPercent.'%':'0%';
 				
-				$twoStarRatingPercent = round(($twoStarRating/5)*100);
+				$twoStarRatingPercent = round(($twoStarRating/$count)*100);
 				$twoStarRatingPercent = !empty($twoStarRatingPercent)?$twoStarRatingPercent.'%':'0%';
 				
-				$oneStarRatingPercent = round(($oneStarRating/5)*100);
+				$oneStarRatingPercent = round(($oneStarRating/$count)*100);
 				$oneStarRatingPercent = !empty($oneStarRatingPercent)?$oneStarRatingPercent.'%':'0%';
 				
 				?>
@@ -79,7 +79,7 @@
 					</div>
 					<div class="pull-left" style="width:180px;">
 						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: <?php echo $fiveStarRatingPercent; ?>">
+						  <div class="progress-bar progress-bar-success" role="progressbar" style="width: <?php echo $fiveStarRatingPercent; ?>">
 							<span class="sr-only"><?php echo $fiveStarRatingPercent; ?></span>
 						  </div>
 						</div>
@@ -93,7 +93,7 @@
 					</div>
 					<div class="pull-left" style="width:180px;">
 						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: <?php echo $fourStarRatingPercent; ?>">
+						  <div class="progress-bar progress-bar-primary" role="progressbar" style="width: <?php echo $fourStarRatingPercent; ?>">
 							<span class="sr-only"><?php echo $fourStarRatingPercent; ?></span>
 						  </div>
 						</div>
@@ -106,7 +106,7 @@
 					</div>
 					<div class="pull-left" style="width:180px;">
 						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: <?php echo $threeStarRatingPercent; ?>">
+						  <div class="progress-bar progress-bar-info" role="progressbar" style="width: <?php echo $threeStarRatingPercent; ?>">
 							<span class="sr-only"><?php echo $threeStarRatingPercent; ?></span>
 						  </div>
 						</div>
@@ -119,7 +119,7 @@
 					</div>
 					<div class="pull-left" style="width:180px;">
 						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: <?php echo $twoStarRatingPercent; ?>">
+						  <div class="progress-bar progress-bar-warning" role="progressbar" style="width: <?php echo $twoStarRatingPercent; ?>">
 							<span class="sr-only"><?php echo $twoStarRatingPercent; ?></span>
 						  </div>
 						</div>
@@ -132,7 +132,7 @@
 					</div>
 					<div class="pull-left" style="width:180px;">
 						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: <?php echo $oneStarRatingPercent; ?>">
+						  <div class="progress-bar progress-bar-danger" role="progressbar" style="width: <?php echo $oneStarRatingPercent; ?>">
 							<span class="sr-only"><?php echo $oneStarRatingPercent; ?></span>
 						  </div>
 						</div>
@@ -146,13 +146,13 @@
 				<hr/>
 				<div class="review-block">		
 				<?php
-				$status = $_GET['package_id'];
-				$ratinguery = "SELECT * FROM tuition_review WHERE tuition_id = '$status'";
+				$tuition_id = $_GET['tuition_id'];
+				$ratinguery = "SELECT * FROM `tuition_review` INNER JOIN `student` ON `student`.`student_id` = `tuition_review`.`student_id` INNER JOIN `tuition_package` ON `tuition_package`.`tuition_id` = `tuition_review`.`tuition_id` AND `tuition_package`.`package_id` = `tuition_review`.`package_id` WHERE `tuition_review`.`tuition_id` = '$tuition_id'";
 				$ratingResult = mysqli_query($myConnection,$ratinguery) or die("database error:". mysqli_error($myConnection));
 				while($rating = mysqli_fetch_array($ratingResult)){
-					$posted_by = $rating['posted_by'];
-					$package_taken = $rating['package_id'];	
-					$date=date_create($rating['created']);
+					$posted_by = $rating['student_name'];
+					$package_taken = $rating['package_name'];	
+					$date=date_create($rating['review_created']);
 					$reviewDate = date_format($date,"M d, Y");
 				?>				
 					<div class="row">
@@ -167,7 +167,7 @@
 								<?php
 								for ($i = 1; $i <= 5; $i++) {
 									$ratingClass = "btn-default btn-grey";
-									if($i <= $rating['ratingNumber']) {
+									if($i <= $rating['review_star']) {
 										$ratingClass = "btn-warning";
 									}
 								?>
@@ -176,8 +176,8 @@
 								</button>								
 								<?php } ?>
 							</div>
-							<div class="review-block-title"><?php echo $rating['title']; ?></div>
-							<div class="review-block-description"><?php echo $rating['comments']; ?></div>
+							<div class="review-block-title"><?php echo $rating['review_title']; ?></div>
+							<div class="review-block-description"><?php echo $rating['review_comments']; ?></div>
 						</div>
 					</div>
 					<hr/>					

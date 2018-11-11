@@ -1,27 +1,27 @@
 <?php session_start(); 
 
-  if(isset($_SESSION['user_id'])) 
-    {
-       $usid = $_SESSION['user_id'];
-    }
+if(isset($_SESSION['user_id'])) 
+{
+   $usid = $_SESSION['user_id'];
+}
 
- include_once("connection.php");
- // $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$usid'";
- // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
- // $row = mysqli_fetch_array($sql_usr);
+include_once("connection.php");
+// $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$usid'";
+// $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+// $row = mysqli_fetch_array($sql_usr);
 
  $tuition_id = $_GET['tuition_id'];
  $subject_id = $_GET['subject_id'];
 
 $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
- $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
- $row = mysqli_fetch_array($sql_usr);
+$sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+$row = mysqli_fetch_array($sql_usr);
 
- // $lastupdate = $row['parent_last_update'];
- $email = $row['tuition_email'];
- $telno = $row['tuition_telno'];
- $name = $row['tuition_name'];
- $address = $row['tuition_address'];
+// $lastupdate = $row['parent_last_update'];
+$email = $row['tuition_email'];
+$telno = $row['tuition_telno'];
+$name = $row['tuition_name'];
+$address = $row['tuition_address'];
 
 ?>
 
@@ -49,36 +49,30 @@ $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
 
   <body>
     <div id="main-wrapper">
-
       <header id="header">
         <div class="header-top-bar">
-
          <?php include 'header.php'; ?>
         </div>
         <!-- end .header-top-bar -->
       </header> <!-- end #header -->
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
-          <h1>Package View</h1>
-
-          <ol class="breadcrumb">
-            <li><a href="index.php">Home</a></li>
-            <li href="searchTuition.php">Tuition Search</li>
-            <li class="active">Package View</li>
-          </ol>
-
-        </div> <!-- end .container -->
-
+          <div class="container">
+            <h1>Package View</h1>
+            <ol class="breadcrumb">
+              <li><a href="index.php">Home</a></li>
+              <li href="searchTuition.php">Tuition Search</li>
+              <li class="active">Package View</li>
+            </ol>
+          </div> <!-- end .container -->
+        </div>
       </div> <!-- end .header-page-title -->
 
       <div id="page-content" class="candidate-profile">
         <div class="container">
           <div class="page-content mt30 mb30">
             <div class="">
-
-
-              <div class="tab-pane active" id="candidate-profile">
+               <div class="tab-pane active" id="candidate-profile">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="motijob-sidebar">
@@ -92,7 +86,7 @@ $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
                       <div class="candidate-general-info">
                         <div class="title clearfix">
                            <center><h6>Tuition Information</h6></center>
-                          </div> <!-- end .end .title -->
+                        </div> <!-- end .end .title -->
 
                         <ul class="list-unstyled">
                           <li><strong>Name:</strong><?php echo $name; ?></li>
@@ -106,67 +100,68 @@ $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
                   </div> <!-- end .3col grid layout -->
 
                   <div class="col-sm-8 page-content">
-              <?php 
+                  <?php 
 
-              $sql = "SELECT `tuition`.*, `tuition_package`.* FROM `tuition`
-                      INNER JOIN `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
-                      INNER JOIN  `tuition_package_subject` ON `tuition_package`.`package_id` = `tuition_package_subject`.`package_id`
-                      WHERE `tuition_package`.`tuition_id` = '$tuition_id' AND `tuition_package_subject`.`subject_id` = '$subject_id'";
+                  $sql = "SELECT `tuition`.*, `tuition_package`.* FROM `tuition`
+                          INNER JOIN `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
+                          INNER JOIN  `tuition_package_subject` ON `tuition_package`.`package_id` = `tuition_package_subject`.`package_id`
+                          WHERE `tuition_package`.`tuition_id` = '$tuition_id' AND `tuition_package_subject`.`subject_id` = '$subject_id'";
 
-              $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                  $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
-              if (mysqli_num_rows($sql_tuition)==0){
-                     echo "No result found";
-               }
+                  if (mysqli_num_rows($sql_tuition)==0){
+                         echo "No result found";
+                   }
              
-             while($row = mysqli_fetch_assoc($sql_tuition))
-                { 
-                   $area = $row['tuition_area'];
-                   $id = $row['package_id'];
-                   $name = $row['package_name'];
-                   $capacity = $row['package_capacity'];
-                   $price = $row['package_price'];
-                   $telno = $row['tuition_telno'];
-                   $tuitionName = $row['tuition_name'];
-               ?>
+                  while($row = mysqli_fetch_assoc($sql_tuition))
+                  { 
+                    $area = $row['tuition_area'];
+                    $id = $row['package_id'];
+                    $name = $row['package_name'];
+                    $capacity = $row['package_capacity'];
+                    $price = $row['package_price'];
+                    $telno = $row['tuition_telno'];
+                    $tuitionName = $row['tuition_name'];
+                  ?>
          
-              <div class="candidate-description client-description applicants-content">
+                    <div class="candidate-description client-description applicants-content">
 
-                <div class="language-print client-des clearfix">
-                  <!-- end .aplicants-pic -->
-                  <div class="clearfix">
-                    <div class="pull-left">
-                      <h5><?php echo $name ?></h5>
-                      <b>Address :</b> <?php echo $area ?><br>
-                      <b>Phone No :</b> <?php echo $telno ?><br>
-                      <b>Student :</b> <?php //Open php
+                      <div class="language-print client-des clearfix">
+                        <!-- end .aplicants-pic -->
+                        <div class="clearfix">
+                          <div class="pull-left">
+                            <h5><?php echo $name ?></h5>
+                            <b>Address :</b> <?php echo $area ?><br>
+                            <b>Phone No :</b> <?php echo $telno ?><br>
+                            <b>Student :</b> 
+                  <?php //Open php
 
-                                     $count = 0;
+                    $count = 0;
+                    $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_student_list` WHERE `package_id` = '$id'") or die (mysqli_error());//Select table from database
 
-                                      $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_student_list` WHERE `package_id` = '$id'") or die (mysqli_error());//Select table from database
+                    while($row=mysqli_fetch_array($sql))//loop the data
+                    {
+                      $count ++;
+                    }
+                    echo "{$count} / {$capacity}<br>";
+                  ?>
 
-                                       while($row=mysqli_fetch_array($sql))//loop the data
-                                       {
-                                          $count ++;
-                                       }
+                            <b>Description :</b><br> 
+                  <?php 
+                    $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_package_subject` INNER JOIN `master_subject` ON `master_subject`.`subject_id` = `tuition_package_subject`.`subject_id` WHERE `package_id` = '$id'") or die (mysqli_error());
 
-                                       echo "{$count} / {$capacity}<br>";
-                                       ?>
-                      <b>Description :</b><br> 
-                      <?php 
-                        $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_package_subject` INNER JOIN `master_subject` ON `master_subject`.`subject_id` = `tuition_package_subject`.`subject_id` WHERE `package_id` = '$id'") or die (mysqli_error());
-
-                        while($row=mysqli_fetch_array($sql))
-                        {
-                            echo "<span style='margin-left: 40px'>{$row['subject_name']} : {$row['subject_day']}  ({$row['subject_start_hour']} to {$row['subject_end_hour']})</span><br>";
-                        }
-                      ?><br>
-                      <b>PRICE :</b> RM <?php echo $price ?><br>
-                    </div>
-                  </div>
-
-                </div>
+                    while($row=mysqli_fetch_array($sql))
+                    {
+                        echo "<span style='margin-left: 40px'>{$row['subject_name']} : {$row['subject_day']}  ({$row['subject_start_hour']} to {$row['subject_end_hour']})</span><br>";
+                    }
+                  ?>
+                            <br>
+                            <b>PRICE :</b> RM <?php echo $price ?><br>
+                          </div>
+                        </div>
+                      </div>
                   <!-- end .aplicant-details-show -->
+                  
                   <?php
                   if ($count < $capacity)
                   {
@@ -184,10 +179,12 @@ $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
               </div> <!-- end .language-print -->
 
                 
-              </div> <!-- end .candidate-description -->
 
-              <?php }  ?>
+              <?php 
+              }
+              ?>
               <!-- end loop here -->
+              </div> <!-- end .candidate-description -->
 
             </div> <!-- end .page-content -->
 
