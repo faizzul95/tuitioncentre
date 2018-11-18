@@ -40,11 +40,11 @@ if (isset($_POST['register_student']))
   
             if($user_type == 'student')
             {
-               echo "<script type='text/javascript'> document.location='student_profile-update.php?id=$id'; </script>";
+               echo "<script type='text/javascript'> document.location='student_profile-update.php'; </script>";
             }
             else
             {
-                echo "<script type='text/javascript'> document.location='parent_profile-update.php?id=$id'; </script>";
+                echo "<script type='text/javascript'> document.location='parent_profile-update.php'; </script>";
             }
         }
         else 
@@ -73,19 +73,52 @@ if (isset($_POST['reg_std_info']))
     
     if (mysqli_num_rows($check_stud)>0) 
     {
-        echo "<script type='text/javascript'>alert('Fail. This student already exist in system.Please use other username');</script>";
-        echo "<script type='text/javascript'> document.location='register.php'; </script>";
+        if ($_SESSION['user_type'] != 'parent')
+        {
+            $student_id = $_SESSION['student_id'];
+
+            $query_std = "UPDATE `student` SET `student_name`='$student_name', `student_ic`='$student_ic', `student_telno`='$student_telno', `student_email`='$student_email', `student_gender`='$student_gender', `student_dob`='$student_dob' WHERE `student_id`='$student_id'";
+            $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection)); 
+            
+            if($res_std)
+            {
+                echo "<script type='text/javascript'>alert('Successfully Updated.');</script>";
+                echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
+            }
+            else
+            {
+                echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+                echo "<script type='text/javascript'> document.location='student_profile-update.php'; </script>";
+            }
+        }
+        else
+        {
+            $student_id = $_SESSION['student_id'];
+
+            $query_std = "UPDATE `student` SET `student_name`='$student_name', `student_ic`='$student_ic', `student_telno`='$student_telno', `student_email`='$student_email', `student_gender`='$student_gender', `student_dob`='$student_dob' WHERE `student_id`='$student_id'";
+            $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection)); 
+            
+            if($res_std)
+            {
+                echo "<script type='text/javascript'>alert('Successfully Updated.');</script>";
+                echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
+            }
+            else
+            {
+                echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+                echo "<script type='text/javascript'> document.location='student_profile-update.php'; </script>";
+            }
+        }
+
     }
     else
     {   
-
 	    $query_std="INSERT INTO `student` (`student_name`, `student_ic`, `student_telno`,`student_dob`, `student_gender`, `student_email`,`student_last_update`, `user_id`)
 	                    VALUES ('$student_name', '$student_ic', '$student_telno','$std_dob','$student_gender','$student_email','$date','$user_id')";
 	    $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));
 
 	    if($res_std)
 	    {
-
             $last_id = mysqli_insert_id($myConnection);
             $_SESSION['student_id'] = $last_id;
 	        echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
@@ -102,31 +135,80 @@ if (isset($_POST['reg_std_info']))
 // reg parent info (after sign up)
 if (isset($_POST['reg_prt_info']))
 {
+    $user_id = $_POST['user_id'];
     $prt_name = $_POST['prt_name'];
     $prt_ic = $_POST['prt_ic'];
     $prt_telno = $_POST['prt_telno'];
     $prt_email = $_POST['prt_email'];
-    $user_id = $_POST['user_id'];
     $prt_gender = $_POST['prt_gender'];
     $prt_dob = $_POST['prt_dob'];
     $date = mysqli_real_escape_string($myConnection, date('Y-m-d'));
-     
-    $query_prt="INSERT INTO `parent` (`parent_name`, `parent_ic`, `parent_telno`,`parent_dob`, `parent_gender`, `parent_email`,`parent_last_update`, `user_id`)
-                    VALUES ('$prt_name', '$prt_ic', '$prt_telno','$prt_dob','$prt_gender','$prt_email','$date','$user_id')";
-    $res_prt = mysqli_query($myConnection,$query_prt) or die(mysqli_error($myConnection));
+    
+    $sql_usr = "SELECT * FROM `parent` WHERE `user_id`='$user_id'";
+    $check_prt = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
+    
+    if (mysqli_num_rows($check_prt)>0) 
+    {
+        $query_prt = "UPDATE `parent` SET `parent_name`='$prt_name', `parent_ic`='$prt_ic', `parent_telno`='$prt_telno', `parent_email`='$prt_email', `parent_gender`='$prt_gender', `parent_dob`='$prt_dob' WHERE `user_id`='$user_id'";
+        $res_prt = mysqli_query($myConnection,$query_prt) or die(mysqli_error($myConnection)); 
+        
+        if($res_prt)
+        {
+            echo "<script type='text/javascript'>alert('Successfully Updated.');</script>";
+            echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
+        }
+        else
+        {
+            echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+            echo "<script type='text/javascript'> document.location='parent_profile-update.php'; </script>";
+        }
+    }
+    else
+    {
+        $query_prt="INSERT INTO `parent` (`parent_name`, `parent_ic`, `parent_telno`,`parent_dob`, `parent_gender`, `parent_email`,`parent_last_update`, `user_id`)
+                        VALUES ('$prt_name', '$prt_ic', '$prt_telno','$prt_dob','$prt_gender','$prt_email','$date','$user_id')";
+        $res_prt = mysqli_query($myConnection,$query_prt) or die(mysqli_error($myConnection));
 
-    if($res_prt)
+        if($res_prt)
+        {
+            echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
+            echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
+        }
+        else
+        {
+            echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+            echo "<script type='text/javascript'> document.location='parent_profile-update.php'; </script>";
+        }
+    }
+
+}
+
+//register children
+if (isset($_POST['reg_child']))
+{
+    $user_id = $_POST['parent_user_id'];
+    $student_name = $_POST['std_name'];
+    $student_ic = $_POST['std_ic'];
+    $student_telno = $_POST['std_telno'];
+    $student_email = $_POST['std_email'];
+    $student_gender = $_POST['student_gender'];
+    $std_dob = $_POST['std_dob'];
+    $date = mysqli_real_escape_string($myConnection, date('Y-m-d'));
+
+    $query_std="INSERT INTO `student` (`student_name`, `student_ic`, `student_telno`,`student_dob`, `student_gender`, `student_email`,`student_last_update`, `user_id`)
+                    VALUES ('$student_name', '$student_ic', '$student_telno','$std_dob','$student_gender','$student_email','$date','$user_id')";
+    $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));
+
+    if($res_std)
     {
         echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
-        echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
     }
     else
     {
         echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
-        echo "<script type='text/javascript'> document.location='parent_profile-update.php?id=$user_id'; </script>";
     }
+        echo "<script type='text/javascript'> document.location='parent_profile.php?parentid=$user_id'; </script>";
 }
-
 
 // reg tuition
 if (isset($_POST['register_tuition'])) 
@@ -204,8 +286,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
          
      }
      else { 
-              
-        
+                      
         $_SESSION['user_id'] = $usr_id;
         $_SESSION['username'] = $username;
         $_SESSION['user_type'] = $user_type;
@@ -338,6 +419,31 @@ if(isset($_POST['review_package']))
     
 }
 
+if (isset($_POST['update_tuition']))
+{
+    $tuition_id = $_SESSION['tuition_id'];
+    $tuition_name = $_POST['tuition_name'];
+    $tuition_telno = $_POST['tuition_telno'];
+    $tuition_email = $_POST['tuition_email'];
+    $tuition_add = $_POST['tuition_add'];
+    $tuition_state = $_POST['tuition_state'];
+    $tuition_area = $_POST['tuition_area'];
+
+    $query_tuition = "UPDATE `tuition` SET `tuition_name`='$tuition_name', `tuition_telno`='$tuition_telno', `tuition_email`='$tuition_email', `tuition_address`='$tuition_add', `tuition_state`='$tuition_state', `tuition_area`='$tuition_area' WHERE `tuition_id`='$tuition_id'";
+    $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
+
+    if( $res_tuition )
+    {
+        echo "<script type='text/javascript'>alert('Tuition Updated Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='tuition_profile.php'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='tuition_profile-update.php'; </script>";
+    }
+}
+
 if(isset($_POST['update_package']))
 {
     $user_id = $_SESSION['user_id'];
@@ -345,23 +451,23 @@ if(isset($_POST['update_package']))
     $package_name = $_POST['package_name'];
     $package_capacity = $_POST['package_capacity'];
     $package_price = $_POST['package_price'];
-    $package_description = $_POST['package_description'];
 
-    $sql = "SELECT * FROM `master_subject`";
+    $sql = "SELECT * FROM `tuition_package_subject` WHERE `package_id` = '$package_id'";
     $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
-    $subject = '';
     while( $row = mysqli_fetch_array($sql_subject) )
     {
-        if( isset($_POST[$row['subject_id']]) )
+        if( !isset($_POST[$row['subject_id']]) )
         {
-            $subject .= ",".$row['subject_name'];
+            $sql_del = "DELETE FROM `tuition_package_subject` WHERE `subject_id` = {$row['subject_id']} AND `package_id` = '$package_id'";
+            $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
+            // $subject .= ",".$row['subject_name'];
             // $subject .= ",".$row['subject_id'];
         }
     }
-    $subject = substr($subject, 1);
+    // $subject = substr($subject, 1);
 
-    $query_package = "UPDATE `tuition_package` SET `package_name`='$package_name', `package_capacity`='$package_capacity', `package_price`='$package_price', `package_description`='$package_description', `package_subject`='$subject' WHERE `package_id`='$package_id'";
+    $query_package = "UPDATE `tuition_package` SET `package_name`='$package_name', `package_capacity`='$package_capacity', `package_price`='$package_price' WHERE `package_id`='$package_id'";
     $res_package = mysqli_query($myConnection,$query_package) or die(mysqli_error($myConnection));
 
     if( $res_package )
@@ -403,6 +509,53 @@ if(isset($_POST['add_subject']))
     
 }
 
+if ( isset($_GET['VIEW_STD']) )
+{
+    $student_id = $_GET['VIEW_STD'];
+
+    $_SESSION['student_id'] = $student_id;
+
+    echo "<script type='text/javascript'> document.location='student_profile.php?'; </script>";
+}
+
+if ( isset($_GET['DEL_PACKAGE']) )
+{
+    $package_id = $_GET['DEL_PACKAGE'];
+
+    $sql_del = "DELETE FROM `tuition_package` WHERE `package_id` = '$package_id'";
+    $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
+
+    if( $res_del )
+    {
+        echo "<script type='text/javascript'>alert('Package Deleted Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='tuition_profile.php?'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='tuition_profile.php?'; </script>";
+    }
+}
+
+if ( isset($_GET['REMOVE_STD']) )
+{
+    $list_id = $_GET['REMOVE_STD'];
+    $package_id = $_GET['PACKAGE_ID'];
+
+    $sql_del = "DELETE FROM `tuition_student_list` WHERE `list_id` = '$list_id'";
+    $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
+
+    if( $res_del )
+    {
+        echo "<script type='text/javascript'>alert('Package Deleted Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='view_package_subject.php?p_id=$package_id'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='view_package_subject.php?p_id=$package_id'; </script>";
+    }
+}
 
 if(isset($_POST['std_register_package']))
 {

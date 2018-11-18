@@ -37,11 +37,11 @@
 
                         <li><a href="">Forum</a></li>
                         <?php  if($_SESSION['user_type'] == 'parent') { ?>
-                          <li><a href="parent_profile.php?id=$usid">Profil</a></li>
+                          <li><a href="parent_profile.php">Profil</a></li>
                         <?php } else if($_SESSION['user_type'] == 'student') { ?>
-                          <li><a href="student_profile.php?id=$usid">Profil</a></li>
+                          <li><a href="student_profile.php">Profil</a></li>
                         <?php } else { ?> 
-                          <li><a href="tuition_profile.php?id=$usid">Profil</a></li>
+                          <li><a href="tuition_profile.php">Profil</a></li>
                         <?php } ?>
                         <li><a href="logout.php">Logout</a></li>
                       </ul>

@@ -1,32 +1,28 @@
 <?php 
 
   session_start(); 
+
   $user_id = $_SESSION['user_id'];
   include_once("connection.php");
+ 
+  $tuition_id = $_SESSION['tuition_id'];
+  $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
+  $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $row = mysqli_fetch_array($sql_tuition);
 
-  $sql = "SELECT * FROM `parent` WHERE `user_id` = '$user_id'";
-  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $tuition_name = $row['tuition_name'];
+  $tuition_telno = $row['tuition_telno'];
+  $tuition_email = $row['tuition_email'];
+  $tuition_add = $row['tuition_address'];
+  $tuition_state = $row['tuition_state'];
+  $tuition_area = $row['tuition_area'];
+ 
+ // $lastupdate = $row['student_last_update'];
 
-  if (mysqli_num_rows($sql_usr)>0)
-  {
-    $row = mysqli_fetch_array($sql_usr);
-
-    $parent_name = $row['parent_name'];
-    $parent_ic = $row['parent_ic'];
-    $parent_telno = $row['parent_telno'];
-    $parent_email = $row['parent_email'];
-    $parent_dob = $row['parent_dob'];
-    $parent_gender = $row['parent_gender'];
-  }
-  else
-  {
-    $parent_name = '';
-    $parent_ic = '';
-    $parent_telno = '';
-    $parent_email = '';
-    $parent_dob = '';
-    $parent_gender = ''; 
-  }
+ // if($lastupdate == NULL) 
+ //       {
+ //           header("Location:student_profile.php?id=$user_id");  
+ //       }
 
 ?>
 <!doctype html>
@@ -36,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Profile Update || Parent</title>
+    <title>Profile Update || Tuition</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -100,7 +96,7 @@
 
                         </div>
 
-                        <!-- <a class="btn btn-default" href="#">Upload a Picture</a> -->
+                        <a class="btn btn-default" href="#">Upload a Picture</a>
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">
@@ -111,18 +107,18 @@
                           </div> <!-- end .end .title -->
 
                           <ul class="list-unstyled candidate-registration">
-                            <li><strong>Name:</strong><input type="text" placeholder="[first name] [last name]" value="<?php echo $parent_name; ?>"></li>
-                            <li><strong>Gender:</strong><input type="text" placeholder="[gender]" value="<?php echo $parent_gender; ?>"></li>
-                            <li><strong>Date of Birth:</strong><input type="text" placeholder="[date of birth]" value="<?php echo $parent_dob; ?>"></li>
-                            <li><strong>Tel:</strong><input type="text" placeholder="[telephone number]" value="<?php echo $parent_telno; ?>"></li>
-                            <li><strong>Email:</strong><input type="text" placeholder="[email address]" value="<?php echo $parent_email; ?>"></li>
+                            <li><strong>Tuition Name:</strong><input type="text" placeholder="[first name] [last name]" value="<?php echo $tuition_name; ?>"></li>
+                            <li><strong>Telno:</strong><input type="text" placeholder="[gender]" value="<?php echo $tuition_telno; ?>"></li>
+                            <li><strong>Email:</strong><input type="text" placeholder="[date of birth]" value="<?php echo $tuition_email; ?>"></li>
+                            <li><strong>Address:</strong><input type="text" placeholder="[telephone number]" value="<?php echo $tuition_add; ?>"></li>
+                            <li><strong>State:</strong><input type="text" placeholder="[email address]" value="<?php echo $tuition_state; ?>"></li>
+                            <li><strong>Area:</strong><input type="text" placeholder="[email address]" value="<?php echo $tuition_area; ?>"></li>
                           </ul>
                         </form>
 
                       </div> <!-- end .candidate-general-info -->
                     </div>
                     </div> <!-- end .3col grid layout -->
-
                     <div class="col-md-8">
                       <div class="job-reg-form">
                         <form action="controller.php" method="post">
@@ -137,44 +133,42 @@
                               <div class="col-md-8">
                                 <div class="candidate-skill-single clearfix">
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="prt_name" placeholder="Full Name" required value="<?php echo $parent_name; ?>">
+                                      <input type="text" name="tuition_name" placeholder="Tuition Name" required value="<?php echo $tuition_name; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="prt_ic" placeholder="Identity Card" required value="<?php echo $parent_ic; ?>">
-                                    </div> <!-- end .skill-selectbox -->
-                                     <div class="skill-selectbox mb10">
-                                      <input type="date" name="prt_dob" placeholder="Date Of Birth" class="form-control" required value="<?php echo $parent_dob; ?>">
+                                      <input type="text" name="tuition_add" placeholder="Address" required value="<?php echo $tuition_add; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="prt_telno" placeholder="Phone Number" required value="<?php echo $parent_telno; ?>">
+                                      <input type="text" name="tuition_telno" placeholder="Phone Number" required value="<?php echo $tuition_telno; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="prt_email" placeholder="Email Address" required value="<?php echo $parent_email; ?>">
+                                      <input type="text" name="tuition_email" placeholder="Email Address" required value="<?php echo $tuition_email; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <select name="prt_gender">
-                                        <option value="">-- Please Select --</option>
-                                        <?php
-                                          if ($parent_gender == 'male')
-                                          {
-                                          ?>
-                                            <option value="male" selected>Male</option>
-                                            <option value="female">Female</option>
-                                          <?php
-                                          }
-                                          elseif($parent_gender == 'female')
-                                          {
-                                          ?>
-                                            <option value="male">Male</option>
-                                            <option value="female" selected>Female</option>
-                                          <?php
-                                          }
-                                          ?>
-                                      </select>
+                                      <select name="tuition_state">
+                                        <option value="">Choose State</option>
+                                        <option value="JOHOR">JOHOR</option>
+                                        <option value="KEDAH">KEDAH</option>
+                                        <option value="KELANTAN">KELANTAN</option>
+                                        <option value="LABUAN">LABUAN</option>
+                                        <option value="MELAKA">MELAKA</option>
+                                        <option value="NEGERI SEMBILAN">NEGERI SEMBILAN</option>
+                                        <option value="PERAK">PERAK</option>
+                                        <option value="PAHANG">PAHANG</option>
+                                        <option value="PERLIS">PERLIS</option>
+                                        <option value="PULAU PINANG">PULAU PINANG</option>
+                                        <option value="SABAH">SABAH</option>
+                                        <option value="SARAWAK">SARAWAK</option>
+                                        <option value="SELANGOR">SELANGOR</option>
+                                        <option value="TERENGGANU">TERENGGANU</option>
                                       </select>
                                     </div> <!-- end .skill-selectbox -->
+                                    <div class="skill-selectbox mb10">
+                                      <input type="text" name="tuition_area" placeholder="Area" class="form-control" required value="<?php echo $tuition_area; ?>"> 
+                                    </div> <!-- end .skill-selectbox -->
+                                    
                                 </div> <!-- end .candidate-skills-single -->
-                                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+
 
                               </div> <!-- end .8th grid layout -->
                             </div> <!-- end nasted .row -->
@@ -182,7 +176,7 @@
 
                           <div class="save-cancel-button ml20">
                             <!-- <a href="#" class="btn btn-default">Save</a> -->
-                            <input type="submit" name="reg_prt_info" value="Submit" class="form-control btn btn-default">
+                            <input type="submit" name="update_tuition" value="Submit" class="form-control btn btn-default">
                           </div> <!-- end .save-cancel-button -->
                         </form>
                       </div> <!-- end .candidate-reg-form -->

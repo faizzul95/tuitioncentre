@@ -18,9 +18,9 @@
  $dob = $row['parent_dob'];
 
  if($lastupdate == NULL) 
-       {
-           header("Location:parent_profile-update.php?id=$user_id");  
-       }
+ {
+     header("Location:parent_profile-update.php?id=$user_id");  
+ }
 
 ?>
 
@@ -91,7 +91,7 @@
                       <div class="candidate-general-info">
                         <div class="title clearfix">
                             <h6>General Information</h6>
-                            <a class="pull-right" href="profile_update.php"><i class="fa fa-edit"></i>Update</a>
+                            <a class="pull-right" href="parent_profile-update.php"><i class="fa fa-edit"></i>Update</a>
                           </div> <!-- end .end .title -->
 
                         <ul class="list-unstyled">
@@ -151,12 +151,13 @@
                                       $count = 1;
                                      while($row = mysqli_fetch_assoc($sql_child))
                                       { 
+                                        $student_id = $row['student_id'];
                                           ?>
                                         <tr>
                                           <th scope="row"><center><?php echo $count; ?></center></th>
                                           <td><center><?php echo $row['student_name']; ?></center></td>
                                           <td><center><?php echo $row['student_ic']; ?></center></td>
-                                          <td><center><button class="btn btn-default">View</button></center></td>
+                                          <td><center><button class="btn btn-default" onclick="location.href='controller.php?VIEW_STD=<?php echo $student_id; ?>';">View</button></center></td>
                                           <td><center><button onclick="location.href='index.php?student_id=<?php echo $row['student_id']; ?>';" class="btn btn-info">Apply</button></center></td>
                                         </tr>
                                         <?php

@@ -1,12 +1,12 @@
 <?php session_start(); 
 
 if(isset($_SESSION['user_id'])) 
-    {
-      if($_SESSION['user_type']=="parent") 
-      {
-         $_SESSION['student_id'] = $_GET['student_id'];
-      }
-    }
+{
+  if($_SESSION['user_type']=="parent") 
+  {
+     $_SESSION['student_id'] = $_GET['student_id'];
+  }
+}
 
 ?>
 <!doctype html>
@@ -66,7 +66,7 @@ if(isset($_SESSION['user_id']))
                           <select name="area" required>
                             <option value="">Select Area</option>
                             <?php
-                              $sql = "SELECT * FROM `tuition`";
+                              $sql = "SELECT distinct tuition_area FROM `tuition`";
                               $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
                               
                               while( $row = mysqli_fetch_array($sql_tuition) )

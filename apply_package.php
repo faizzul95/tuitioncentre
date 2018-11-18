@@ -5,10 +5,15 @@ include_once("connection.php");
 // var_dump($_SESSION);
 // echo '</pre>';
 
- if(isset($_SESSION['student_id'])) 
-    {
-       $student_id = $_SESSION['student_id'];
-    }
+if(isset($_SESSION['student_id'])) 
+{
+   $student_id = $_SESSION['student_id'];
+}
+else
+{
+  echo "<script type='text/javascript'>alert('No Student Id is set ! Please Log In Again');</script>";
+  echo "<script type='text/javascript'> document.location='login.php'; </script>";
+}
 
 if (isset($_GET['package_id']))
 {

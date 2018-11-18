@@ -3,9 +3,15 @@ session_start();
 include("connection.php");
 
 if(isset($_SESSION['user_id'])) 
-    {
-       $user_id = $_SESSION['user_id'];
-    }
+{
+   $user_id = $_SESSION['user_id'];
+}
+
+if(isset($_SESSION['student_id']) )
+{
+  $student_id = $_SESSION['student_id'];
+}
+
 
 ?>
 <!doctype html>
@@ -45,7 +51,7 @@ if(isset($_SESSION['user_id']))
           <h1>Tuition Search</h1>
 
           <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li class="active">Search</li>
           </ol>
 
@@ -68,7 +74,7 @@ if(isset($_SESSION['user_id']))
                        <select name="area" class="form-control mt10 mb10">
                         <option value="">Select Area</option>
                             <?php
-                              $sql = "SELECT * FROM `tuition`";
+                              $sql = "SELECT distinct tuition_area FROM `tuition`";
                               $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
                               
                               while( $row = mysqli_fetch_array($sql_tuition) )
@@ -144,7 +150,7 @@ if(isset($_SESSION['user_id']))
                           INNER JOIN `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
                           INNER JOIN `tuition_package_subject` ON `tuition_package_subject`.`package_id` = `tuition_package`.`package_id`
                           INNER JOIN `master_subject` ON `tuition_package_subject`.`subject_id` = `master_subject`.`subject_id`
-                          WHERE `tuition_area` = '$area' AND `tuition_package_subject`.`subject_id` = '$available_subjects' AND round(`tuition_rating`) = '$avg_rating'";
+                          WHERE `tuition_area` = '$area' AND `tuition_package_subject`.`subject_id` = '$available_subjects' AND ( round(`tuition_rating`) = '$avg_rating' OR floor(`tuition_rating`) = '$avg_rating') order by `tuition_rating` desc";
 
               $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 

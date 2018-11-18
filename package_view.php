@@ -4,6 +4,10 @@ if(isset($_SESSION['user_id']))
 {
    $usid = $_SESSION['user_id'];
 }
+if(isset($_SESSION['student_id'])) 
+{
+   $student_id = $_SESSION['student_id'];
+}
 
 include_once("connection.php");
 // $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$usid'";
@@ -137,12 +141,10 @@ $address = $row['tuition_address'];
                   <?php //Open php
 
                     $count = 0;
-                    $sql = mysqli_query($myConnection,"SELECT * FROM `tuition_student_list` WHERE `package_id` = '$id'") or die (mysqli_error());//Select table from database
-
-                    while($row=mysqli_fetch_array($sql))//loop the data
-                    {
-                      $count ++;
-                    }
+                    $sql = mysqli_query($myConnection,"SELECT count(*) as C FROM `tuition_student_list` WHERE `package_id` = '$id'") or die (mysqli_error());//Select table from database
+                    $row=mysqli_fetch_array($sql);
+                    $count = $row['C'];
+                    
                     echo "{$count} / {$capacity}<br>";
                   ?>
 

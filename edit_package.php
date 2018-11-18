@@ -12,8 +12,6 @@ if(isset($_GET['p_id']))
   $package_name = $row['package_name'];
   $package_capacity = $row['package_capacity'];
   $package_price = $row['package_price'];
-  $package_subject = $row['package_subject'];
-  $package_description = $row['package_description'];
   $tuition_id = $row['tuition_id'];
 
 }
@@ -109,35 +107,18 @@ else
                         </div> <!-- end .single-content -->
 
                         <div class="single-content">
-                          <label><span>*</span>Package Description</label>
-                          <div class="company-name">
-                            <input type="text" name="package_description" placeholder="" value="<?php echo $package_description; ?>">
-                          </div>
-                        </div> <!-- end .single-content -->
-
-                        <div class="single-content">
                           <label><span>*</span>Package Subject</label>
                           <div class="company-name">
                             <?php
-                            $subj = explode(',', $package_subject);
 
-                            $sql = "SELECT * FROM `master_subject`";
+                            $sql = "SELECT * FROM `master_subject` inner join `tuition_package_subject` on `tuition_package_subject`.`subject_id` = `master_subject`.`subject_id` WHERE `tuition_package_subject`.`package_id` = '$package_id'";
                             $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
                             while( $row = mysqli_fetch_array($sql_subject) )
                             {
-                              if (in_array($row['subject_name'], $subj))
-                              {
                               ?>
-                                <input type="checkbox" name="<?php echo $row['subject_id']; ?>" value="<?php echo $row['subject_id']; ?>" checked><?php echo $row['subject_name']; ?><br>
-                              <?php  
-                              }
-                              else
-                              {
-                              ?>
-                                <input type="checkbox" name="<?php echo $row['subject_id']; ?>" value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?><br>
-                              <?php
-                              }
+                              <input type="checkbox" name="<?php echo $row['subject_id']; ?>" value="<?php echo $row['subject_id']; ?>" checked><?php echo $row['subject_name']; ?><br>
+                            <?php
                             }
                             ?>
                           </div>

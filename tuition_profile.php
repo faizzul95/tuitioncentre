@@ -1,8 +1,9 @@
 <?php session_start(); 
 
  $usid = $_SESSION['user_id'];
+ $tuition_id = $_SESSION['tuition_id'];
  include_once("connection.php");
- $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$usid'";
+ $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);
 
@@ -11,6 +12,9 @@
  $telno = $row['tuition_telno'];
  $name = $row['tuition_name'];
  $address = $row['tuition_address'];
+ $state = $row['tuition_state'];
+ $area = $row['tuition_area'];
+ $rating = $row['tuition_rating'];
 
 ?>
 
@@ -81,14 +85,18 @@
                       <div class="candidate-general-info">
                         <div class="title clearfix">
                             <h6>General Information</h6>
-                            <a class="pull-right" href="profile_update.php"><i class="fa fa-edit"></i>Update</a>
+                            <a class="pull-right" href="tuition_profile-update.php"><i class="fa fa-edit"></i>Update</a>
                           </div> <!-- end .end .title -->
 
                         <ul class="list-unstyled">
                           <li><strong>Name:</strong><?php echo $name; ?></li>
                           <li><strong>Email:</strong><?php echo $email; ?></li>
-                          <li><strong>Address:</strong><?php echo $address; ?></li>
                           <li><strong>Tel No:</strong><?php echo $telno; ?></li>
+                          <li><strong>Address:</strong><?php echo $address; ?></li>
+                          <li><strong>State:</strong><?php echo $state; ?></li>
+                          <li><strong>Area:</strong><?php echo $area; ?></li>
+                          <li><strong>Rating:</strong><?php echo $rating; ?></li>
+
                         </ul>
 
                       </div> <!-- end .candidate-general-info -->
@@ -155,12 +163,12 @@
                                           <td><center><?php echo $price; ?></center></td>
                                           <td><center><?php echo $capacity; ?></center></td>
                                           <td>
-                                            <center><button class="btn btn-default" onclick="location.href = 'add_package_subject.php?p_id=<?php echo $id; ?>';">Edit Subject</button> &nbsp; 
+                                            <center><button class="btn btn-default" onclick="location.href = 'add_package_subject.php?p_id=<?php echo $id; ?>';">Add Subject</button> &nbsp; 
                                             <button class="btn btn-default" onclick="location.href = 'view_package_subject.php?p_id=<?php echo $id; ?>';">View</button> </center>
                                           </td>
                                           <td>
-                                            <center><button class="btn btn-default" onclick="location.href = 'edit_package.php?p_id=<?php echo $id; ?>';">Edit</button> &nbsp; 
-                                            <button class="btn btn-danger" onclick=''>Remove</button> </center>
+                                            <center><button class="btn btn-default" onclick="location.href = 'edit_package.php?p_id=<?php echo $id; ?>';">Update</button> &nbsp; 
+                                            <button class="btn btn-danger" onclick="remove_package(<?php echo $id; ?>)">Remove</button> </center>
                                           </td>
                                         </tr>
                                          <?php $no ++;  } ?>
@@ -207,5 +215,14 @@
 
       </script>
 
+      <script type="text/javascript">
+      	function remove_package(id)
+      	{
+      		if( confirm("Delete this package ?") )
+      		{
+      			window.location = "controller.php?DEL_PACKAGE="+id;
+      		}
+      	}
+      </script>
     </body>
   </html>

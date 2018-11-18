@@ -57,6 +57,10 @@
 			</div>
 			<div class="col-sm-3">
 				<?php
+				if ($count == 0)
+				{
+					$count =1;
+				}
 				$fiveStarRatingPercent = round(($fiveStarRating/$count)*100);
 				$fiveStarRatingPercent = !empty($fiveStarRatingPercent)?$fiveStarRatingPercent.'%':'0%';	
 				

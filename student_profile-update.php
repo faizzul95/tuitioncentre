@@ -4,9 +4,31 @@
 
  $user_id = $_SESSION['user_id'];
  include_once("connection.php");
- // $sql = "SELECT * FROM `student` WHERE `user_id` = '$user_id'";
- // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
- // $row = mysqli_fetch_array($sql_usr);
+ 
+ if(isset($_SESSION['student_id']))
+ {
+    $student_id = $_SESSION['student_id'];
+    $sql = "SELECT * FROM `student` WHERE `student_id` = '$student_id'";
+    $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+    $row = mysqli_fetch_array($sql_usr);
+    
+    $student_name = $row['student_name'];
+    $student_ic = $row['student_ic'];
+    $student_telno = $row['student_telno'];
+    $student_email = $row['student_email'];
+    $student_dob = $row['student_dob'];
+    $student_gender = $row['student_gender'];
+ }
+ else
+ {
+   $student_name = '';
+   $student_ic = '';
+   $student_telno = '';
+   $student_email = '';
+   $student_dob = '';
+   $student_gender = ''; 
+ }
+ 
 
  // $lastupdate = $row['student_last_update'];
 
@@ -98,12 +120,11 @@
                           </div> <!-- end .end .title -->
 
                           <ul class="list-unstyled candidate-registration">
-                            <li><strong>Name:</strong><input type="text" placeholder="[first name] [last name]"></li>
-                            <li><strong>Gender:</strong><input type="text" placeholder="[gender]"></li>
-                            <li><strong>Date of Birth:</strong><input type="text" placeholder="[date of birth]"></li>
-                            <li><strong>Tel:</strong><input type="text" placeholder="[telephone number]"></li>
-                            <li><strong>Mob:</strong><input type="text" placeholder="[mobile number]"></li>
-                            <li><strong>Email:</strong><input type="text" placeholder="[email address]"></li>
+                            <li><strong>Name:</strong><input type="text" placeholder="[first name] [last name]" value="<?php echo $student_name; ?>"></li>
+                            <li><strong>Gender:</strong><input type="text" placeholder="[gender]" value="<?php echo $student_gender; ?>"></li>
+                            <li><strong>Date of Birth:</strong><input type="text" placeholder="[date of birth]" value="<?php echo $student_dob; ?>"></li>
+                            <li><strong>Tel:</strong><input type="text" placeholder="[telephone number]" value="<?php echo $student_telno; ?>"></li>
+                            <li><strong>Email:</strong><input type="text" placeholder="[email address]" value="<?php echo $student_email; ?>"></li>
                           </ul>
                         </form>
 
@@ -119,31 +140,45 @@
                           <div class="candidate-single-content">
                             <div class="row">
                               <div class="col-md-4">
-                                <label><span>*</span>Personnal Info</label>
+                                <label><span>*</span>Personal Info</label>
                               </div> <!-- end .4th grid-layout -->
 
                               <div class="col-md-8">
                                 <div class="candidate-skill-single clearfix">
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="std_name" placeholder="Full Name" required>
+                                      <input type="text" name="std_name" placeholder="Full Name" required value="<?php echo $student_name; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="std_ic" placeholder="Identity Card" required>
+                                      <input type="text" name="std_ic" placeholder="Identity Card" required value="<?php echo $student_ic; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                      <div class="skill-selectbox mb10">
-                                      <input type="date" name="std_dob" placeholder="Date Of Birth" class="form-control" required>
+                                      <input type="date" name="std_dob" placeholder="Date Of Birth" class="form-control" required value="<?php echo $student_dob; ?>"> 
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="std_telno" placeholder="Phone Number" required>
+                                      <input type="text" name="std_telno" placeholder="Phone Number" required value="<?php echo $student_telno; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="std_email" placeholder="Email Address" required>
+                                      <input type="text" name="std_email" placeholder="Email Address" required value="<?php echo $student_email; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
                                       <select name="student_gender">
                                         <option value="">-- Please Select --</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <?php
+                                          if ($student_gender == 'male')
+                                          {
+                                          ?>
+                                            <option value="male" selected>Male</option>
+                                            <option value="female">Female</option>
+                                          <?php
+                                          }
+                                          elseif($student_gender == 'female')
+                                          {
+                                          ?>
+                                            <option value="male">Male</option>
+                                            <option value="female" selected>Female</option>
+                                          <?php
+                                          }
+                                          ?>
                                       </select>
                                     </div> <!-- end .skill-selectbox -->
                                 </div> <!-- end .candidate-skills-single -->

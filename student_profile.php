@@ -17,9 +17,9 @@
  $dob = $row['student_dob'];
 
  if($lastupdate == NULL) 
-       {
-           header("Location:student_profile-update.php?id=$usid");  
-       }
+ {
+   header("Location:student_profile-update.php?id=$usid");  
+ }
 
 ?>
 
@@ -90,7 +90,7 @@
                       <div class="candidate-general-info">
                         <div class="title clearfix">
                             <h6>General Information</h6>
-                            <a class="pull-right" href="profile_update.php"><i class="fa fa-edit"></i>Update</a>
+                            <a class="pull-right" href="student_profile-update.php"><i class="fa fa-edit"></i>Update</a>
                           </div> <!-- end .end .title -->
 
                         <ul class="list-unstyled">
