@@ -152,7 +152,7 @@ if(isset($_GET['p_id']))
                                     <td>{$row['student_gender']}</td>
                                     <td>{$row['student_telno']}</td>
                                     <td>{$row['student_email']}</td>
-                                    <td>{$row['student_start_date']}</td>
+                                    <td>{$row['start_date']}</td>
                                     <td><input type='button' class='btn btn-danger' onclick='remove_student($list_id, $package_id)' value='REMOVE'></td>
                                     </tr>";
                               }
