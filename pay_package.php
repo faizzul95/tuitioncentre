@@ -15,24 +15,25 @@ else
   echo "<script type='text/javascript'> document.location='login.php'; </script>";
 }
 
-if (isset($_GET['package_id']))
+if (isset($_GET['payment_id']))
 {
-  $package_id = $_GET['package_id'];
+  $payment_id = $_GET['payment_id'];
 
-  $sql = "SELECT * FROM `tuition_package` WHERE `package_id` = '$package_id'";
-  $sql_package = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-  $row = mysqli_fetch_array($sql_package);
+  $sql = "SELECT * FROM `payment`
+  		INNER JOIN `tuition_student_list` ON `tuition_student_list`.`list_id` = `payment`.`list_id`
+  		INNER JOIN `tuition_package` ON `tuition_student_list`.`package_id` = `tuition_package`.`package_id`
+  		INNER JOIN `tuition` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
+  		INNER JOIN `student` ON `student`.`student_id` = `tuition_student_list`.`student_id`
+  		WHERE `payment`.`payment_id` = '$payment_id'";
+
+  $sql_pay = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $row = mysqli_fetch_array($sql_pay);
+
+  $tuition_name = $row['tuition_name'];
   $package_name = $row['package_name'];
-  $package_capacity = $row['package_capacity'];
-  $package_price = $row['package_price'];
-
-  $sql = "SELECT * FROM `student` WHERE `student_id` = '$student_id'";
-  $sql_std = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-  $row = mysqli_fetch_array($sql_std);
-
   $student_name = $row['student_name'];
-  $student_telno = $row['student_telno'];
-  $student_email = $row['student_email'];
+  $list_id = $row['list_id'];
+  $payment_status = $row['payment_status'];
 }
 ?>
 <!doctype html>
@@ -44,7 +45,7 @@ if (isset($_GET['package_id']))
     <?php
       include_once("connection.php");
     ?>  
-    <title>Apply Package</title>
+    <title>Payment</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -69,7 +70,7 @@ if (isset($_GET['package_id']))
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
         <div class="container">
-          <h1>Apply Package</h1>
+          <h1>Payment</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
@@ -89,16 +90,15 @@ if (isset($_GET['package_id']))
                 <div class="tab-pane active" id="agency-profile-tab">
 
 
-                  <h4 class=" client-registration-title">Register Package
-                    <span>Information</span>
+                  <h4 class=" client-registration-title">Payment
+                    <span>Payment</span>
 
                   </h4>
 
                   <div class="information-form">
                     <div class="table-responsive">
-                      <form action="controller.php" class="default-form" method="post">
-                       <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" >
-                       <input type="hidden" name="package_id" value="<?php echo $package_id; ?>" >
+                      <form action="controller.php" class="default-form" method="post"  enctype="multipart/form-data">
+                       	<input type="hidden" name="payment_id" value="<?php echo $payment_id; ?>" >
                         <div class="single-content">
                           <label><span>*</span>Student Name</label>
                           <div class="company-name">
@@ -107,46 +107,34 @@ if (isset($_GET['package_id']))
                         </div> <!-- end .single-content -->
 
                         <div class="single-content">
-                          <label><span>*</span>Student Phone Number</label>
+                          <label><span>*</span>Tuition Name</label>
                           <div class="company-name">
-                            <input type="text" name="student_telno" placeholder="" disabled value="<?php echo $student_telno; ?>">
+                            <input type="text" name="tuition_name" placeholder="" disabled value="<?php echo $tuition_name; ?>">
                           </div>
                         </div> <!-- end .single-content -->
-
-                        <div class="single-content">
-                          <label><span>*</span>Student Email</label>
-                          <div class="company-name">
-                            <input type="text" name="student_email" value="<?php echo $student_email; ?>">
-                          </div>
-                        </div> <!-- end .single-content -->
-
-
-                        <div class="single-content">
-                          <label><span>*</span>Start Date</label>
-                          <div class="company-name">
-                            <input type="Date" name="start_date" placeholder="" required>
-                          </div>
-                        </div> <!-- end .single-content -->
-
                         <div class="single-content">
                           <label><span>*</span>Package Name</label>
                           <div class="company-name">
-                            <input type="text" name="package_name" placeholder="" disabled value="<?php echo $package_name; ?>">
+                            <input type="text" name="package_name" value="<?php echo $package_name; ?>" disabled>
                           </div>
                         </div> <!-- end .single-content -->
-
                         <div class="single-content">
-                          <label><span>*</span>Package Price</label>
+                          <label><span>*</span>Payment Id</label>
                           <div class="company-name">
-                            <input type="text" name="package_price" placeholder="" disabled value="<?php echo $package_price; ?>">
+                            <input type="text" name="payment_id" value="<?php echo $payment_id; ?>" disabled>
                           </div>
                         </div> <!-- end .single-content -->
-
+                        <div class="single-content">
+                          <label><span>*</span>Select receipt image to upload (max : 1MB) :</label>
+                          <div class="company-name">
+                            <input type="file" name="receipt" required>
+                          </div>
+                        </div> <!-- end .single-content -->
 
                         <!-- <input type="submit" name="add_package" value="Add Package"> -->
                          <div class="submit-preview-buttons">
                             <!-- <a href="#" >Confirm</a> -->
-                            <input type="submit" name="std_register_package" class="btn btn-default pull-right" value="Register Package">
+                            <input type="submit" name="pay_package" class="btn btn-default pull-right" value="Pay">
                         </div> <!-- end .submit-preview-buttons -->
                       </form> <!-- end form -->
                     </div>

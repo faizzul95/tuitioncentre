@@ -117,7 +117,7 @@
                                       <thead>
                                         <tr class="bg-primary">
                                           <th scope="col"><center>#</center></th>
-                                          <th scope="col"><center>Package Name</center></th>
+                                          <th scope="col"><center>Tuition and Package Name</center></th>
                                           <th scope="col"><center>Package Register Date</center></th>
                                           <th scope="col"><center>Package Price</center></th>
                                           <th scope="col"><center>Action</center></th>
@@ -126,8 +126,10 @@
                                       <tbody>
 
                                       <?php
-                                       $sql = "SELECT `tuition_student_list`.*,`tuition_package`.* FROM `tuition_package` 
+                                       $sql = "SELECT * FROM `tuition_package` 
                                                 INNER JOIN  `tuition_student_list` ON `tuition_package`.`package_id` = `tuition_student_list`.`package_id`
+                                                INNER JOIN `tuition` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
+                                                INNER JOIN `payment` ON `payment`.`list_id` = `tuition_student_list`.`list_id`
                                                 WHERE `student_id` = '$student_id'";
 
                                       $sql_package = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -141,10 +143,28 @@
                                           ?>
                                         <tr>
                                           <th scope="row"><center><?php echo $count; ?></center></th>
-                                          <td><center><?php echo $row['package_name']; ?></center></td>
+                                          <td><center><?php echo $row['tuition_name']; ?><br><?php echo $row['package_name']; ?></center></td>
                                           <td><center><?php echo $row['start_date']; ?></center></td>
                                           <td><center><?php echo $row['package_price']; ?></center></td>
-                                          <td><center><button class="btn btn-default" onclick="location.href='review_package.php?package_id=<?php echo $row['package_id']; ?>';">Review</button> </center></td>
+                                          <?php
+                                            if ( $row['payment_status'] == 'UNPAID')
+                                            { 
+                                                // if ( $row['start_date'] < $today )
+                                            ?>
+                                                <td><center><button class="btn btn-default" onclick="location.href='pay_package.php?payment_id=<?php echo $row['payment_id']; ?>';">Pay</button> </center></td>
+                                            <?php
+                                            }
+                                            elseif ( $row['payment_status'] == 'PENDING') 
+                                            { ?>
+                                                <td><center>Pending</center></td>
+                                            <?php
+                                            }
+                                            else  //paid
+                                            { ?>
+                                                <td><center><button class="btn btn-default" onclick="location.href='review_package.php?package_id=<?php echo $row['package_id']; ?>';">Review</button> </center></td>
+                                            <?php
+                                            }
+                                            ?>
                                         </tr>
                                         <?php
                                         $count++;
@@ -190,6 +210,13 @@
       <script type="text/javascript">
         $('#tags').tagsInput();
 
+        function pay(list)
+        {
+          var url = "pay_package.php?list_id="
+          url = url.concat(list);
+         
+          window.open(url, "_blank", "resizable=yes,top=100,left=500,width=800,height=800");
+        }
       </script>
 
     </body>

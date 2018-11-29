@@ -77,7 +77,7 @@ if(isset($_GET['p_id']))
 
                   <div class="information-form">
                     <div class="table-responsive">
-                      <form action="controller.php" class="default-form" method="post">
+                      <!-- <form class="default-form"> -->
                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" >
 
                        <div class="single-content">
@@ -126,47 +126,15 @@ if(isset($_GET['p_id']))
                           </div>
                         </div>
 
-                        <div class="">
-                          <label><span>*</span>Student List :</label>
-                          <div class="company-name">
-                            <?php
-                              $sql = "SELECT * FROM `tuition_student_list` inner join `student` on `student`.`student_id` = `tuition_student_list`.`student_id` WHERE `package_id` = '$package_id'";
-                              $sql_std = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-                              
-                              $i = 0;
-                              echo "<table border='1'>";
-                              echo "<th>No</th>
-                                    <th>Student Name</th>
-                                    <th>Student Gender</th>
-                                    <th>Student Phone</th>
-                                    <th>Student E-mail</th>
-                                    <th>Student Start Date</th>
-                                    <th>Action</th>";
-                              while ($row = mysqli_fetch_array($sql_std))
-                              { 
-                                ++$i;
-                                $list_id = $row['list_id'];
-                                echo "<tr>
-                                    <td>{$i}</td>
-                                    <td>{$row['student_name']}</td>
-                                    <td>{$row['student_gender']}</td>
-                                    <td>{$row['student_telno']}</td>
-                                    <td>{$row['student_email']}</td>
-                                    <td>{$row['start_date']}</td>
-                                    <td><input type='button' class='btn btn-danger' onclick='remove_student($list_id, $package_id)' value='REMOVE'></td>
-                                    </tr>";
-                              }
-                            ?>
-                          </div>
-                        </div>
-
+                        <button class="btn btn-default" onclick="location.href = 'tuition_student_list.php?p_id=<?php echo $package_id; ?>';">View Students</button>
+                        
                         <!-- <input type="hidden" name="package_id" value="<?php echo $package_id; ?>"> -->
                         <!-- <input type="submit" name="add_package" value="Add Package">  -->
                          <div class="submit-preview-buttons">
                             <!-- <a href="#" >Confirm</a> -->
                             <!-- <input type="submit" name="add_subject" class="btn btn-default pull-right" value="Add Subject"><br><br><br> -->
                         </div> <!-- end .submit-preview-buttons -->
-                      </form> <!-- end form -->
+                      <!-- </form> end form -->
                     </div>
                   </div> <!-- end information-form -->
                 </div> <!-- end .tabe pane -->
@@ -201,16 +169,6 @@ if(isset($_GET['p_id']))
 
       bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
     </script>
-
-    <script type="text/javascript">
-        function remove_student(list_id,package_id)
-        {
-          if( confirm("Delete this package ?") )
-          {
-            window.location = "controller.php?REMOVE_STD="+list_id+"&PACKAGE_ID="+package_id;
-          }
-        }
-      </script>
 
   </body>
 </html>
