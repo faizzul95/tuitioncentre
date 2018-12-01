@@ -15,6 +15,7 @@
   $tuition_email = $row['tuition_email'];
   $tuition_add = $row['tuition_address'];
   $tuition_state = $row['tuition_state'];
+  $tuition_dist = $row['tuition_district'];
   $tuition_area = $row['tuition_area'];
  
  // $lastupdate = $row['student_last_update'];
@@ -164,8 +165,18 @@
                                       </select>
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <input type="text" name="tuition_area" placeholder="Area" class="form-control" required value="<?php echo $tuition_area; ?>"> 
+                                      <select name="tuition_dist">
+                                        <option value="">Choose District</option>
+                                      </select>
                                     </div> <!-- end .skill-selectbox -->
+                                    <div class="skill-selectbox mb10">
+                                      <select name="tuition_dist" required>
+                                        <option value="">Choose Area</option>
+                                      </select>
+                                    </div> <!-- end .skill-selectbox -->
+                                    <!-- <div class="skill-selectbox mb10">
+                                      <input type="text" name="tuition_area" placeholder="Area" class="form-control" required value="<?php echo $tuition_area; ?>"> 
+                                    </div> --> <!-- end .skill-selectbox -->
                                     
                                 </div> <!-- end .candidate-skills-single -->
 

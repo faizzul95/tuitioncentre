@@ -222,7 +222,8 @@ if (isset($_POST['register_tuition']))
     $tuition_email = $_POST['tuition_email'];
     $tuition_address = $_POST['tuition_address'];
     $tuition_state = $_POST['tuition_state'];
-    $tuition_area = $_POST['tuition_area'];
+    $tuition_dist = $_POST['tuition_dist'];
+    $tuition_area = $_POST['tuition_city'];
 
 
     $sql_usr = "SELECT * FROM `user` WHERE `user_username`='$username' ";
@@ -244,8 +245,8 @@ if (isset($_POST['register_tuition']))
         $row = mysqli_fetch_array($sql_usr);
         $id = $row['user_id'];
 
-        $query_tuition="INSERT INTO `tuition` (`tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_area`, `user_id`)
-                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_area', '$id')";
+        $query_tuition="INSERT INTO `tuition` (`tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_district`, `tuition_area`, `user_id`)
+                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_dist' '$tuition_area', '$id')";
         $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
 
         if( $res_user && $res_tuition)

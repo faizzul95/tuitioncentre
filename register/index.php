@@ -151,7 +151,7 @@
             <!-- <div class="top-row"> -->
             <div class="field-wrap">
               <label>
-                Distinct <span class="req">*</span>
+                District <span class="req">*</span>
               </label>
               <!-- <input  type="text" name="ic_no" required autocomplete="off" required /> -->
               <select style="color: #C0C0C0;" name="tuition_dist" id="tuition_dist" onchange="dist_change()">
@@ -187,7 +187,7 @@
 
       check_state = [];
       $("#tuition_dist").empty();
-      $("#tuition_dist").append(new Option());
+      $("#tuition_dist").append(new Option('-- Select District --',''));
       $("#tuition_city").empty();
       for (i=0; i< row_geo.length; i++)
       {   
@@ -210,6 +210,7 @@
 
       check_dist = [];
       $("#tuition_city").empty();
+      $("#tuition_city").append(new Option('-- Select Area --',''));
       for (i=0; i< row_geo.length; i++)
       {   
           if( row[i]['geo_dist'].localeCompare(d) == 0 )
