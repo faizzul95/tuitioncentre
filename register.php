@@ -1,3 +1,6 @@
+<?php 
+ include_once("connection.php");
+?>
 <!doctype html>
 <html lang="en">
   <head>

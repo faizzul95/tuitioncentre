@@ -1,4 +1,33 @@
-  <!DOCTYPE html>
+<?php 
+ // include_once("connection.php");
+?>
+
+<?php
+  $sql = "SELECT * from geoloc";
+  $sql_geo = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $row_geo = mysqli_fetch_all($sql_geo,MYSQLI_ASSOC);
+
+  $sql = "SELECT distinct `geo_state` from geoloc order by `geo_state` asc";
+  $sql_state = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $states = mysqli_fetch_all($sql_state,MYSQLI_ASSOC);
+  // print_r($state);
+  $sql = "SELECT distinct `geo_dist` from geoloc order by `geo_dist` asc";
+  $sql_dist = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $dist = mysqli_fetch_all($sql_dist,MYSQLI_ASSOC);
+
+  $sql = "SELECT distinct `geo_city` from geoloc order by `geo_city` asc";
+  $sql_city = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $city = mysqli_fetch_all($sql_city,MYSQLI_ASSOC);
+?>
+
+<script type="text/javascript">
+  var row_geo = <?php echo json_encode($row_geo); ?>;
+  var states = <?php echo json_encode($states); ?>;
+  var dist = <?php echo json_encode($dist); ?>;
+  var city = <?php echo json_encode($city); ?>;
+</script>
+
+<!DOCTYPE html>
 <html lang="en" >
 
 <head>
@@ -55,7 +84,7 @@
         
         <div id="login">   
           <h1>REGISTER AS TUITION CENTRE</h1>
-          
+
           <form action="controller.php" method="post">
           
           <div class="top-row">
@@ -108,30 +137,33 @@
                 State <span class="req">*</span>
               </label>
               <!-- <input  type="text" name="ic_no" required autocomplete="off" required /> -->
-              <select style="color: #C0C0C0;" name="tuition_state" id="location">
-                  <option value="">Choose State</option>
-                  <option value="JOHOR">JOHOR</option>
-                  <option value="KEDAH">KEDAH</option>
-                  <option value="KELANTAN">KELANTAN</option>
-                  <option value="LABUAN">LABUAN</option>
-                  <option value="MELAKA">MELAKA</option>
-                  <option value="NEGERI SEMBILAN">NEGERI SEMBILAN</option>
-                  <option value="PERAK">PERAK</option>
-                  <option value="PAHANG">PAHANG</option>
-                  <option value="PERLIS">PERLIS</option>
-                  <option value="PULAU PINANG">PULAU PINANG</option>
-                  <option value="SABAH">SABAH</option>
-                  <option value="SARAWAK">SARAWAK</option>
-                  <option value="SELANGOR">SELANGOR</option>
-                  <option value="TERENGGANU">TERENGGANU</option>
+              <select style="color: #C0C0C0;" name="tuition_state" id="tuition_state" onchange="state_change()">
+                <option value="">Choose State</option>
+                  <?php
+                    foreach ($states as $s) {
+                      $ss = $s['geo_state'];
+                      echo "<option value='$ss'>$ss</option>";
+                    }
+                  ?>
               </select>
             </div>
-        
+            
+            <!-- <div class="top-row"> -->
+            <div class="field-wrap">
+              <label>
+                Distinct <span class="req">*</span>
+              </label>
+              <!-- <input  type="text" name="ic_no" required autocomplete="off" required /> -->
+              <select style="color: #C0C0C0;" name="tuition_dist" id="tuition_dist" onchange="dist_change()">
+              </select>
+            </div>
+
             <div class="field-wrap">
               <label>
                 Area <span class="req">*</span>
               </label>
-              <input style="color: #C0C0C0;" type="text" name="tuition_area" required autocomplete="on"/>
+              <select style="color: #C0C0C0;" name="tuition_city" id="tuition_city">
+              </select>
             </div>
           </div>
 
@@ -145,7 +177,57 @@
       
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script  src="register/js/index.js"></script>
+  <script  src="register/js/index.js"></script>
+
+  <script type="text/javascript">
+  function state_change()
+  {
+      var s = $('#tuition_state').val();
+      var d;
+
+      check_state = [];
+      $("#tuition_dist").empty();
+      $("#tuition_dist").append(new Option());
+      $("#tuition_city").empty();
+      for (i=0; i< row_geo.length; i++)
+      {   
+          if( row_geo[i]['geo_state'].localeCompare(s) == 0 )
+          {
+              d = row_geo[i]['geo_dist'];
+              if( check_state.indexOf(d) == -1 )
+              {
+                  $("#tuition_dist").append(new Option(d, d));
+                  check_state.push(d);
+              }
+          }
+      }
+  }
+
+  function dist_change()
+  {
+      var d = $('#tuition_dist').val();
+      var c;
+
+      check_dist = [];
+      $("#tuition_city").empty();
+      for (i=0; i< row_geo.length; i++)
+      {   
+          if( row[i]['geo_dist'].localeCompare(d) == 0 )
+          {
+              c = row[i]['geo_city'];
+              if( check_dist.indexOf(d) == -1 )
+              {
+                  $("#tuition_city").append(new Option(c, c));
+                  check_state.push(c);
+              }
+          }
+      }
+  }
+
+  </script>
+
 </body>
 
 </html>
+
+
