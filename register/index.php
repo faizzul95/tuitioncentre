@@ -137,7 +137,7 @@
                 State <span class="req">*</span>
               </label>
               <!-- <input  type="text" name="ic_no" required autocomplete="off" required /> -->
-              <select style="color: #C0C0C0;" name="tuition_state" id="tuition_state" onchange="state_change()">
+              <select name="tuition_state" id="tuition_state" onchange="state_change()" required>
                 <option value="">Choose State</option>
                   <?php
                     foreach ($states as $s) {
@@ -154,7 +154,8 @@
                 District <span class="req">*</span>
               </label>
               <!-- <input  type="text" name="ic_no" required autocomplete="off" required /> -->
-              <select style="color: #C0C0C0;" name="tuition_dist" id="tuition_dist" onchange="dist_change()">
+              <select name="tuition_dist" id="tuition_dist" onchange="dist_change()" required>
+                <option value="">-- Choose District --</option>
               </select>
             </div>
 
@@ -162,7 +163,8 @@
               <label>
                 Area <span class="req">*</span>
               </label>
-              <select style="color: #C0C0C0;" name="tuition_city" id="tuition_city">
+              <select name="tuition_city" id="tuition_city" required>
+                <option value="">-- Choose Area --</option>
               </select>
             </div>
           </div>
@@ -187,7 +189,7 @@
 
       check_state = [];
       $("#tuition_dist").empty();
-      $("#tuition_dist").append(new Option('-- Select District --',''));
+      $("#tuition_dist").append(new Option('-- Choose District --',''));
       $("#tuition_city").empty();
       for (i=0; i< row_geo.length; i++)
       {   
@@ -210,17 +212,18 @@
 
       check_dist = [];
       $("#tuition_city").empty();
-      $("#tuition_city").append(new Option('-- Select Area --',''));
+      $("#tuition_city").append(new Option('-- Choose Area --',''));
       for (i=0; i< row_geo.length; i++)
       {   
-          if( row[i]['geo_dist'].localeCompare(d) == 0 )
+          if( row_geo[i]['geo_dist'].localeCompare(d) == 0 )
           {
-              c = row[i]['geo_city'];
-              if( check_dist.indexOf(d) == -1 )
+              c = row_geo[i]['geo_city'];
+              if( check_dist.indexOf(c) == -1 )
               {
                   $("#tuition_city").append(new Option(c, c));
-                  check_state.push(c);
+                  check_dist.push(c);
               }
+
           }
       }
   }

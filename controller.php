@@ -246,7 +246,7 @@ if (isset($_POST['register_tuition']))
         $id = $row['user_id'];
 
         $query_tuition="INSERT INTO `tuition` (`tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_district`, `tuition_area`, `user_id`)
-                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_dist' '$tuition_area', '$id')";
+                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_dist', '$tuition_area', '$id')";
         $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
 
         if( $res_user && $res_tuition)

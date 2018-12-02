@@ -1,3 +1,6 @@
+<!doctype html>
+<html lang="en">
+
 <?php 
 
   session_start(); 
@@ -18,16 +21,33 @@
   $tuition_dist = $row['tuition_district'];
   $tuition_area = $row['tuition_area'];
  
- // $lastupdate = $row['student_last_update'];
-
- // if($lastupdate == NULL) 
- //       {
- //           header("Location:student_profile.php?id=$user_id");  
- //       }
-
 ?>
-<!doctype html>
-<html lang="en">
+
+<?php
+  $sql = "SELECT * from geoloc";
+  $sql_geo = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $row_geo = mysqli_fetch_all($sql_geo,MYSQLI_ASSOC);
+
+  $sql = "SELECT distinct `geo_state` from geoloc order by `geo_state` asc";
+  $sql_state = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $states = mysqli_fetch_all($sql_state,MYSQLI_ASSOC);
+  // print_r($state);
+  $sql = "SELECT distinct `geo_dist` from geoloc order by `geo_dist` asc";
+  $sql_dist = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $dist = mysqli_fetch_all($sql_dist,MYSQLI_ASSOC);
+
+  $sql = "SELECT distinct `geo_city` from geoloc order by `geo_city` asc";
+  $sql_city = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+  $city = mysqli_fetch_all($sql_city,MYSQLI_ASSOC);
+?>
+
+<script type="text/javascript">
+  var row_geo = <?php echo json_encode($row_geo); ?>;
+  var states = <?php echo json_encode($states); ?>;
+  var dist = <?php echo json_encode($dist); ?>;
+  var city = <?php echo json_encode($city); ?>;
+</script>
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,12 +128,13 @@
                           </div> <!-- end .end .title -->
 
                           <ul class="list-unstyled candidate-registration">
-                            <li><strong>Tuition Name:</strong><input type="text" placeholder="[first name] [last name]" value="<?php echo $tuition_name; ?>"></li>
-                            <li><strong>Telno:</strong><input type="text" placeholder="[gender]" value="<?php echo $tuition_telno; ?>"></li>
-                            <li><strong>Email:</strong><input type="text" placeholder="[date of birth]" value="<?php echo $tuition_email; ?>"></li>
-                            <li><strong>Address:</strong><input type="text" placeholder="[telephone number]" value="<?php echo $tuition_add; ?>"></li>
-                            <li><strong>State:</strong><input type="text" placeholder="[email address]" value="<?php echo $tuition_state; ?>"></li>
-                            <li><strong>Area:</strong><input type="text" placeholder="[email address]" value="<?php echo $tuition_area; ?>"></li>
+                            <li><strong>Tuition Name:</strong><input type="text" placeholder="[tuition name]" value="<?php echo $tuition_name; ?>"></li>
+                            <li><strong>Telno:</strong><input type="text" placeholder="[telephone number]" value="<?php echo $tuition_telno; ?>"></li>
+                            <li><strong>Email:</strong><input type="text" placeholder="[email]" value="<?php echo $tuition_email; ?>"></li>
+                            <li><strong>Address:</strong><input type="text" placeholder="[address]" value="<?php echo $tuition_add; ?>"></li>
+                            <li><strong>State:</strong><input type="text" placeholder="[state]" value="<?php echo $tuition_state; ?>"></li>
+                            <li><strong>District:</strong><input type="text" placeholder="[district]" value="<?php echo $tuition_dist; ?>"></li>
+                            <li><strong>Area:</strong><input type="text" placeholder="[area]" value="<?php echo $tuition_area; ?>"></li>
                           </ul>
                         </form>
 
@@ -146,32 +167,24 @@
                                       <input type="text" name="tuition_email" placeholder="Email Address" required value="<?php echo $tuition_email; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <select name="tuition_state">
+                                      <select name="tuition_state" id="tuition_state" onchange="state_change()" required>
                                         <option value="">Choose State</option>
-                                        <option value="JOHOR">JOHOR</option>
-                                        <option value="KEDAH">KEDAH</option>
-                                        <option value="KELANTAN">KELANTAN</option>
-                                        <option value="LABUAN">LABUAN</option>
-                                        <option value="MELAKA">MELAKA</option>
-                                        <option value="NEGERI SEMBILAN">NEGERI SEMBILAN</option>
-                                        <option value="PERAK">PERAK</option>
-                                        <option value="PAHANG">PAHANG</option>
-                                        <option value="PERLIS">PERLIS</option>
-                                        <option value="PULAU PINANG">PULAU PINANG</option>
-                                        <option value="SABAH">SABAH</option>
-                                        <option value="SARAWAK">SARAWAK</option>
-                                        <option value="SELANGOR">SELANGOR</option>
-                                        <option value="TERENGGANU">TERENGGANU</option>
+                                        <?php
+                                          foreach ($states as $s) {
+                                            $ss = $s['geo_state'];
+                                            echo "<option value='$ss'>$ss</option>";
+                                          }
+                                        ?>
                                       </select>
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <select name="tuition_dist">
-                                        <option value="">Choose District</option>
+                                      <select name="tuition_dist" id="tuition_dist" onchange="dist_change()" required>
+                                        <option value="">-- Choose District --</option>
                                       </select>
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
-                                      <select name="tuition_dist" required>
-                                        <option value="">Choose Area</option>
+                                      <select name="tuition_city" id="tuition_city" required>
+                                        <option value="">-- Choose Area --</option>
                                       </select>
                                     </div> <!-- end .skill-selectbox -->
                                     <!-- <div class="skill-selectbox mb10">
@@ -218,10 +231,10 @@
       <script src="js/jquery-ui.js"></script>
 
       <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
-      <script src="js/scripts.js"></script>
+      <!-- <script src="js/scripts.js"></script> -->
 
 
-      <script type="text/javascript">
+      <!-- <script type="text/javascript">
         $('#tags').tagsInput();
 
         bkLib.onDomLoaded(function() {
@@ -232,7 +245,54 @@
           );
         });
 
+      </script> -->
 
+      <script type="text/javascript">
+        function state_change()
+        {
+            var s = $('#tuition_state').val();
+            var d;
+
+            check_state = [];
+            $("#tuition_dist").empty();
+            $("#tuition_dist").append(new Option('-- Choose District --',''));
+            $("#tuition_city").empty();
+            for (i=0; i< row_geo.length; i++)
+            {   
+                if( row_geo[i]['geo_state'].localeCompare(s) == 0 )
+                {
+                    d = row_geo[i]['geo_dist'];
+                    if( check_state.indexOf(d) == -1 )
+                    {
+                        $("#tuition_dist").append(new Option(d, d));
+                        check_state.push(d);
+                    }
+                }
+            }
+        }
+
+        function dist_change()
+        {
+            var d = $('#tuition_dist').val();
+            var c;
+
+            check_dist = [];
+            $("#tuition_city").empty();
+            $("#tuition_city").append(new Option('-- Choose Area --',''));
+            for (i=0; i< row_geo.length; i++)
+            {   
+                if( row_geo[i]['geo_dist'].localeCompare(d) == 0 )
+                {
+                    c = row_geo[i]['geo_city'];
+                    if( check_dist.indexOf(c) == -1 )
+                    {
+                        $("#tuition_city").append(new Option(c, c));
+                        check_dist.push(c);
+                    }
+
+                }
+            }
+        }
 
       </script>
 

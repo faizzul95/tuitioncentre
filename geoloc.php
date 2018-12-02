@@ -1,42 +1,67 @@
-<?php session_start(); 
-include_once("connection.php");
+<!doctype html>
+<html lang="en">
+<?php 
+	session_start(); 
+	include_once("connection.php");
 
-$x = 3.1409018;
-$y = 101.615815;
+	$x = 0;
+	if( isset($_GET['test']) )
+	{
+	    $x = $_GET['test'];
+	    $ch = $_GET['check'];
+	    $lat = $_GET['lat'];
+	    $lon = $_GET['lon'];
 
-//$sql1 = "SELECT `geoloc`.*, sqrt( pow({$x}-`geoloc`.`geo_lat`,2) + pow({$y}-`geoloc`.`geo_lon`,2) ) as distance from `geoloc`";
-$sql2 = "SELECT * FROM `geoloc`";
-$sql_loc = mysqli_query($myConnection,$sql2) or die(mysqli_error($myConnection));
-$row = mysqli_fetch_array($sql_loc);
-echo $row['geo_city'];
+		echo $lat."<br>";
+		echo $lon."<br>";
+	}
+
+	echo $x;
+	$sql = "SELECT `geoloc`.*, sqrt( power({$lat}-`geoloc`.`geo_lat`,2) + power({$lon}-`geoloc`.`geo_lon`,2) ) as dist FROM `geoloc` WHERE `geoloc`.`geo_city` IN (SELECT distinct `tuition_area` FROM `tuition`) ORDER BY dist ASC";
+	  $sql_geo = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+	  $row_geo = mysqli_fetch_all($sql_geo,MYSQLI_ASSOC);
+	  print_r($row_geo);
+
 ?>
 
+<br><span id='q'></span><br>
+<span id='check_loc' hidden><?php echo $ch; ?></span><br>
 
-<!DOCTYPE html>
-<html>
-<body>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/jquery.ba-outside-events.min.js"></script>
+<script src="js/jquery.inview.min.js"></script>
+<script src="js/jquery.responsive-tabs.js"></script>
+<script src="js/jquery.tagsinput.min.js"></script>
+<script src="js/owl.carousel.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery-ui.js"></script>
 
-<p>Click the button to get your coordinates.</p>
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
 
-<button onclick="getLocation()">Try It</button>
+<script type="text/javascript">
+    $( document ).ready(function (){
+        if ( $('#check_loc').text() != 'fal' ){
+            if (navigator.geolocation){
+	            // get_loc();
+	            navigator.geolocation.getCurrentPosition(get_loc);
+	            // alert('test');
+            }
+            else{
+    			alert("Geolocation is not supported by this browser.");
+            }
+        }
 
-<p id="demo"></p>
+    })
 
-<script>
-var x = document.getElementById("demo");
-
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition);
-    } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";}
+    function get_loc(position){
+        // alert('hohoho');
+        // $('#pp').html('fal');
+        // window.location.href = "http://192.168.1.132/MINDCRAFT/component/Mindcraft/test_zone/testAnwar.php?test=999";
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        // alert(lat);
+        window.location.href = "geoloc.php?test=999&check=fal&lat="+lat+"&lon="+lon;
+    	
     }
-    
-function showPosition(position) {
-    x.innerHTML="Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
-}
-</script>
 
-</body>
-</html>
+</script>

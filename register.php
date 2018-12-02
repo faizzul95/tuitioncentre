@@ -76,7 +76,7 @@
     <script src="js/jquery.tagsinput.min.js"></script>
     <script src="js/owl.carousel.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="js/scripts.js"></script>
+    <!-- <script src="js/scripts.js"></script> -->
     <script type="text/javascript">
       $('#tags').tagsInput();
     </script>

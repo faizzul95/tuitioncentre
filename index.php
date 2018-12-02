@@ -8,6 +8,16 @@ if(isset($_SESSION['user_id']))
   }
 }
 
+if( isset($_GET['check']) )
+{
+    $ch = $_GET['check'];
+    $lat = $_GET['lat'];
+    $lon = $_GET['lon'];
+
+    // echo $lat."<br>";
+    // echo $lon."<br>";
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -64,16 +74,25 @@ if(isset($_SESSION['user_id']))
                       <div class="basic-form clearfix">
                         <div class="hsb-input-1">
                           <select name="area" required>
-                            <option value="">Select Area</option>
+                            <!-- <option value="">Select Area</option> -->
                             <?php
-                              $sql = "SELECT distinct tuition_area FROM `tuition`";
-                              $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-                              
-                              while( $row = mysqli_fetch_array($sql_tuition) )
+                              $sql = "SELECT `geoloc`.*, sqrt( power({$lat}-`geoloc`.`geo_lat`,2) + power({$lon}-`geoloc`.`geo_lon`,2) ) as dist FROM `geoloc` WHERE `geoloc`.`geo_city` IN (SELECT distinct `tuition_area` FROM `tuition`) ORDER BY dist ASC";
+                              $sql_geo = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                              // $row_geo = mysqli_fetch_all($sql_geo,MYSQLI_ASSOC);
+
+                              // $sql = "SELECT distinct `tuition_area` FROM `tuition`";
+                              // $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                              $distinct_area = [];
+                              while( $row = mysqli_fetch_array($sql_geo) )
                               {
+                                $area = $row['geo_city'];
+                                if( !in_array($area, $distinct_area) )
+                                {
                                 ?>
-                                <option value="<?php echo $row['tuition_area']; ?>"><?php echo $row['tuition_area']; ?></option>
+                                  <option value="<?php echo $area; ?>"><?php echo $area; ?></option>
                                 <?php
+                                  $distinct_area[] = $area;  
+                                }
                               }
                             ?>
                             <!-- <option value="">Choose Location In Shah Alam</option>
@@ -81,6 +100,7 @@ if(isset($_SESSION['user_id']))
                             <option value="Sekyesn 13">Sekyesn 13</option>
                             <option value="Seksyen 9">Seksyen 9</option> -->
                           </select>
+                          <!-- <button onclick="find_loc()">Check Location</button> -->
                         </div>
                         <div class="hsb-container">
                           <div class="hsb-input-2">
@@ -150,16 +170,40 @@ if(isset($_SESSION['user_id']))
 
     <!-- Scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
-      <script src="js/bootstrap.js"></script>
-      <script src="js/jquery.ba-outside-events.min.js"></script>
-      <script src="js/jquery.responsive-tabs.js"></script>
-      <script src="js/jquery.flexslider-min.js"></script>
-      <script src="js/jquery.fitvids.js"></script>
-      <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
-      <script src="js/jquery.inview.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.ba-outside-events.min.js"></script>
+    <script src="js/jquery.responsive-tabs.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/jquery.fitvids.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/jquery.inview.min.js"></script>
 
-      <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
-      <script src="js/owl.carousel.min.js"></script>
-      <script src="js/scripts.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <!-- <script src="js/scripts.js"></script> -->
+    
+    <span id='check_loc' hidden><?php echo $ch; ?></span><br>
+    <script type="text/javascript">
+      $( document ).ready(function (){
+          if ( $('#check_loc').text() != 'fal' ){
+              if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(get_loc);
+              }
+              else{
+                alert("Geolocation is not supported by this browser.");
+              }
+          }
+
+      })
+
+      function get_loc(position){
+          var lat = position.coords.latitude;
+          var lon = position.coords.longitude;
+          // alert(lat);
+
+          window.location.href = "index.php?check=fal&lat="+lat+"&lon="+lon;
+      }
+
+    </script>
     </body>
   </html>
