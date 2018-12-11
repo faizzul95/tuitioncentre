@@ -18,6 +18,17 @@
   $sql = "SELECT distinct `geo_city` from geoloc order by `geo_city` asc";
   $sql_city = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
   $city = mysqli_fetch_all($sql_city,MYSQLI_ASSOC);
+
+  if( isset($_GET['check']) )
+  {
+    $ch = $_GET['check'];
+    $lat = $_GET['lat'];
+    $lon = $_GET['lon'];
+
+    // echo $lat."<br>";
+    // echo $lon."<br>";
+  }
+
 ?>
 
 <script type="text/javascript">
@@ -168,7 +179,8 @@
               </select>
             </div>
           </div>
-
+          <input type="hidden" name="lat" value="<?php echo $lat; ?>">
+          <input type="hidden" name="lon" value="<?php echo $lon; ?>">
           <button name="register_tuition" type="submit" class="button button-block"/>REGISTER</button>
           
           </form>
@@ -229,6 +241,31 @@
   }
 
   </script>
+
+   <span id='check_loc' hidden><?php echo $ch; ?></span><br>
+    <script type="text/javascript">
+      $( document ).ready(function (){
+          if ( $('#check_loc').text() != 'fal' ){
+              if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(get_loc);
+              }
+              else{
+                alert("Geolocation is not supported by this browser.");
+              }
+          }
+
+      })
+
+      function get_loc(position){
+          var lat = position.coords.latitude;
+          var lon = position.coords.longitude;
+          // alert(lat);
+
+          window.location.href = "register.php?check=fal&lat="+lat+"&lon="+lon;
+      }
+
+    </script>
+
 
 </body>
 

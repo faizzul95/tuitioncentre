@@ -224,6 +224,8 @@ if (isset($_POST['register_tuition']))
     $tuition_state = $_POST['tuition_state'];
     $tuition_dist = $_POST['tuition_dist'];
     $tuition_area = $_POST['tuition_city'];
+    $lat = $_POST['lat'];
+    $lon = $_POST['lon'];
 
 
     $sql_usr = "SELECT * FROM `user` WHERE `user_username`='$username' ";
@@ -245,8 +247,8 @@ if (isset($_POST['register_tuition']))
         $row = mysqli_fetch_array($sql_usr);
         $id = $row['user_id'];
 
-        $query_tuition="INSERT INTO `tuition` (`tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_district`, `tuition_area`, `user_id`)
-                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_dist', '$tuition_area', '$id')";
+        $query_tuition="INSERT INTO `tuition` (`tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_district`, `tuition_area`, `user_id`, `tuition_lat`, `tuition_lon`)
+                    VALUES ('$tuition_name', '$tuition_telno', '$tuition_email', '$tuition_address', '$tuition_state', '$tuition_dist', '$tuition_area', '$id', '$lat', '$lon')";
         $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
 
         if( $res_user && $res_tuition)
@@ -585,6 +587,28 @@ if(isset($_POST['std_register_package']))
     
 }
 
+if (isset($_POST['create_forum']))
+{
+    $user_id = $_SESSION['user_id'];
+    $title = $_POST['forum_title'];
+    $desc = $_POST['forum_desc'];
+
+    $sql="INSERT INTO `forum` (`forum_user`, `forum_title`, `forum_desc`)
+                        VALUES ('$user_id', '$title', '$desc')";
+    $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+    if( $res )
+    {
+        echo "<script type='text/javascript'>alert('Forum Created Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='forum.php'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='forum.php'; </script>";
+    }
+}
+
 if(isset($_POST['pay_package']))
 {
     // print_r($_FILES); die;
@@ -681,5 +705,28 @@ if ( isset($_GET['approve_pay']) )
     {
         echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
         echo "<script type='text/javascript'> document.location='tuition_student_list.php?p_id=$package_id'; </script>";
+    }
+}
+
+if (isset($_POST['comm']))
+{
+    $com_desc = $_POST['new_com'];
+    $forum_id = $_POST['forum_id'];
+    $user_id = $_SESSION['user_id'];
+
+
+    $sql="INSERT INTO `comment` (`com_desc`, `com_forum_id`, `com_user`)
+                        VALUES ('$com_desc', '$forum_id', '$user_id')";
+    $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+    if( $res )
+    {
+        // echo "<script type='text/javascript'>alert('Forum Created Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='forum_detail.php?forum_id=$forum_id'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='forum_detail.php?forum_id=$forum_id'; </script>";
     }
 }

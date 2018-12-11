@@ -12,8 +12,6 @@ if(isset($_SESSION['student_id']) )
   $student_id = $_SESSION['student_id'];
 }
 
-$lat = $_POST['lat'];
-$lon = $_POST['lon'];
 
 
 ?>
@@ -23,7 +21,7 @@ $lon = $_POST['lon'];
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tuition Search</title>
+    <title>Forum</title>
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
@@ -51,11 +49,11 @@ $lon = $_POST['lon'];
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
         <div class="container">
-          <h1>Tuition Search</h1>
+          <h1>Forum</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li class="active">Search</li>
+            <li class="active">Forum</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -72,63 +70,12 @@ $lon = $_POST['lon'];
                   <div class="widget sidebar-widget jobs-search-widget">
                     <h5 class="widget-title">Search</h5> 
                     <div class="widget-content">
-                      <span class="search-tex">I'm looking for a ...</span>
-                    <form method="post" action="searchTuition.php">
-                      <input type="hidden" name="lat" value="<?php echo $lat; ?>">
-                      <input type="hidden" name="lon" value="<?php echo $lon; ?>">
-                       <select name="area" class="form-control mt10 mb10">
-                        <option value="">Select Area</option>
-                            <?php
-                              
-                              $sql = "SELECT `geoloc`.*, sqrt( power({$lat}-`geoloc`.`geo_lat`,2) + power({$lon}-`geoloc`.`geo_lon`,2) ) as dist FROM `geoloc` WHERE `geoloc`.`geo_city` IN (SELECT distinct `tuition_area` FROM `tuition`) ORDER BY dist ASC";
-                              $sql_geo = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-                              $distinct_area = [];
-
-                              while( $row = mysqli_fetch_array($sql_geo) )
-                              {
-                                $area = $row['geo_city'];
-                                if( !in_array($area, $distinct_area) )
-                                {
-                                ?>
-                                  <option value="<?php echo $area; ?>"><?php echo $area; ?></option>
-                                <?php
-                                  $distinct_area[] = $area;  
-                                }
-                              }
-                            ?>
-                          </select>
-                      <br>
-
-                      <select name="avg_rating" class="form-control mt10 mb10">
-                        <option value="">Choose Rating</option>
-                        <option value="0">No Star Yet</option>
-                        <option value="1">1 Star</option>
-                        <option value="2">2 Star</option>
-                        <option value="3">3 Star</option>
-                        <option value="4">4 Star</option>
-                        <option value="5">5 Star</option>
-                      </select>
-
-                      <br>
-
-                      <select name="available_subjects" class="form-control mt10 mb10">
-                        <option value="">Select Subject</option>
-                              <?php
-                              $sql = "SELECT * FROM `master_subject`";
-                              $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-                              
-                              while( $row = mysqli_fetch_array($sql_subject) )
-                              {
-                                ?>
-                                <option value="<?php echo $row['subject_id']; ?>"><?php echo $row['subject_name']; ?></option>
-                                <?php
-                              }
-                              ?>
-                      </select>
-
-                      <br>
-
-                      <input type="submit" name="view_tuition_center" value="Search" class="btn btn-default">
+                      <span class="search-tex">Create Forum</span>
+                    <form method="post" action="controller.php">
+                    	Title : <input type="text" name="forum_title" ><br>
+                    	Description : <textarea rows="4" cols="50" name="forum_desc">
+                    	</textarea><br>
+                      <input type="submit" name="create_forum" value="Create Forum" class="btn btn-default">
                     </div>
                     </form>
                   </div>
@@ -152,32 +99,31 @@ $lon = $_POST['lon'];
 
               <?php 
 
-              $area = $_POST['area'];
-              $available_subjects = $_POST['available_subjects'];
-              $avg_rating = $_POST['avg_rating'];
-
               // $sql = "SELECT * FROM `tuition` a INNER JOIN `tuition_package` b ON a.`tuition_id` = b.`tuition_id` WHERE `tuition_area` = '$area'";
 
-              $sql = "SELECT distinct `tuition`.* FROM `tuition`
-                          INNER JOIN `tuition_package` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id`
-                          INNER JOIN `tuition_package_subject` ON `tuition_package_subject`.`package_id` = `tuition_package`.`package_id`
-                          INNER JOIN `master_subject` ON `tuition_package_subject`.`subject_id` = `master_subject`.`subject_id`
-                          INNER JOIN `geoloc` ON `geoloc`.`geo_city` = `tuition`.`tuition_area`
-                          WHERE `tuition_area` = '$area' AND `tuition_package_subject`.`subject_id` = '$available_subjects' AND ( round(`tuition_rating`) = '$avg_rating' OR floor(`tuition_rating`) = '$avg_rating') order by `tuition_rating` desc, sqrt( power({$lat}-`tuition_lat`,2) + power({$lon}-`tuition_lon`,2) ) asc";
+              $sql = "SELECT * from `forum` INNER JOIN `user` ON `user`.`user_id` = `forum`.`forum_user`";
 
-              $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+              $sql_forum = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
-              if (mysqli_num_rows($sql_tuition)==0){
-                     echo "No result found";
+              if (mysqli_num_rows($sql_forum)==0){
+                     echo "No Forum found";
                }
              
-             while($row = mysqli_fetch_assoc($sql_tuition))
+             while($row = mysqli_fetch_assoc($sql_forum))
                 { 
-                  $tuition_id = $row['tuition_id'];
-                  $tuitionName = $row['tuition_name'];
-                  $telno = $row['tuition_telno'];
-                  $tuition_address = $row['tuition_address'];
-                  $rate = $row['tuition_rating'];
+                  $forum_title = $row['forum_title'];
+                  $forum_desc = $row['forum_desc'];
+                  $forum_user = $row['forum_user'];
+
+                  if($forum_user == $_SESSION['user_id'])
+                  {
+                  	$username = 'You';
+                  }
+                  else
+                  {
+                  	$username = $row['user_username'];
+                  }
+                  $forum_date = $row['forum_date'];
                ?>
          
               <div class="candidate-description client-description applicants-content">
@@ -186,16 +132,16 @@ $lon = $_POST['lon'];
                   <!-- end .aplicants-pic -->
                   <div class="clearfix">
                     <div class="pull-left">
-                      <h5><?php echo $tuitionName ?></h5>
-                      <b>Address :</b> <?php echo $tuition_address ?><br>
-                      <b>Phone No :</b> <?php echo $telno ?><br>
-                      <b>Rating :</b> <?php echo $rate ?>
+                      <h5><?php echo $forum_title ?></h5>
+                      <b>By :</b> <?php echo $username ?><br>
+                      <b>Description :</b> <?php echo $forum_desc ?><br>
+                      <b>Date :</b> <?php echo $forum_date ?>
                     </div>
 
 
                   </div>
                   <!-- end .aplicant-details-show -->
-                  <button type="button" onclick="window.location='package_view.php?tuition_id=<?php echo $row['tuition_id'] ?>&subject_id=<?php echo $available_subjects; ?>';" class="btn btn-default pull-right">View Package</button>
+                  <button type="button" onclick="window.location='forum_detail.php?forum_id=<?php echo $row['forum_id'] ?>';" class="btn btn-default pull-right">View Forum</button>
 
                   <!-- <button class="btn btn-default pull-right">Apply</button> -->
                 </div> <!-- end .language-print -->

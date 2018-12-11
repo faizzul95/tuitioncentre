@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2018 at 07:34 AM
+-- Generation Time: Dec 11, 2018 at 09:19 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -19,6 +19,53 @@ SET time_zone = "+00:00";
 --
 -- Database: `tuition_community`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comment`
+--
+
+CREATE TABLE IF NOT EXISTS `comment` (
+  `com_id` int(11) NOT NULL AUTO_INCREMENT,
+  `com_desc` varchar(2056) NOT NULL,
+  `com_forum_id` int(11) NOT NULL,
+  `com_user` int(11) NOT NULL,
+  `com_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`com_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`com_id`, `com_desc`, `com_forum_id`, `com_user`, `com_date`) VALUES
+(1, 'test com 1', 1, 2, '2018-12-10 23:24:40'),
+(2, 'test com 2', 1, 3, '2018-12-10 23:24:40'),
+(3, 'test 3', 1, 2, '2018-12-11 14:30:45');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum`
+--
+
+CREATE TABLE IF NOT EXISTS `forum` (
+  `forum_id` int(11) NOT NULL AUTO_INCREMENT,
+  `forum_user` int(11) NOT NULL,
+  `forum_title` varchar(255) NOT NULL,
+  `forum_desc` varchar(2056) NOT NULL,
+  `forum_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`forum_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `forum`
+--
+
+INSERT INTO `forum` (`forum_id`, `forum_user`, `forum_title`, `forum_desc`, `forum_date`) VALUES
+(1, 2, 'test', 'test 1', '2018-12-09 22:17:48'),
+(2, 2, 'test 2', 'test 2                    	', '2018-12-09 22:19:34');
 
 -- --------------------------------------------------------
 
@@ -1003,19 +1050,22 @@ CREATE TABLE IF NOT EXISTS `tuition` (
   `tuition_state` varchar(255) NOT NULL,
   `tuition_district` varchar(255) NOT NULL,
   `tuition_area` varchar(255) NOT NULL,
+  `tuition_lat` float NOT NULL,
+  `tuition_lon` float NOT NULL,
   `tuition_rating` float NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`tuition_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `tuition`
 --
 
-INSERT INTO `tuition` (`tuition_id`, `tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_district`, `tuition_area`, `tuition_rating`, `user_id`) VALUES
-(1, 'aaaa', 'aaa', 'aaa', 'aaa', 'JOHOR', 'test', 'Shah Alam', 3.5, 1),
-(2, 'bbb', 'bbb', 'bbb', 'bbb', 'JOHOR', 'test', 'Serdang', 2.6, 2),
-(3, 'ttt', 'ttt', 'tt', 'ttt', 'Selangor', 'Petaling', 'Damansara', 0, 5);
+INSERT INTO `tuition` (`tuition_id`, `tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_district`, `tuition_area`, `tuition_lat`, `tuition_lon`, `tuition_rating`, `user_id`) VALUES
+(1, 'aaaa', 'aaa', 'aaa', 'aaa', 'JOHOR', 'test', 'Shah Alam', 6, 105, 3.5, 1),
+(2, 'bbb', 'bbb', 'bbb', 'bbb', 'JOHOR', 'test', 'Shah Alam', 5, 104, 2.6, 2),
+(3, 'ttt', 'ttt', 'tt', 'ttt', 'Selangor', 'Petaling', 'Damansara', 4, 103, 0, 5),
+(4, 't2t2', 't2t2', 't2t2', 't2t2', 'WP', 'Kuala Lumpur', 'Kuala Lumpur', 3.14091, 101.616, 0, 6);
 
 -- --------------------------------------------------------
 
@@ -1132,7 +1182,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_type` varchar(100) NOT NULL,
   `user_password` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `user`
@@ -1142,7 +1192,8 @@ INSERT INTO `user` (`user_id`, `user_username`, `user_type`, `user_password`) VA
 (1, 'aaa', 'tuition', 'aaa'),
 (2, 'sss', 'student', 'sss'),
 (3, 'ppp', 'parent', 'ppp'),
-(5, 'ttt', 'tuition', 'ttt');
+(5, 'ttt', 'tuition', 'ttt'),
+(6, 't2t2', 'tuition', 't2t2');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

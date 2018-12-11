@@ -73,6 +73,8 @@ if( isset($_GET['check']) )
                     <form method="post" action="searchTuition.php">
                       <div class="basic-form clearfix">
                         <div class="hsb-input-1">
+                          <input type="hidden" name="lat" value="<?php echo $lat; ?>">
+                          <input type="hidden" name="lon" value="<?php echo $lon; ?>">
                           <select name="area" required>
                             <!-- <option value="">Select Area</option> -->
                             <?php

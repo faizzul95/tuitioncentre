@@ -35,7 +35,7 @@
                           <li><a href="index.php">Home</a></li>
                           <?php }  ?>
 
-                        <li><a href="">Forum</a></li>
+                        <li><a href="forum.php">Forum</a></li>
                         <?php  if($_SESSION['user_type'] == 'parent') { ?>
                           <li><a href="parent_profile.php">Profil</a></li>
                         <?php } else if($_SESSION['user_type'] == 'student') { ?>
