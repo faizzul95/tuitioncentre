@@ -4,9 +4,9 @@
  $tuition_id = $_SESSION['tuition_id'];
  include_once("connection.php");
 
- if(isset($_GET['p_id']))
+ if(isset($_GET['package_id']))
 {
-  $package_id = $_GET['p_id'];
+  $package_id = $_GET['package_id'];
 
   $sql = "SELECT * FROM `tuition_package` where `package_id` = '$package_id'";
   $sql_package = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -17,22 +17,7 @@
   $package_price = $row['package_price'];
   $tuition_id = $row['tuition_id'];
 }
-
- // $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
- // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
- // $row = mysqli_fetch_array($sql_usr);
-
- // // $lastupdate = $row['parent_last_update'];
- // $email = $row['tuition_email'];
- // $telno = $row['tuition_telno'];
- // $name = $row['tuition_name'];
- // $address = $row['tuition_address'];
- // $state = $row['tuition_state'];
- // $area = $row['tuition_area'];
- // $rating = $row['tuition_rating'];
-
 ?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -40,44 +25,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Profile || Tuition</title>
+    <title>Student List</title>
 
-    <!-- Stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/responsive.css">
 
-    <!--[if IE 9]>
-    <script src="js/media.match.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-    <div id="main-wrapper">
-
-      <header id="header">
-        <div class="header-top-bar">
-
-         <?php include 'header.php'; ?>
-        </div>
-        <!-- end .header-top-bar -->
-      </header> <!-- end #header -->
-      <div class="header-page-title job-registration clearfix">
-        <div class="title-overlay"></div>
-        <div class="container">
-          <h1>Package Student List</h1>
-
-          <ol class="breadcrumb">
-            <li><a href="index.php">Home</a></li>
-            <li class="active">Package Student List</li>
-          </ol>
-
-        </div> <!-- end .container -->
-
-      </div> <!-- end .header-page-title -->
 
       <div id="page-content" class="candidate-profile">
         <div class="container">
@@ -88,7 +44,7 @@
               <div class="tab-pane active" id="candidate-profile">
                 <div class="row">
         
-                  <div class="col-md-8">
+                  <div class="col-md-12">
                     <div class="candidate-description">
 
                       <div class="candidate-details">
@@ -129,7 +85,6 @@
                                           <th scope="col"><center>Student E-mail</center></th>
                                           <th scope="col"><center>Student Start Date</center></th>
                                           <th scope="col"><center>Payment Status</center></th>
-                                          <th scope="col"><center>Action</center></th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -154,40 +109,12 @@
                                           <td><center><?php echo $std_telno; ?></center></td>
                                           <td><center><?php echo $std_email; ?></center></td>
                                           <td><center><?php echo $std_start_date; ?></center></td>
-                                          <td>
-                                            <?php
-                                            if ( $payment_status == 'UNPAID')
-                                            { 
-                                            ?>
-                                                <center><?php echo $payment_status; ?></center>
-                                            <?php
-                                            }
-                                            elseif ( $payment_status == 'PENDING') 
-                                            { ?>
-                                                <center>
-                                                  <button class="btn btn-default" onclick="approve_pay(<?php echo $payment_id; ?>, <?php echo $package_id; ?>)">Approve</button> <br>&nbsp
-                                                  <button class="btn btn-default" onclick="view_receipt('<?php echo $payment_receipt; ?>')">View Receipt</button>
-                                                </center>
-                                            <?php
-                                            }
-                                            else  //paid
-                                            { ?>
-                                                <center><?php echo $payment_status; ?></center>
-                                            <?php
-                                            } 
-                                            ?>
-                                          </td>
-                                          <td>
-                                            <center><button class="btn btn-danger" onclick="remove_student(<?php echo $list_id; ?>, <?php echo $package_id; ?>)">Remove</button> </center>
-                                          </td>
+                                          <td><center><?php echo $payment_status; ?></center></td>
                                         </tr>
                                          <?php $no++;  }  //end while ?>
 
                                       </tbody>
                                     </table>
-                                    <button style="float: right" class="btn btn-default" onclick="print_list(<?php echo $package_id; ?>)">Print</button>
-
-
 
                       </div> <!-- end .candidate-details -->
 
@@ -205,12 +132,8 @@
         </div> <!-- end .container -->
       </div> <!-- end #page-content -->
 
-      <?php include 'footer.php'; ?>
 
-    </div> <!-- end #main-wrapper -->
-
-    <!-- Scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
+ <script src="js/jquery-3.1.1.min.js"></script>
       <script src="js/jquery.ba-outside-events.min.js"></script>
       <script src="js/jquery.inview.min.js"></script>
       <script src="js/jquery.responsive-tabs.js"></script>
@@ -220,42 +143,8 @@
       <script src="js/jquery-ui.js"></script>
       <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
       <script src="js/scripts.js"></script>
-
-
-      <script type="text/javascript">
-        $('#tags').tagsInput();
-
-      </script>
-
-      <script type="text/javascript">
-        function remove_student(list_id,package_id)
-        {
-          if( confirm("Remove this student ?") )
-          {
-            window.location = "controller.php?REMOVE_STD="+list_id+"&PACKAGE_ID="+package_id;
-          }
-        }
-
-        function view_receipt(file_name)
-        {
-          var url = "receipt/";
-          url = url.concat(file_name);
-
-          window.open(url, "_blank", "resizable=yes,top=100,left=500,width=800,height=800");
-        }
-
-        function approve_pay(payment_id, package_id)
-        {
-          window.location = "controller.php?approve_pay="+payment_id+"&PACKAGE_ID="+package_id;
-        }
-
-        function print_list(package_id)
-        {
-          var url = "print_list.php?package_id=";
-          url = url.concat(package_id);
-
-          window.open(url, "_blank", "resizable=yes,top=100,left=500,width=800,height=800");
-        }
-      </script>
-    </body>
-  </html>
+<script type="text/javascript">
+  $(document).ready( function(){
+    window.print();
+  });
+</script>
