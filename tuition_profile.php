@@ -15,6 +15,7 @@
  $state = $row['tuition_state'];
  $area = $row['tuition_area'];
  $rating = $row['tuition_rating'];
+ $tuition_img = $row['tuition_img'];
 
 ?>
 
@@ -75,10 +76,11 @@
                   <div class="col-md-4">
                     <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
+                        <img src="profile_pic/<?php echo $tuition_img; ?>" alt="">
                         <!-- <img src="img/content/candidate-profile.jpg" alt=""> -->
-                        <div class="upload-img-field">
+                        <!-- <div class="upload-img-field">
 
-                        </div>
+                        </div> -->
                         <a href="#"><?php echo $name; ?></a>
                       </div> <!-- end .agent-profile-picture -->
 

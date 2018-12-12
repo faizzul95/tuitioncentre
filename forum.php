@@ -141,7 +141,15 @@ if(isset($_SESSION['student_id']) )
 
                   </div>
                   <!-- end .aplicant-details-show -->
-                  <button type="button" onclick="window.location='forum_detail.php?forum_id=<?php echo $row['forum_id'] ?>';" class="btn btn-default pull-right">View Forum</button>
+                  <?php
+                  if($forum_user == $_SESSION['user_id'])
+                  {
+                  	?>
+                  		<button name="del_forum" onclick="window.location='controller.php?DEL_FORUM=<?php echo $row['forum_id']; ?>';" class="btn btn-danger pull-right">Delete</button>&nbsp
+                  	<?php
+                  }
+                  ?>
+                  <button type="button" onclick="window.location='forum_detail.php?forum_id=<?php echo $row['forum_id'] ?>';" class="btn btn-default pull-right">View Forum</button>&nbsp
 
                   <!-- <button class="btn btn-default pull-right">Apply</button> -->
                 </div> <!-- end .language-print -->

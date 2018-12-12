@@ -15,6 +15,11 @@
  $email = $row['student_email'];
  $gender = $row['student_gender'];
  $dob = $row['student_dob'];
+ $student_img = $row['student_img'];
+
+ $today = mysqli_real_escape_string($myConnection, date('Y-m-d'));
+ $today = new DateTime($today);
+
 
  if($lastupdate == NULL) 
  {
@@ -80,10 +85,10 @@
                   <div class="col-md-4">
                     <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
-                        <!-- <img src="img/content/candidate-profile.jpg" alt=""> -->
-                        <div class="upload-img-field">
+                        <img src="profile_pic/<?php echo $student_img; ?>" alt="">
+                        <!-- <div class="upload-img-field">
 
-                        </div>
+                        </div> -->
                         <a href="#"><?php echo $name; ?></a>
                       </div> <!-- end .agent-profile-picture -->
 
@@ -146,25 +151,35 @@
                                           <td><center><?php echo $row['tuition_name']; ?><br><?php echo $row['package_name']; ?></center></td>
                                           <td><center><?php echo $row['start_date']; ?></center></td>
                                           <td><center><?php echo $row['package_price']; ?></center></td>
+                                          <td><center>
                                           <?php
                                             if ( $row['payment_status'] == 'UNPAID')
                                             { 
                                                 // if ( $row['start_date'] < $today )
                                             ?>
-                                                <td><center><button class="btn btn-default" onclick="location.href='pay_package.php?payment_id=<?php echo $row['payment_id']; ?>';">Pay</button> </center></td>
+                                                <button class="btn btn-default" onclick="location.href='pay_package.php?payment_id=<?php echo $row['payment_id']; ?>';">Pay</button> 
                                             <?php
                                             }
                                             elseif ( $row['payment_status'] == 'PENDING') 
                                             { ?>
-                                                <td><center>Pending</center></td>
+                                                Pending
                                             <?php
                                             }
                                             else  //paid
                                             { ?>
-                                                <td><center><button class="btn btn-default" onclick="location.href='review_package.php?package_id=<?php echo $row['package_id']; ?>';">Review</button> </center></td>
+                                                <button class="btn btn-default" onclick="location.href='review_package.php?package_id=<?php echo $row['package_id']; ?>';">Review</button>
                                             <?php
                                             }
+
+                                            $startDate = new DateTime($row['start_date']);
+                                            if ($today <= $startDate)
+                                            {
+                                              ?>
+                                              <br><br><button class="btn btn-danger" onclick="cancel_package(<?php echo $row['list_id']; ?>, <?php echo $row['payment_id']; ?>)">Cancel</button>
+                                              <?php
+                                            }
                                             ?>
+                                            </center></td>
                                         </tr>
                                         <?php
                                         $count++;
@@ -216,6 +231,14 @@
           url = url.concat(list);
          
           window.open(url, "_blank", "resizable=yes,top=100,left=500,width=800,height=800");
+        }
+
+        function cancel_package(list_id, payment_id)
+        {
+          if (confirm('Cancel package subscription ?'))
+          {
+            window.location = "controller.php?CANCEL_PACKAGE="+list_id+"&payment_id="+payment_id;
+          }
         }
       </script>
 

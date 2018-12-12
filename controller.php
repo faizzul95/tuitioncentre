@@ -73,11 +73,20 @@ if (isset($_POST['reg_std_info']))
     
     if (mysqli_num_rows($check_stud)>0) 
     {
+        $student_id = $_SESSION['student_id'];
+        $std_img = save_img('student',$student_id);
+
+        $row = mysqli_fetch_array($check_stud);
+        $pic = $row['student_img'];
+        if ( $pic != 'user.png' and empty(basename($_FILES["pro_pic"]["name"])) )
+        {
+            $std_img = $pic;
+        }
+
         if ($_SESSION['user_type'] != 'parent')
         {
-            $student_id = $_SESSION['student_id'];
 
-            $query_std = "UPDATE `student` SET `student_name`='$student_name', `student_ic`='$student_ic', `student_telno`='$student_telno', `student_email`='$student_email', `student_gender`='$student_gender', `student_dob`='$student_dob' WHERE `student_id`='$student_id'";
+            $query_std = "UPDATE `student` SET `student_name`='$student_name', `student_ic`='$student_ic', `student_telno`='$student_telno', `student_email`='$student_email', `student_gender`='$student_gender', `student_dob`='$student_dob', `student_img`='$std_img' WHERE `student_id`='$student_id'";
             $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection)); 
             
             if($res_std)
@@ -93,9 +102,8 @@ if (isset($_POST['reg_std_info']))
         }
         else
         {
-            $student_id = $_SESSION['student_id'];
 
-            $query_std = "UPDATE `student` SET `student_name`='$student_name', `student_ic`='$student_ic', `student_telno`='$student_telno', `student_email`='$student_email', `student_gender`='$student_gender', `student_dob`='$student_dob' WHERE `student_id`='$student_id'";
+            $query_std = "UPDATE `student` SET `student_name`='$student_name', `student_ic`='$student_ic', `student_telno`='$student_telno', `student_email`='$student_email', `student_gender`='$student_gender', `student_dob`='$student_dob', `student_img`='$std_img' WHERE `student_id`='$student_id'";
             $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection)); 
             
             if($res_std)
@@ -114,15 +122,27 @@ if (isset($_POST['reg_std_info']))
     else
     {   
 	    $query_std="INSERT INTO `student` (`student_name`, `student_ic`, `student_telno`,`student_dob`, `student_gender`, `student_email`,`student_last_update`, `user_id`)
-	                    VALUES ('$student_name', '$student_ic', '$student_telno','$std_dob','$student_gender','$student_email','$date','$user_id')";
+	                    VALUES ('$student_name', '$student_ic', '$student_telno','$student_dob','$student_gender','$student_email','$date','$user_id')";
 	    $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));
 
 	    if($res_std)
 	    {
             $last_id = mysqli_insert_id($myConnection);
             $_SESSION['student_id'] = $last_id;
-	        echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
-	        echo "<script type='text/javascript'> document.location='student_profile.php?id=$user_id'; </script>";
+
+            $std_img = save_img('student',$student_id);
+            
+            $query_std = "UPDATE `student` SET `student_img`='$std_img' WHERE `student_id`='$last_id'";
+            $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));
+
+            if($res_std)
+            {
+                echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
+                echo "<script type='text/javascript'> document.location='student_profile.php?id=$user_id'; </script>";
+            }
+
+            echo "<script type='text/javascript'>alert('Pic Upload Fail, Please Try Again');</script>";
+            echo "<script type='text/javascript'> document.location='student_profile-update.php'; </script>";   
 	    }
 	    else
 	    {
@@ -143,13 +163,22 @@ if (isset($_POST['reg_prt_info']))
     $prt_gender = $_POST['prt_gender'];
     $prt_dob = $_POST['prt_dob'];
     $date = mysqli_real_escape_string($myConnection, date('Y-m-d'));
+    $prt_img = save_img('parent',$user_id);
     
     $sql_usr = "SELECT * FROM `parent` WHERE `user_id`='$user_id'";
     $check_prt = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
     
+    $row = mysqli_fetch_array($check_prt);
+    $pic = $row['parent_img'];
+    if ( $pic != 'user.png' and empty(basename($_FILES["pro_pic"]["name"])) )
+    {
+        $prt_img = $pic;
+    }
+
     if (mysqli_num_rows($check_prt)>0) 
     {
-        $query_prt = "UPDATE `parent` SET `parent_name`='$prt_name', `parent_ic`='$prt_ic', `parent_telno`='$prt_telno', `parent_email`='$prt_email', `parent_gender`='$prt_gender', `parent_dob`='$prt_dob' WHERE `user_id`='$user_id'";
+        
+        $query_prt = "UPDATE `parent` SET `parent_name`='$prt_name', `parent_ic`='$prt_ic', `parent_telno`='$prt_telno', `parent_email`='$prt_email', `parent_gender`='$prt_gender', `parent_dob`='$prt_dob', `parent_img` = '$prt_img' WHERE `user_id`='$user_id'";
         $res_prt = mysqli_query($myConnection,$query_prt) or die(mysqli_error($myConnection)); 
         
         if($res_prt)
@@ -165,8 +194,8 @@ if (isset($_POST['reg_prt_info']))
     }
     else
     {
-        $query_prt="INSERT INTO `parent` (`parent_name`, `parent_ic`, `parent_telno`,`parent_dob`, `parent_gender`, `parent_email`,`parent_last_update`, `user_id`)
-                        VALUES ('$prt_name', '$prt_ic', '$prt_telno','$prt_dob','$prt_gender','$prt_email','$date','$user_id')";
+        $query_prt="INSERT INTO `parent` (`parent_name`, `parent_ic`, `parent_telno`,`parent_dob`, `parent_gender`, `parent_email`,`parent_last_update`, `user_id`, `parent_img`)
+                        VALUES ('$prt_name', '$prt_ic', '$prt_telno','$prt_dob','$prt_gender','$prt_email','$date','$user_id', '$prt_img')";
         $res_prt = mysqli_query($myConnection,$query_prt) or die(mysqli_error($myConnection));
 
         if($res_prt)
@@ -415,9 +444,20 @@ if (isset($_POST['update_tuition']))
     $tuition_email = $_POST['tuition_email'];
     $tuition_add = $_POST['tuition_add'];
     $tuition_state = $_POST['tuition_state'];
-    $tuition_area = $_POST['tuition_area'];
+    $tuition_area = $_POST['tuition_city'];
+    $tuit_img = save_img('tuition',$tuition_id);
 
-    $query_tuition = "UPDATE `tuition` SET `tuition_name`='$tuition_name', `tuition_telno`='$tuition_telno', `tuition_email`='$tuition_email', `tuition_address`='$tuition_add', `tuition_state`='$tuition_state', `tuition_area`='$tuition_area' WHERE `tuition_id`='$tuition_id'";
+    $sql = "SELECT * FROM `tuition` WHERE `tuition_id`='$tuition_id'";
+    $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+    $row = mysqli_fetch_array($res);
+    $pic = $row['tuition_img'];
+    if ( $pic != 'user.png' and empty(basename($_FILES["pro_pic"]["name"])) )
+    {
+        $tuit_img = $pic;
+    }
+
+    $query_tuition = "UPDATE `tuition` SET `tuition_name`='$tuition_name', `tuition_telno`='$tuition_telno', `tuition_email`='$tuition_email', `tuition_address`='$tuition_add', `tuition_state`='$tuition_state', `tuition_area`='$tuition_area', `tuition_img` = '$tuit_img' WHERE `tuition_id`='$tuition_id'";
     $res_tuition = mysqli_query($myConnection,$query_tuition) or die(mysqli_error($myConnection));
 
     if( $res_tuition )
@@ -545,6 +585,51 @@ if ( isset($_GET['REMOVE_STD']) )
     }
 }
 
+if(isset($_GET['DEL_FORUM']))
+{
+    $forum_id = $_GET['DEL_FORUM'];
+
+    $sql_del = "DELETE FROM `forum` WHERE `forum_id` = '$forum_id'";
+    $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
+
+    if( $res_del )
+    {
+        echo "<script type='text/javascript'>alert('Forum deleted Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='forum.php'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='forum.php'; </script>";
+    }
+}
+
+if (isset($_GET['CANCEL_PACKAGE']))
+{
+    $student_id = $_SESSION['student_id'];
+    $list_id = $_GET['CANCEL_PACKAGE'];
+    $payment_id = $_GET['payment_id'];
+
+    $sql_del = "DELETE FROM `tuition_student_list` WHERE `list_id` = '$list_id'";
+    $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
+
+    if($res_del)
+    {
+        $sql_del = "DELETE FROM `payment` WHERE `payment_id` = '$payment_id'";
+        $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
+
+        if($res_del)
+        {
+            echo "<script type='text/javascript'>alert('Package Cancelled Successfully');</script>";
+            echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
+        }
+    }
+
+    echo "<script type='text/javascript'>alert('Fail, Please try again');</script>";
+    echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
+
+}
+
 if(isset($_POST['std_register_package']))
 {
     $student_id = $_SESSION['student_id'];
@@ -640,7 +725,7 @@ if(isset($_POST['pay_package']))
     // }
 
     // Check file size
-    if ($_FILES["receipt"]["size"] > 1000000) {
+    if ($_FILES["receipt"]["size"] > 5000000) {
         $error_str .= "Your file is too large.\\n";
         $uploadOk = 0;
     }
@@ -706,6 +791,70 @@ if ( isset($_GET['approve_pay']) )
         echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
         echo "<script type='text/javascript'> document.location='tuition_student_list.php?p_id=$package_id'; </script>";
     }
+}
+
+function save_img($user, $id)
+{
+    if ( empty(basename($_FILES["pro_pic"]["name"])) )
+    {
+        return 'user.png';
+    }
+    
+    $target_dir = "profile_pic/";
+    $target_file = $target_dir . basename($_FILES["pro_pic"]["name"]);
+    // $target_file = $target_dir . $payment_id;
+    $img_name = "$user-$id";
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    $target_file = "{$target_dir}{$img_name}.{$imageFileType}";
+    $error_str = "";
+    $ret = "{$img_name}.{$imageFileType}";
+
+    // Check if image file is a actual image or fake image
+    $check = getimagesize($_FILES["pro_pic"]["tmp_name"]);
+    if($check !== false) {
+        // echo "File is an image - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else {
+        $error_str .= "File is not an image.\\n";
+        $uploadOk = 0;
+    }
+
+    // Check if file already exists
+    // if (file_exists($target_file)) {
+    //     $error_str .= "File already exists.\\n";
+    //     $uploadOk = 0;
+    // }
+
+    // Check file size
+    if ($_FILES["pro_pic"]["size"] > 5000000) {
+        $error_str .= "Your file is too large.\\n";
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    && $imageFileType != "gif" ) {
+        $error_str .= "Sorry, only JPG, JPEG, PNG & GIF files are allowed.\\n";
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        // echo "<script type='text/javascript'>alert('Fail,Your file is not uploaded : \\n $error_str');</script>";
+        return 'user.png';
+    // if everything is ok, try to upload file
+    } 
+    else {
+        if (move_uploaded_file($_FILES["pro_pic"]["tmp_name"], $target_file)) {
+            // echo "<script type='text/javascript'>alert('The file ". basename( $_FILES["receipt"]["name"]). " has been uploaded.');</script>";
+        } else {
+            // echo "<script type='text/javascript'>alert('Sorry, there was an error uploading your file. Please try again.');</script>";
+            return 'user.png';
+        }
+    }
+
+   return $ret;
 }
 
 if (isset($_POST['comm']))

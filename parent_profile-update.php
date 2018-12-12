@@ -11,12 +11,14 @@
   {
     $row = mysqli_fetch_array($sql_usr);
 
+    $parent_id = $row['parent_id'];
     $parent_name = $row['parent_name'];
     $parent_ic = $row['parent_ic'];
     $parent_telno = $row['parent_telno'];
     $parent_email = $row['parent_email'];
     $parent_dob = $row['parent_dob'];
     $parent_gender = $row['parent_gender'];
+    $parent_img = $row['parent_img'];
   }
   else
   {
@@ -26,6 +28,7 @@
     $parent_email = '';
     $parent_dob = '';
     $parent_gender = ''; 
+    $parent_img = 'user.png';
   }
 
 ?>
@@ -95,12 +98,12 @@
                     <div class="col-md-4">
                       <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
+                        <img src="profile_pic/<?php echo $parent_img; ?>" alt="">
+                       <!--  <div class="upload-img-field">
 
-                        <div class="upload-img-field">
+                        </div> -->
 
-                        </div>
-
-                        <!-- <a class="btn btn-default" href="#">Upload a Picture</a> -->
+                        <!-- <a class="btn btn-default" href="controller.php?UPLOAD_PIC=<?php echo $user_id; ?>&PARENT=<?php echo $parent_id; ?>">Upload a Picture</a> -->
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">
@@ -125,7 +128,7 @@
 
                     <div class="col-md-8">
                       <div class="job-reg-form">
-                        <form action="controller.php" method="post">
+                        <form action="controller.php" method="post" enctype="multipart/form-data" >
                           
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                           <div class="candidate-single-content">
@@ -152,8 +155,11 @@
                                       <input type="text" name="prt_email" placeholder="Email Address" required value="<?php echo $parent_email; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
+                                      <span style="float: left">Upload Profile Picture : &nbsp &nbsp</span><input type="file" name="pro_pic" placeholder="Profile Picture">
+                                    </div> <!-- end .skill-selectbox -->
+                                    <div class="skill-selectbox mb10">
                                       <select name="prt_gender">
-                                        <option value="">-- Please Select --</option>
+                                        <!-- <option value="">-- Please Select --</option> -->
                                         <?php
                                           if ($parent_gender == 'male')
                                           {
@@ -162,7 +168,7 @@
                                             <option value="female">Female</option>
                                           <?php
                                           }
-                                          elseif($parent_gender == 'female')
+                                          else
                                           {
                                           ?>
                                             <option value="male">Male</option>

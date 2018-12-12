@@ -16,6 +16,7 @@
  $email = $row['parent_email'];
  $gender = $row['parent_gender'];
  $dob = $row['parent_dob'];
+ $parent_img = $row['parent_img'];
 
  if($lastupdate == NULL) 
  {
@@ -81,10 +82,11 @@
                   <div class="col-md-4">
                     <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
+                        <img src="profile_pic/<?php echo $parent_img; ?>" alt="">
                         <!-- <img src="img/content/candidate-profile.jpg" alt=""> -->
-                        <div class="upload-img-field">
+                       <!--  <div class="upload-img-field">
 
-                        </div>
+                        </div> -->
                         <a href="#"><?php echo $name; ?></a>
                       </div> <!-- end .agent-profile-picture -->
 

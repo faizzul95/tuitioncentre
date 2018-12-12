@@ -1,9 +1,17 @@
 <?php 
-
+ include_once("connection.php");
  session_start(); 
 
  $user_id = $_SESSION['user_id'];
- include_once("connection.php");
+ $sql = "select * from `student` where `user_id` = '$user_id'";
+ $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+ if (mysqli_num_rows($sql_usr)>0){
+  $new_std = False;
+ } 
+ else{
+  $new_std =  True;
+ }
+
  
  if(isset($_SESSION['student_id']))
  {
@@ -18,6 +26,7 @@
     $student_email = $row['student_email'];
     $student_dob = $row['student_dob'];
     $student_gender = $row['student_gender'];
+    $student_img = $row['student_img'];
  }
  else
  {
@@ -27,6 +36,7 @@
    $student_email = '';
    $student_dob = '';
    $student_gender = ''; 
+   $student_img = 'user.png';
  }
  
 
@@ -104,12 +114,18 @@
                     <div class="col-md-4">
                       <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
+                        <img src="profile_pic/<?php echo $student_img; ?>" alt="">
+                       <!--  <div class="upload-img-field">
 
-                        <div class="upload-img-field">
-
-                        </div>
-
-                        <a class="btn btn-default" href="#">Upload a Picture</a>
+                        </div> -->
+                        <?php
+                        if (!$new_std)
+                        {
+                        ?> 
+                          <!-- <a class="btn btn-default" href="controller.php?UPLOAD_PIC=<?php echo $user_id; ?>&STUDENT=<?php echo $student_id; ?>">Upload a Picture</a> -->
+                        <?php
+                        }
+                        ?>
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">
@@ -134,7 +150,7 @@
 
                     <div class="col-md-8">
                       <div class="job-reg-form">
-                        <form action="controller.php" method="post">
+                        <form action="controller.php" method="post" enctype="multipart/form-data" >
                           
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                           <div class="candidate-single-content">
@@ -160,22 +176,25 @@
                                     <div class="skill-selectbox mb10">
                                       <input type="text" name="std_email" placeholder="Email Address" required value="<?php echo $student_email; ?>">
                                     </div> <!-- end .skill-selectbox -->
+                                     <div class="skill-selectbox mb10">
+                                      <span style="float: left">Upload Profile Picture : &nbsp &nbsp</span><input type="file" name="pro_pic" placeholder="Profile Picture" >
+                                    </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
                                       <select name="student_gender">
-                                        <option value="">-- Please Select --</option>
+                                        <!-- <option value="">-- Please Select --</option> -->
                                         <?php
-                                          if ($student_gender == 'male')
-                                          {
-                                          ?>
-                                            <option value="male" selected>Male</option>
-                                            <option value="female">Female</option>
-                                          <?php
-                                          }
-                                          elseif($student_gender == 'female')
+                                          if ($student_gender == 'female')
                                           {
                                           ?>
                                             <option value="male">Male</option>
                                             <option value="female" selected>Female</option>
+                                          <?php
+                                          }
+                                          else
+                                          {
+                                          ?>
+                                            <option value="male" selected="">Male</option>
+                                            <option value="female">Female</option>
                                           <?php
                                           }
                                           ?>

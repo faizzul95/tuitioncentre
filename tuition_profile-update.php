@@ -20,6 +20,7 @@
   $tuition_state = $row['tuition_state'];
   $tuition_dist = $row['tuition_district'];
   $tuition_area = $row['tuition_area'];
+  $tuition_img = $row['tuition_img'];
  
 ?>
 
@@ -112,12 +113,12 @@
                     <div class="col-md-4">
                       <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
+                        <img src="profile_pic/<?php echo $tuition_img; ?>" alt="">
+                       <!--  <div class="upload-img-field">
 
-                        <div class="upload-img-field">
+                        </div> -->
 
-                        </div>
-
-                        <a class="btn btn-default" href="#">Upload a Picture</a>
+                        <!-- <a class="btn btn-default" href="controller.php?UPLOAD_PIC=<?php echo $user_id; ?>&TUITION=<?php echo $tuition_id; ?>">Upload a Picture</a> -->
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">
@@ -143,7 +144,7 @@
                     </div> <!-- end .3col grid layout -->
                     <div class="col-md-8">
                       <div class="job-reg-form">
-                        <form action="controller.php" method="post">
+                        <form action="controller.php" method="post" enctype="multipart/form-data">
                           
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                           <div class="candidate-single-content">
@@ -167,6 +168,9 @@
                                       <input type="text" name="tuition_email" placeholder="Email Address" required value="<?php echo $tuition_email; ?>">
                                     </div> <!-- end .skill-selectbox -->
                                     <div class="skill-selectbox mb10">
+                                    <div class="skill-selectbox mb10">
+                                      <span style="float: left">Upload Profile Picture : &nbsp &nbsp</span><input type="file" name="pro_pic" placeholder="Profile Picture" >
+                                    </div> <!-- end .skill-selectbox -->
                                       <select name="tuition_state" id="tuition_state" onchange="state_change()" required>
                                         <option value="">Choose State</option>
                                         <?php
