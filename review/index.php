@@ -158,10 +158,11 @@
 					$package_taken = $rating['package_name'];	
 					$date=date_create($rating['review_created']);
 					$reviewDate = date_format($date,"M d, Y");
+					$img = $rating['student_img'];
 				?>				
 					<div class="row">
 						<div class="col-sm-3">
-							<img src="review/image/profile.png" class="img-rounded">
+							<img src="profile_pic/<?php echo $img; ?>" class="img-rounded">
 							<div class="review-block-name">By <a href="#"><?php echo $posted_by; ?></a></div>
 							<div class="review-block-name">Package Taken : <a href="#"><?php echo $package_taken; ?></a></div>
 							<div class="review-block-date"><?php echo $reviewDate; ?></div>

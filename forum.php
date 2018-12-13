@@ -127,7 +127,7 @@ if(isset($_SESSION['student_id']) )
                ?>
          
               <div class="candidate-description client-description applicants-content">
-
+                <!-- <img src="profile_pic/<?php echo $img; ?>" class="img-rounded"> -->
                 <div class="language-print client-des clearfix">
                   <!-- end .aplicants-pic -->
                   <div class="clearfix">

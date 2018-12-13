@@ -166,7 +166,6 @@
 
                                             if ( $row['payment_status'] == 'UNPAID')
                                             { 
-                                                // if ( $row['start_date'] < $today )
                                             ?>
                                                 <button class="btn btn-default" onclick="location.href='pay_package.php?payment_id=<?php echo $row['payment_id']; ?>';">Pay</button> 
                                             <?php

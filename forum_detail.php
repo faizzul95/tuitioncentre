@@ -120,13 +120,28 @@ echo "forum date : $forum_date";
                 $username = $row['user_username'];
               }
               $com_date = $row['com_date'];
+
+              $sql_img = "SELECT * FROM `parent` WHERE `user_id` = '$com_user'";
+              $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));
+              
+              if (mysqli_num_rows($sql_img)>0){
+                $row_img = mysqli_fetch_array($sql_img);
+                $img = $row_img['parent_img'];
+              }
+              else{
+                $sql_img = "SELECT * FROM `student` WHERE `user_id` = '$com_user'";
+                $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  
+
+                $row_img = mysqli_fetch_array($sql_img);
+                $img = $row_img['student_img'];
+              }
           ?>        
     <div class="row">
       <div class="col-sm-9">
         <div class="review-block">    
           <div class="row">
             <div class="col-sm-3">
-              <img src="review/image/profile.png" class="img-rounded">
+              <img src="profile_pic/<?php echo $img; ?>" class="img-rounded">
               <!-- <div class="review-block-name">By <a href="#"><?php echo $username; ?></a></div> -->
               <!-- <div class="review-block-name">Package Taken : <a href="#"><?php echo $package_taken; ?></a></div> -->
             </div>
