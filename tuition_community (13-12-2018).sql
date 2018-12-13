@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2018 at 09:19 AM
+-- Generation Time: Dec 13, 2018 at 09:55 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -64,8 +64,7 @@ CREATE TABLE IF NOT EXISTS `forum` (
 --
 
 INSERT INTO `forum` (`forum_id`, `forum_user`, `forum_title`, `forum_desc`, `forum_date`) VALUES
-(1, 2, 'test', 'test 1', '2018-12-09 22:17:48'),
-(2, 2, 'test 2', 'test 2                    	', '2018-12-09 22:19:34');
+(2, 1, 'test 2', 'test 2                    	', '2018-12-09 22:19:34');
 
 -- --------------------------------------------------------
 
@@ -956,6 +955,7 @@ CREATE TABLE IF NOT EXISTS `parent` (
   `parent_dob` date DEFAULT NULL,
   `parent_gender` varchar(25) NOT NULL,
   `parent_email` varchar(255) NOT NULL,
+  `parent_img` varchar(255) NOT NULL DEFAULT 'user.png',
   `parent_last_update` date DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`parent_id`)
@@ -965,8 +965,8 @@ CREATE TABLE IF NOT EXISTS `parent` (
 -- Dumping data for table `parent`
 --
 
-INSERT INTO `parent` (`parent_id`, `parent_name`, `parent_ic`, `parent_telno`, `parent_dob`, `parent_gender`, `parent_email`, `parent_last_update`, `user_id`) VALUES
-(1, 'pppp', 'ppp', 'ppp', '2018-11-08', 'male', 'ppp', '2018-11-06', 3);
+INSERT INTO `parent` (`parent_id`, `parent_name`, `parent_ic`, `parent_telno`, `parent_dob`, `parent_gender`, `parent_email`, `parent_img`, `parent_last_update`, `user_id`) VALUES
+(1, 'pppp', 'ppp', 'ppp', '2018-11-08', 'male', 'ppp', 'user.png', '2018-11-06', 3);
 
 -- --------------------------------------------------------
 
@@ -987,7 +987,6 @@ CREATE TABLE IF NOT EXISTS `payment` (
 --
 
 INSERT INTO `payment` (`payment_id`, `payment_status`, `payment_receipt`, `list_id`) VALUES
-(2, 'PAID', '2.jpg', 8),
 (3, 'PAID', '', 1),
 (4, 'UNPAID', '', 5);
 
@@ -999,10 +998,13 @@ INSERT INTO `payment` (`payment_id`, `payment_status`, `payment_receipt`, `list_
 
 CREATE TABLE IF NOT EXISTS `profilepic_upload` (
   `upload_id` int(11) NOT NULL AUTO_INCREMENT,
-  `usr_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `tuition_id` int(11) NOT NULL,
   `image` varchar(255) DEFAULT 'user.png',
   PRIMARY KEY (`upload_id`),
-  KEY `usr_id` (`usr_id`)
+  KEY `usr_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -1015,25 +1017,26 @@ CREATE TABLE IF NOT EXISTS `student` (
   `student_id` int(11) NOT NULL AUTO_INCREMENT,
   `student_name` varchar(255) NOT NULL,
   `student_ic` varchar(255) NOT NULL,
-  `student_start_date` date DEFAULT NULL,
   `student_telno` varchar(255) NOT NULL,
   `student_dob` date DEFAULT NULL,
   `student_gender` varchar(25) NOT NULL,
   `student_email` varchar(255) NOT NULL,
+  `student_img` varchar(255) NOT NULL DEFAULT 'user.png',
   `student_last_update` date DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`student_id`, `student_name`, `student_ic`, `student_start_date`, `student_telno`, `student_dob`, `student_gender`, `student_email`, `student_last_update`, `user_id`) VALUES
-(1, 'sss', 'sss', NULL, '01122336655', '2018-11-20', 'female', 'fahmy_izwan@yahoo.com', '2018-11-04', 2),
-(2, 'Mohd Fahmy Izwan Bin Zulkhafri', '930514025299', NULL, '01111019984', '2018-08-15', 'male', 'fahmy_izwan@yahoo.com', '2018-11-08', 3),
-(3, 'chil1', 'child1', NULL, 'chil1', '2000-01-01', 'male', 'child1', '2018-11-17', 3),
-(4, 'child22', 'child2', NULL, 'child2', '0000-00-00', 'male', 'child2', '2018-11-17', 3);
+INSERT INTO `student` (`student_id`, `student_name`, `student_ic`, `student_telno`, `student_dob`, `student_gender`, `student_email`, `student_img`, `student_last_update`, `user_id`) VALUES
+(1, 'sss', 'sss', '01122336655', '2018-11-20', 'female', 'fahmy_izwan@yahoo.com', 'user.png', '2018-11-04', 2),
+(2, 'Mohd Fahmy Izwan Bin Zulkhafri', '930514025299', '01111019984', '2018-08-15', 'male', 'fahmy_izwan@yahoo.com', 'user.png', '2018-11-08', 3),
+(3, 'chil1', 'child1', 'chil1', '2000-01-01', 'male', 'child1', 'user.png', '2018-11-17', 3),
+(4, 'child22', 'child2', 'child2', '0000-00-00', 'male', 'child2', 'user.png', '2018-11-17', 3),
+(8, 'ss2', 'ss2', 'ss2', '2018-12-04', 'male', 'ss2', 'user.png', '2018-12-12', 7);
 
 -- --------------------------------------------------------
 
@@ -1053,6 +1056,7 @@ CREATE TABLE IF NOT EXISTS `tuition` (
   `tuition_lat` float NOT NULL,
   `tuition_lon` float NOT NULL,
   `tuition_rating` float NOT NULL,
+  `tuition_img` varchar(255) NOT NULL DEFAULT 'user.png',
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`tuition_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
@@ -1061,11 +1065,11 @@ CREATE TABLE IF NOT EXISTS `tuition` (
 -- Dumping data for table `tuition`
 --
 
-INSERT INTO `tuition` (`tuition_id`, `tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_district`, `tuition_area`, `tuition_lat`, `tuition_lon`, `tuition_rating`, `user_id`) VALUES
-(1, 'aaaa', 'aaa', 'aaa', 'aaa', 'JOHOR', 'test', 'Shah Alam', 6, 105, 3.5, 1),
-(2, 'bbb', 'bbb', 'bbb', 'bbb', 'JOHOR', 'test', 'Shah Alam', 5, 104, 2.6, 2),
-(3, 'ttt', 'ttt', 'tt', 'ttt', 'Selangor', 'Petaling', 'Damansara', 4, 103, 0, 5),
-(4, 't2t2', 't2t2', 't2t2', 't2t2', 'WP', 'Kuala Lumpur', 'Kuala Lumpur', 3.14091, 101.616, 0, 6);
+INSERT INTO `tuition` (`tuition_id`, `tuition_name`, `tuition_telno`, `tuition_email`, `tuition_address`, `tuition_state`, `tuition_district`, `tuition_area`, `tuition_lat`, `tuition_lon`, `tuition_rating`, `tuition_img`, `user_id`) VALUES
+(1, 'aaaa', 'aaa', 'aaa', 'aaa', 'WP', 'test', 'Labuan', 6, 105, 3.66667, 'user.png', 1),
+(2, 'bbb', 'bbb', 'bbb', 'bbb', 'JOHOR', 'test', 'Shah Alam', 5, 104, 2.6, 'user.png', 2),
+(3, 'ttt', 'ttt', 'tt', 'ttt', 'Selangor', 'Petaling', 'Damansara', 4, 103, 0, 'user.png', 5),
+(4, 't2t2', 't2t2', 't2t2', 't2t2', 'WP', 'Kuala Lumpur', 'Kuala Lumpur', 3.14091, 101.616, 0, 'user.png', 6);
 
 -- --------------------------------------------------------
 
@@ -1136,7 +1140,7 @@ CREATE TABLE IF NOT EXISTS `tuition_review` (
   `review_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `student_id` int(11) NOT NULL,
   PRIMARY KEY (`rating_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `tuition_review`
@@ -1145,7 +1149,8 @@ CREATE TABLE IF NOT EXISTS `tuition_review` (
 INSERT INTO `tuition_review` (`rating_id`, `package_id`, `tuition_id`, `review_star`, `review_title`, `review_comments`, `review_created`, `student_id`) VALUES
 (1, 3, 3, 3, 'OKAY', 'Terbaoeekkkk', '2018-11-02 00:00:00', 0),
 (2, 7, 1, 4, 'qwe', 'asd', '2018-11-10 01:14:40', 1),
-(3, 9, 1, 3, 'qqq', 'aaa', '2018-11-10 01:36:12', 1);
+(3, 9, 1, 3, 'qqq', 'aaa', '2018-11-10 01:36:12', 1),
+(4, 9, 1, 4, 'q', '2', '2018-12-13 15:58:55', 2);
 
 -- --------------------------------------------------------
 
@@ -1159,7 +1164,7 @@ CREATE TABLE IF NOT EXISTS `tuition_student_list` (
   `student_id` int(100) NOT NULL,
   `start_date` date NOT NULL,
   PRIMARY KEY (`list_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `tuition_student_list`
@@ -1167,8 +1172,7 @@ CREATE TABLE IF NOT EXISTS `tuition_student_list` (
 
 INSERT INTO `tuition_student_list` (`list_id`, `package_id`, `student_id`, `start_date`) VALUES
 (1, 9, 2, '2018-11-07'),
-(5, 9, 3, '2018-11-19'),
-(8, 9, 1, '2018-11-28');
+(5, 9, 3, '2018-11-19');
 
 -- --------------------------------------------------------
 
@@ -1182,7 +1186,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_type` varchar(100) NOT NULL,
   `user_password` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `user`
@@ -1193,7 +1197,8 @@ INSERT INTO `user` (`user_id`, `user_username`, `user_type`, `user_password`) VA
 (2, 'sss', 'student', 'sss'),
 (3, 'ppp', 'parent', 'ppp'),
 (5, 'ttt', 'tuition', 'ttt'),
-(6, 't2t2', 'tuition', 't2t2');
+(6, 't2t2', 'tuition', 't2t2'),
+(7, 'ss2', 'student', 'ss2');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

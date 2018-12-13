@@ -4,8 +4,16 @@ if(isset($_SESSION['user_id']))
 {
   if($_SESSION['user_type']=="parent") 
   {
+    if(isset($_GET['student_id']))
+    {
      $_SESSION['student_id'] = $_GET['student_id'];
+    }
   }
+}
+
+if(isset($_SESSION['student_id']))
+{
+  $student_id = $_SESSION['student_id'];
 }
 
 if( isset($_GET['check']) )

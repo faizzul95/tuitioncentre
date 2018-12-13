@@ -130,7 +130,7 @@ if (isset($_POST['reg_std_info']))
             $last_id = mysqli_insert_id($myConnection);
             $_SESSION['student_id'] = $last_id;
 
-            $std_img = save_img('student',$student_id);
+            $std_img = save_img('student',$last_id);
             
             $query_std = "UPDATE `student` SET `student_img`='$std_img' WHERE `student_id`='$last_id'";
             $res_std = mysqli_query($myConnection,$query_std) or die(mysqli_error($myConnection));

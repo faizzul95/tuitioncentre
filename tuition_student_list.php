@@ -185,6 +185,7 @@
 
                                       </tbody>
                                     </table>
+                                    Print from : <input type="date" name="dt_from" id="dt_from"> to : <input type="date" name="dt_to" id="dt_to">
                                     <button style="float: right" class="btn btn-default" onclick="print_list(<?php echo $package_id; ?>)">Print</button>
 
 
@@ -252,7 +253,14 @@
         function print_list(package_id)
         {
           var url = "print_list.php?package_id=";
+          var dt_from = $('#dt_from').val();
+          var dt_to = $('#dt_to').val();
+
           url = url.concat(package_id);
+          url = url.concat("&from=");
+          url = url.concat(dt_from);
+          url = url.concat("&to=");
+          url = url.concat(dt_to);
 
           window.open(url, "_blank", "resizable=yes,top=100,left=500,width=800,height=800");
         }

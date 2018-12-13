@@ -153,6 +153,17 @@
                                           <td><center><?php echo $row['package_price']; ?></center></td>
                                           <td><center>
                                           <?php
+                                            $startDate = new DateTime($row['start_date']);
+                                            $package_id = $row['package_id'];
+                                            $reviewed = false;
+
+                                            $sql_rev = "select * from `tuition_review` where `package_id` = '$package_id' and `student_id` = '$student_id'";
+                                            $res_rev = mysqli_query($myConnection,$sql_rev) or die(mysqli_error($myConnection));
+                                            if (mysqli_num_rows($res_rev)>0)
+                                            {
+                                              $reviewed = true;
+                                            }
+
                                             if ( $row['payment_status'] == 'UNPAID')
                                             { 
                                                 // if ( $row['start_date'] < $today )
@@ -165,13 +176,26 @@
                                                 Pending
                                             <?php
                                             }
-                                            else  //paid
-                                            { ?>
+                                            elseif( $row['payment_status'] == 'PAID' && $today >= $startDate && !$reviewed)  //paid and after start date
+                                            { 
+                                              ?>
+                                                Confirmed<br>
                                                 <button class="btn btn-default" onclick="location.href='review_package.php?package_id=<?php echo $row['package_id']; ?>';">Review</button>
                                             <?php
                                             }
+                                            elseif( $row['payment_status'] == 'PAID' && $today >= $startDate && $reviewed) //paid and reviewed
+                                            {
+                                              ?>
+                                                Confirmed <br> Reviewed
+                                              <?php
+                                            }
+                                            else
+                                            {
+                                              ?>
+                                              Confirmed
+                                              <?php
+                                            }
 
-                                            $startDate = new DateTime($row['start_date']);
                                             if ($today <= $startDate)
                                             {
                                               ?>

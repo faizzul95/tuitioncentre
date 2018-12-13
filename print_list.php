@@ -8,6 +8,11 @@
 {
   $package_id = $_GET['package_id'];
 
+  $dt_from = $_GET['from'] ?: '0001-01-01';
+  // $dt_from = new DateTime($dt_from);
+  $dt_to = $_GET['to'] ?: '9999-12-31';
+  // $dt_to = new DateTime($dt_to);
+
   $sql = "SELECT * FROM `tuition_package` where `package_id` = '$package_id'";
   $sql_package = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
   $row = mysqli_fetch_array($sql_package);
@@ -66,7 +71,9 @@
                             $sql = "SELECT * FROM `tuition_student_list` 
                                     inner join `student` on `student`.`student_id` = `tuition_student_list`.`student_id` 
                                     inner join `payment` on `payment`.`list_id` = `tuition_student_list`.`list_id`
-                                    WHERE `package_id` = '$package_id'";
+                                    WHERE `package_id` = '$package_id' AND date_format(`start_date`,'%Y-%m-%d') >= date_format('$dt_from','%Y-%m-%d') 
+                                    AND date_format(`start_date`,'%Y-%m-%d') <= date_format('$dt_to','%Y-%m-%d')";
+
                             $sql_student = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 
                             if (mysqli_num_rows($sql_student)==0){
