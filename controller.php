@@ -652,14 +652,18 @@ if(isset($_POST['std_register_package']))
         {
             echo "<script type='text/javascript'>alert('Payment Data is not stored');</script>";
         }
-        // mail function
-         $title = "TUITION CENTER";
-         $message = "Kelas anda akan bermula pada : ".$start_date;
-        
-         $to = $email;
-         $subject = "PENDAFTARAN TUITION TELAH BERJAYA";
 
-         mail($to, $subject, $message);
+        $sql = "SELECT * FROM `student` WHERE `student_id` = '$student_id'";
+        $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+        $row = mysqli_fetch_assoc($sql_usr);
+        $email = $row['student_email'];
+        $name = $row['student_name'];
+
+        // mail function
+         $message = "Hi $name,\nKelas anda akan bermula pada : ".$start_date;
+         $subject = "PENDAFTARAN TUISYEN";
+
+         mail($email, $subject, $message);
 
         echo "<script type='text/javascript'>alert('Registered Successfully');</script>";
         echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
@@ -878,4 +882,71 @@ if (isset($_POST['comm']))
         echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
         echo "<script type='text/javascript'> document.location='forum_detail.php?forum_id=$forum_id'; </script>";
     }
+}
+
+if(isset($_GET['forgotpass']))
+{
+    $username = $_GET['forgotpass'];
+
+    if (!empty($username))
+    {
+        $sql = "SELECT * FROM `user` WHERE `user_username` = '$username'";
+        $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+        if(mysqli_num_rows($sql_usr)>0)
+        {
+            $row = mysqli_fetch_assoc($sql_usr);
+            $user_id = $row['user_id'];
+            $pass = $row['user_password'];
+            $user_type = $row['user_type'];
+
+            if($user_type == 'student'){
+                $sql = "SELECT * FROM `student` WHERE `user_id` = '$user_id'";
+                $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                $row = mysqli_fetch_assoc($sql_usr);
+
+                $email = $row['student_email'];
+            }
+            elseif ($user_type == 'parent') {
+                $sql = "SELECT * FROM `parent` WHERE `user_id` = '$user_id'";
+                $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                $row = mysqli_fetch_assoc($sql_usr);            
+
+                $email = $row['parent_email'];    
+            }
+            else{
+                $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$user_id'";
+                $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                $row = mysqli_fetch_assoc($sql_usr);
+
+                $email = $row['tuition_email'];
+            }
+
+            $msg = "Your username and password is :\n\tUsername : $username\n\tPassword : $pass";
+            $msg = wordwrap($msg,70);
+            if ( mail($email,"Forgot Password",$msg) )
+            {
+                echo "<script type='text/javascript'>alert('Email sent sucessfully. Please check your email.');</script>";
+                echo "<script type='text/javascript'> document.location='login.php'; </script>";
+            }
+            else
+            {
+                echo "<script type='text/javascript'>alert('Email sending fail. Please try again.');</script>";
+                echo "<script type='text/javascript'> document.location='login.php'; </script>";
+            }
+            
+        }   
+        else
+        {
+            echo "<script type='text/javascript'>alert('Username not found. Please enter correct username or register new.');</script>";
+            echo "<script type='text/javascript'> document.location='login.php'; </script>";
+        } 
+
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Please enter username and click forgot password.');</script>";
+        echo "<script type='text/javascript'> document.location='login.php'; </script>";
+    }
+
 }

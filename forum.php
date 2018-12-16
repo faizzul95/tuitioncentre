@@ -108,12 +108,40 @@ if(isset($_SESSION['student_id']) )
               if (mysqli_num_rows($sql_forum)==0){
                      echo "No Forum found";
                }
-             
+             // print_r($_SESSION);
              while($row = mysqli_fetch_assoc($sql_forum))
                 { 
                   $forum_title = $row['forum_title'];
                   $forum_desc = $row['forum_desc'];
                   $forum_user = $row['forum_user'];
+                  $forum_user_type = $row['user_type'];
+                  $forum_user_id = $row['user_id'];
+                  // echo $forum_user_type;
+
+                  if($forum_user_type == 'student')
+                  {
+                      $sql_img = "SELECT * FROM `student` WHERE `user_id` = '$forum_user_id'";
+                      $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  
+
+                      $row_img = mysqli_fetch_array($sql_img);
+                      $img = $row_img['student_img'];
+                  }
+                  elseif ($forum_user_type == 'parent')
+                  {
+                      $sql_img = "SELECT * FROM `parent` WHERE `user_id` = '$forum_user_id'";
+                      $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  
+
+                      $row_img = mysqli_fetch_array($sql_img);
+                      $img = $row_img['parent_img'];
+                  }
+                  else
+                  {
+                      $sql_img = "SELECT * FROM `tuition` WHERE `user_id` = '$forum_user_id'";
+                      $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  
+
+                      $row_img = mysqli_fetch_array($sql_img);
+                      $img = $row_img['tuition_img']; 
+                  }
 
                   if($forum_user == $_SESSION['user_id'])
                   {
@@ -127,8 +155,10 @@ if(isset($_SESSION['student_id']) )
                ?>
          
               <div class="candidate-description client-description applicants-content">
-                <!-- <img src="profile_pic/<?php echo $img; ?>" class="img-rounded"> -->
                 <div class="language-print client-des clearfix">
+                <div class="aplicants-pic">
+                    <img src="profile_pic/<?php echo $img; ?>" class="img-rounded">
+                </div>
                   <!-- end .aplicants-pic -->
                   <div class="clearfix">
                     <div class="pull-left">

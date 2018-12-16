@@ -1,4 +1,4 @@
-<?php 
+  <?php 
 session_start();
 include("connection.php");
 
@@ -178,11 +178,16 @@ $lon = $_POST['lon'];
                   $telno = $row['tuition_telno'];
                   $tuition_address = $row['tuition_address'];
                   $rate = $row['tuition_rating'];
+                  $img = $row['tuition_img'];
                ?>
          
               <div class="candidate-description client-description applicants-content">
 
                 <div class="language-print client-des clearfix">
+                  <div class="aplicants-pic">
+                <img src="profile_pic/<?php echo $img; ?>" class="img-rounded">
+                    
+                  </div>
                   <!-- end .aplicants-pic -->
                   <div class="clearfix">
                     <div class="pull-left">

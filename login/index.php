@@ -25,7 +25,7 @@
             <label>
               Username <span class="req">*</span>
             </label>
-            <input style="color: #C0C0C0;" type="text" name="username" required autocomplete="off"/>
+            <input style="color: #C0C0C0;" type="text" id="username" name="username" required autocomplete="off"/>
           </div>
 
           <div class="field-wrap">
@@ -34,7 +34,7 @@
             </label>
             <input style="color: #C0C0C0;" type="password" name="password" required autocomplete="off"/>
           </div>
-          
+          <span style="float: right"><u><a onclick="forgot()">Forgot password</a></u></span>
           <button type="submit" name="signin" class="button button-block"/>LOGIN</button>
           
           </form>
@@ -50,3 +50,12 @@
 </body>
 
 </html>
+<script type="text/javascript">
+  function forgot()
+  {
+    var username = $('#username').val();
+    url = "controller.php?forgotpass=";
+
+    window.location.href = url+username;
+  }
+</script>
