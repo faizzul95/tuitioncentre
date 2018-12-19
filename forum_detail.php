@@ -22,7 +22,32 @@ $row = mysqli_fetch_array($sql_forum);
 
 $forum_title = $row['forum_title'];
 $forum_desc = $row['forum_desc'];
-$forum_date = $row['forum_date'];
+$forum_date = date( 'd-M-Y', strtotime($row['forum_date']) );
+$forum_user = $row['forum_user'];
+
+$sql_img = "SELECT * FROM `parent` WHERE `user_id` = '$forum_user'";
+$sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));
+if (mysqli_num_rows($sql_img)>0){
+  $row_img = mysqli_fetch_array($sql_img);
+  $img = $row_img['parent_img'];
+}
+else{
+  $sql_img = "SELECT * FROM `student` WHERE `user_id` = '$forum_user'";
+  $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  
+
+  if (mysqli_num_rows($sql_img)>0){
+    $row_img = mysqli_fetch_array($sql_img);
+    $img = $row_img['student_img'];
+  }
+  else{
+    $sql_img = "SELECT * FROM `tuition` WHERE `user_id` = '$forum_user'";
+    $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));      
+    
+    $row_img = mysqli_fetch_array($sql_img);
+    $img = $row_img['tuition_img'];
+  }
+}
+
 if($row['forum_user'] == $usid)
 {
   $forum_posted = 'You';
@@ -31,10 +56,6 @@ else
 {
   $forum_posted = $row['user_username'];
 }
-
-echo "forum title : $forum_title";
-echo "forum desc : $forum_desc";
-echo "forum date : $forum_date";
 
 ?>
 
@@ -90,24 +111,27 @@ echo "forum date : $forum_date";
           
     <div class="row">
       <div class="col-sm-9">
-        <div class="review-block">    
+        <div class="review-block" >    
           <div class="row">
-            <div class="col-sm-12">
-              <!-- <img src="review/image/profile.png" class="img-rounded"> -->
-              <div class="review-block-name"><h5>Title : <?php echo $forum_title; ?></h5></div>
+            <div class="col-sm-3">
+              <br>
+             <div class="img-rounded"> <img src="profile_pic/<?php echo $img; ?>" class="img-rounded" style="height: 120px"> </div>
+            </div>
+            <div class="col-sm-9">
+              <div class="review-block-name"><h5><?php echo $forum_title; ?></h5><h8><?php echo $forum_posted; ?></h8></div>
               <div class="review-block-description"><h6>Description : <?php echo $forum_desc; ?></h6></div>
-              <!-- <div class="review-block-name">Package Taken : <a href="#"><?php echo $package_taken; ?></a></div> -->
               <div class="review-block-date" style="float: right"><?php echo $forum_date; ?></div>
             </div>
           </div>
           </div>
-          <hr/>         
         </div>
       </div>       
   
           <?php
             $sql = "SELECT * FROM `comment` INNER JOIN `user` ON `user_id` = `com_user` WHERE `com_forum_id` = '$forum_id'";
             $res = mysqli_query($myConnection,$sql) or die("database error:". mysqli_error($myConnection));
+
+            $i = 1;
             while($row = mysqli_fetch_array($res)){
               $com_desc = $row['com_desc'];
               $com_user = $row['com_user'];
@@ -119,7 +143,7 @@ echo "forum date : $forum_date";
               {
                 $username = $row['user_username'];
               }
-              $com_date = $row['com_date'];
+              $com_date = date( 'd-M-Y', strtotime($row['com_date']) );
 
               $sql_img = "SELECT * FROM `parent` WHERE `user_id` = '$com_user'";
               $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));
@@ -135,29 +159,39 @@ echo "forum date : $forum_date";
                 $row_img = mysqli_fetch_array($sql_img);
                 $img = $row_img['student_img'];
               }
+              if($i%2 == 0){
+                $color = "background-color: #E7EBEE";
+              }
+              else{
+                $color = "background-color: #D4D8DC";
+              }
+              $i++;
           ?>        
+          <br>
     <div class="row">
-      <div class="col-sm-9">
+      <div class="col-sm-9" style="background-color: #e5e5e5" >
         <div class="review-block">    
-          <div class="row">
-            <div class="col-sm-3">
-              <img src="profile_pic/<?php echo $img; ?>" class="img-rounded">
-              <!-- <div class="review-block-name">By <a href="#"><?php echo $username; ?></a></div> -->
+          <div class="row" style="">
+            <div class="col-sm-3" style="border-right: 1px solid #FFF">
+              <div><img src="profile_pic/<?php echo $img; ?>" class="img-rounded" style='height: 60px'></div><br>
+              <div class="review-block-name" style="float:left">By <a href="#"><?php echo $username; ?></a></div><br>
+              <div class="review-block-date" style="float: left;"><?php echo $com_date; ?></div>
               <!-- <div class="review-block-name">Package Taken : <a href="#"><?php echo $package_taken; ?></a></div> -->
             </div>
             <div class="col-sm-9">            
               <!-- <div class="review-block-title"><?php echo $rating['review_title']; ?></div> -->
-              <div class="review-block-description"><?php echo $com_desc; ?></div>
+              <br>
+              <div class="review-block-description"><?php echo $com_desc; ?></div><br>
             </div>
-            <div class="col-sm-12">
-              <div class="review-block-date">By <a href="#"><?php echo $username; ?></a><span style="float: right;"><?php echo $com_date; ?></span></div>
-            </div>
+            <!-- <div class="col-sm-12"> -->
+              <!-- <div class="review-block-date">By <a href="#"><?php echo $username; ?></a><span style="float: right;"><?php echo $com_date; ?></span></div> -->
+            <!-- </div> -->
           </div>
           </div>
-          <hr/>         
         </div>
       </div>
         <?php } ?>
+        <br>
       <div class="col-sm-9">
         <form action="controller.php" method="post">
           <input type="hidden" name="forum_id" value="<?php echo $forum_id; ?>">
