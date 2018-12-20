@@ -119,7 +119,7 @@ else
             </div>
             <div class="col-sm-9">
               <div class="review-block-name"><h5><?php echo $forum_title; ?></h5><h8><?php echo $forum_posted; ?></h8></div>
-              <div class="review-block-description"><h6>Description : <?php echo $forum_desc; ?></h6></div>
+              <div class="review-block-description"><h6>Description : <?php echo wordwrap($forum_desc,80,"<br>\n"); ?></h6></div>
               <div class="review-block-date" style="float: right"><?php echo $forum_date; ?></div>
             </div>
           </div>
@@ -128,7 +128,7 @@ else
       </div>       
   
           <?php
-            $sql = "SELECT * FROM `comment` INNER JOIN `user` ON `user_id` = `com_user` WHERE `com_forum_id` = '$forum_id'";
+            $sql = "SELECT * FROM `comment` INNER JOIN `user` ON `user_id` = `com_user` WHERE `com_forum_id` = '$forum_id' ORDER BY `com_date`";
             $res = mysqli_query($myConnection,$sql) or die("database error:". mysqli_error($myConnection));
 
             $i = 1;
@@ -181,7 +181,7 @@ else
             <div class="col-sm-9">            
               <!-- <div class="review-block-title"><?php echo $rating['review_title']; ?></div> -->
               <br>
-              <div class="review-block-description"><?php echo $com_desc; ?></div><br>
+              <div class="review-block-description"><?php echo wordwrap($com_desc,100,"<br>\n"); ?></div><br>
             </div>
             <!-- <div class="col-sm-12"> -->
               <!-- <div class="review-block-date">By <a href="#"><?php echo $username; ?></a><span style="float: right;"><?php echo $com_date; ?></span></div> -->

@@ -57,7 +57,7 @@ if( isset($_GET['check']) )
       <!-- end #header -->
 
       <!-- Page Content -->
-      <div id="page-content">
+      <div id="page-content" style="background-image: url('img/tutor.jpg');">
 
         <div class="index-page-search-content">
           <div id="owl-demo" class="owl-carousel owl-theme">

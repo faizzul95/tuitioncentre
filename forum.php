@@ -61,7 +61,7 @@ if(isset($_SESSION['student_id']) )
       </div> <!-- end .header-page-title -->
       <!-- Page Content -->
 
-      <div id="page-content" class="page-content pt60">
+      <div id="page-content" class="page-content pt60" >
         <div class="container">
           <div class="row">
             <div class="col-sm-4 page-sidebar">
@@ -89,7 +89,7 @@ if(isset($_SESSION['student_id']) )
                 <div class="row">
 
                   <div class="col-sm-5 main-title">
-                    <h3 class="client-registration-title">Available Tuition</h3>
+                    <h3 class="client-registration-title">Available Forum</h3>
                   </div>
                 </div> <!-- end .row -->
               </div> <!-- end .view-sort div -->
