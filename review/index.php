@@ -157,7 +157,7 @@
 					$posted_by = $rating['student_name'];
 					$package_taken = $rating['package_name'];	
 					$date=date_create($rating['review_created']);
-					$reviewDate = date_format($date,"M d, Y");
+					$reviewDate = date_format($date,"d M Y h:i A");
 					$img = $rating['student_img'];
 				?>				
 					<div class="row">

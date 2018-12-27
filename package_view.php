@@ -165,19 +165,22 @@ $address = $row['tuition_address'];
                   <!-- end .aplicant-details-show -->
                   
                   <?php
-                  if ($count < $capacity)
+                  if ($_SESSION['user_type'] != 'tuition')
                   {
-                  ?>
-                    <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
-                  <?php
-                  }
-                  else
-                  {
+                    if ($count < $capacity)
+                    {
                     ?>
-                    <button disabled class="btn btn-info pull-right">Full</button>
+                      <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
                     <?php
+                    }
+                    else
+                    {
+                      ?>
+                      <button disabled class="btn btn-info pull-right">Full</button>
+                      <?php
+                    }
                   }
-                  ?>
+                    ?>
               </div> <!-- end .language-print -->
 
                 
