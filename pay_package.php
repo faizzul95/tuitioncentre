@@ -1,6 +1,8 @@
 <?php session_start(); 
 include_once("connection.php");
-
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 // echo '<pre>';
 // var_dump($_SESSION);
 // echo '</pre>';

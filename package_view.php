@@ -26,6 +26,7 @@ $email = $row['tuition_email'];
 $telno = $row['tuition_telno'];
 $name = $row['tuition_name'];
 $address = $row['tuition_address'];
+$tuition_img = $row['tuition_img'];
 
 ?>
 
@@ -82,9 +83,10 @@ $address = $row['tuition_address'];
                     <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
                         <!-- <img src="img/content/candidate-profile.jpg" alt=""> -->
-                        <div class="upload-img-field">
+                        <img src="profile_pic/<?php echo $tuition_img; ?>" alt="">
+                        <!-- <div class="upload-img-field"> -->
 
-                        </div>
+                        <!-- </div> -->
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">

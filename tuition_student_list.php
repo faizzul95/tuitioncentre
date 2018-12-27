@@ -18,6 +18,10 @@
   $tuition_id = $row['tuition_id'];
 }
 
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
+
  // $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
  // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  // $row = mysqli_fetch_array($sql_usr);

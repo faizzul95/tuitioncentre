@@ -1,6 +1,9 @@
 <?php 
  include_once("connection.php");
  session_start(); 
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
  $usid = $_SESSION['user_id'];
  $student_id = $_SESSION['student_id'];

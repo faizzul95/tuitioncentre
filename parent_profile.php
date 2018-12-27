@@ -1,10 +1,13 @@
 <?php 
 
  session_start(); 
+ include_once("connection.php");
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
  $user_id = $_SESSION['user_id'];
 
- include_once("connection.php");
  $sql = "SELECT * FROM `parent` WHERE `user_id` = '$user_id'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);

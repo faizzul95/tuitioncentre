@@ -1,6 +1,9 @@
 <?php 
  include_once("connection.php");
  session_start(); 
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
  $user_id = $_SESSION['user_id'];
  $sql = "select * from `student` where `user_id` = '$user_id'";
