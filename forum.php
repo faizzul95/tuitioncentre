@@ -119,6 +119,7 @@ if(isset($_SESSION['student_id']) )
                   $forum_user = $row['forum_user'];
                   $forum_user_type = $row['user_type'];
                   $forum_user_id = $row['user_id'];
+                  $forum_date = date( 'd M Y h:i A', strtotime($row['forum_date']) );
                   // echo $forum_user_type;
 
                   if($forum_user_type == 'student')
@@ -148,13 +149,12 @@ if(isset($_SESSION['student_id']) )
 
                   if($forum_user == $_SESSION['user_id'])
                   {
-                  	$username = 'You';
+                    $username = 'You';
                   }
                   else
                   {
-                  	$username = $row['user_username'];
+                    $username = $row['user_username'];
                   }
-                  $forum_date = $row['forum_date'];
                ?>
          
               <div class="candidate-description client-description applicants-content">

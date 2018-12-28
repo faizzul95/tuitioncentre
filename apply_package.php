@@ -1,8 +1,5 @@
 <?php session_start(); 
 include_once("connection.php");
-if ( !isset( $_SESSION['user_id'] ) ){
-  header('Location: login.php');
-}
 // echo '<pre>';
 // var_dump($_SESSION);
 // echo '</pre>';
@@ -16,6 +13,10 @@ else
   echo "<script type='text/javascript'>alert('No Student Id is set ! Please Log In Again');</script>";
   echo "<script type='text/javascript'> document.location='login.php'; </script>";
 }
+
+// if ( !isset( $_SESSION['user_id'] ) ){
+//   header('Location: login.php');
+// }
 
 if (isset($_GET['package_id']))
 {
@@ -101,6 +102,7 @@ if (isset($_GET['package_id']))
                       <form action="controller.php" class="default-form" method="post">
                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" >
                        <input type="hidden" name="package_id" value="<?php echo $package_id; ?>" >
+                       <input type="hidden" name="student_email" value="<?php echo $student_email; ?>">
                         <div class="single-content">
                           <label><span>*</span>Student Name</label>
                           <div class="company-name">
@@ -118,7 +120,7 @@ if (isset($_GET['package_id']))
                         <div class="single-content">
                           <label><span>*</span>Student Email</label>
                           <div class="company-name">
-                            <input type="text" name="student_email" value="<?php echo $student_email; ?>">
+                            <input type="text" name="student_email" disabled value="<?php echo $student_email; ?>">
                           </div>
                         </div> <!-- end .single-content -->
 

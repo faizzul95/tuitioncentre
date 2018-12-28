@@ -12,6 +12,7 @@
   // $dt_from = new DateTime($dt_from);
   $dt_to = $_GET['to'] ?: '9999-12-31';
   // $dt_to = new DateTime($dt_to);
+  $student_status = $_GET['status'] ?: 'all';
 
   $sql = "SELECT * FROM `tuition_package` where `package_id` = '$package_id'";
   $sql_package = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -67,12 +68,16 @@
                           <br><br>
 
                           <?php 
-                          
+                            $std_stat = "";
+                            if($student_status != 'all'){
+                              $std_stat = "AND `payment`.`payment_status` = '$student_status'";
+                            }
+
                             $sql = "SELECT * FROM `tuition_student_list` 
                                     inner join `student` on `student`.`student_id` = `tuition_student_list`.`student_id` 
                                     inner join `payment` on `payment`.`list_id` = `tuition_student_list`.`list_id`
                                     WHERE `package_id` = '$package_id' AND date_format(`start_date`,'%Y-%m-%d') >= date_format('$dt_from','%Y-%m-%d') 
-                                    AND date_format(`start_date`,'%Y-%m-%d') <= date_format('$dt_to','%Y-%m-%d')";
+                                    AND date_format(`start_date`,'%Y-%m-%d') <= date_format('$dt_to','%Y-%m-%d') {$std_stat}";
 
                             $sql_student = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
 

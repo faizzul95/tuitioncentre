@@ -167,8 +167,24 @@ $tuition_img = $row['tuition_img'];
                   <!-- end .aplicant-details-show -->
                   
                   <?php
-                  if ($_SESSION['user_type'] != 'tuition')
-                  {
+                  if (isset($_SESSION['user_type'])){
+                    if ($_SESSION['user_type'] != 'tuition')
+                    {
+                      if ($count < $capacity)
+                      {
+                      ?>
+                        <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
+                      <?php
+                      }
+                      else
+                      {
+                        ?>
+                        <button disabled class="btn btn-info pull-right">Full</button>
+                        <?php
+                      }
+                    }
+                  }
+                  else{
                     if ($count < $capacity)
                     {
                     ?>
@@ -182,6 +198,7 @@ $tuition_img = $row['tuition_img'];
                       <?php
                     }
                   }
+
                     ?>
               </div> <!-- end .language-print -->
 

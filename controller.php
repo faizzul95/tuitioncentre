@@ -660,8 +660,29 @@ if(isset($_POST['std_register_package']))
         $name = $row['student_name'];
 
         // mail function
-         $message = "Hi $name,\nKelas anda akan bermula pada : ".$start_date;
-         $subject = "PENDAFTARAN TUISYEN";
+        $sql = "SELECT * FROM `tuition_package` INNER JOIN `tuition` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id` WHERE `tuition_package`.`package_id` = '$package_id'";
+        $sql_tuit = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+        $row = mysqli_fetch_assoc($sql_tuit);
+
+        $tuition_name = $row['tuition_name'];
+        $package_name = $row['package_name'];
+
+        $subject = "PENDAFTARAN TUISYEN ".strtoupper($tuition_name)." : PAKEJ ".strtoupper($package_name);
+        $message = "Hi $name,\nKelas anda akan bermula pada : ".date( 'd M Y', strtotime($start_date) );
+
+        $sql = "SELECT * FROM `tuition_package_subject` INNER JOIN `master_subject` ON `master_subject`.`subject_id` = `tuition_package_subject`.`subject_id` WHERE `tuition_package_subject`.`package_id` = '$package_id'";
+        $sql_sub = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+        while( $row = mysqli_fetch_assoc($sql_sub) ){
+            $sub = $row['subject_name'];
+            $start_time = date( 'h:i A', strtotime($row['subject_start_hour']) );
+            $end_time = date( 'h:i A', strtotime($row['subject_end_hour']) );
+            $day = $row['subject_day'];
+
+            $message .= "\n\t{$sub} : {$day}({$start_time} - {$end_time})";
+        }
+
+
+
 
          mail($email, $subject, $message);
 

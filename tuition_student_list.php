@@ -189,9 +189,12 @@ if ( !isset( $_SESSION['user_id'] ) ){
 
                                       </tbody>
                                     </table>
-                                    Print from : <input type="date" name="dt_from" id="dt_from"> to : <input type="date" name="dt_to" id="dt_to">
+                                    Print from : <input type="date" name="dt_from" id="dt_from"> to : <input type="date" name="dt_to" id="dt_to"><br>
+                                    Student Status : <input type="radio" name="ss" value="all" style="margin: 5px" checked>All <input style="margin: 5px" type="radio" name="ss" value="paid">Paid 
+                                                     <input type="radio" name="ss" value="pending" style="margin: 5px">Pending <input type="radio" name="ss" style="margin: 5px" value="unpaid">Unpaid 
+                                                    
                                     <button style="float: right" class="btn btn-default" onclick="print_list(<?php echo $package_id; ?>)">Print</button>
-
+                                    <br><span id="ss"></span>
 
 
                       </div> <!-- end .candidate-details -->
@@ -229,7 +232,10 @@ if ( !isset( $_SESSION['user_id'] ) ){
 
       <script type="text/javascript">
         $('#tags').tagsInput();
-
+        $('input[name=ss]').change(function(){
+            var value = $( 'input[name=ss]:checked' ).val();
+            $('#ss').val(value);
+        });
       </script>
 
       <script type="text/javascript">
@@ -259,12 +265,15 @@ if ( !isset( $_SESSION['user_id'] ) ){
           var url = "print_list.php?package_id=";
           var dt_from = $('#dt_from').val();
           var dt_to = $('#dt_to').val();
+          var ss = $('#ss').val();
 
           url = url.concat(package_id);
           url = url.concat("&from=");
           url = url.concat(dt_from);
           url = url.concat("&to=");
           url = url.concat(dt_to);
+          url = url.concat("&status=");
+          url = url.concat(ss);
 
           window.open(url, "_blank", "resizable=yes,top=100,left=500,width=800,height=800");
         }
