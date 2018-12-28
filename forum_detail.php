@@ -159,8 +159,17 @@ else
                 $sql_img = "SELECT * FROM `student` WHERE `user_id` = '$com_user'";
                 $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  
 
-                $row_img = mysqli_fetch_array($sql_img);
-                $img = $row_img['student_img'];
+                if(mysqli_num_rows($sql_img)>0){
+                  $row_img = mysqli_fetch_array($sql_img);
+                  $img = $row_img['student_img'];
+                }
+                else{
+                  $sql_img = "SELECT * FROM `tuition` WHERE `user_id` = '$com_user'";
+                  $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));                    
+                
+                  $row_img = mysqli_fetch_array($sql_img);
+                  $img = $row_img['tuition_img'];
+                }
               }
               if($i%2 == 0){
                 $color = "background-color: #E7EBEE";

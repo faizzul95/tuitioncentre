@@ -170,7 +170,7 @@ if (isset($_POST['reg_prt_info']))
     
     $row = mysqli_fetch_array($check_prt);
     $pic = $row['parent_img'];
-    if ( $pic != 'user.png' and empty(basename($_FILES["pro_pic"]["name"])) )
+    if ( $pic != 'user.png' && empty(basename($_FILES["pro_pic"]["name"])) && mysqli_num_rows($check_prt)>0 )
     {
         $prt_img = $pic;
     }
