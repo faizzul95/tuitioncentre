@@ -332,15 +332,24 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
 
         if($_SESSION['user_type'] == 'student')
         {   
-            $sql = "SELECT `student_id` FROM `student` WHERE `user_id` = '$usr_id'";
+            $sql = "SELECT * FROM `student` WHERE `user_id` = '$usr_id'";
             $sql_std = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
             $row = mysqli_fetch_array($sql_std);
             $_SESSION['student_id'] = $row['student_id'];
+            $_SESSION['name'] = $row['student_name'];
+            $_SESSION['email'] = $row['student_email'];
 
             echo "<script type='text/javascript'> document.location='student_profile.php?studid=$usr_id'; </script>";
         }
         else if ($_SESSION['user_type'] == 'parent')
         {
+            $sql = "SELECT * FROM `parent` WHERE `user_id` = '$usr_id'";
+            $sql_std = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+            $row = mysqli_fetch_array($sql_std);
+            $_SESSION['parent_id'] = $row['parent_id'];
+            $_SESSION['name'] = $row['parent_name'];
+            $_SESSION['email'] = $row['parent_email'];
+
             echo "<script type='text/javascript'> document.location='parent_profile.php?parentid=$usr_id'; </script>";
         }
         else if ($_SESSION['user_type'] == 'tuition')

@@ -25,8 +25,9 @@
                                <li><a href="index.php">Home</a></li>
                               <li><a href="about.php">About us</a></li>
                                <li><a href="faq.php">FAQs</a></li>
+                               <li><a href="contact_us.php">Contact Us</a></li>
                               <li><a href="login.php">Login</a></li>
-                              <li><a href="register.php">Register</a></li>
+                              <!-- <li><a href="register.php">Register</a></li> -->
                             </ul>
                           </div>
                         </div> 
@@ -42,7 +43,7 @@
                            <li><a href="index.php">Home</a></li>
                           <?php }  ?>
 
-						<?php  if($_SESSION['user_type'] == 'parent') { ?>
+						          <?php  if($_SESSION['user_type'] == 'parent') { ?>
                           <li><a href="about.php">About us</a></li>
                         <?php } else if($_SESSION['user_type'] == 'student') { ?>
                           <li><a href="about.php">About us</a></li>
@@ -59,10 +60,6 @@
                         <?php } else { ?> 
                           <li><a href="faq.php">FAQs</a></li>
                         <?php } ?>
-                          
-                          
-                          
-                          
                        
                         <?php  if($_SESSION['user_type'] == 'parent') { ?>
                           <li><a href="parent_profile.php">Profile</a></li>
