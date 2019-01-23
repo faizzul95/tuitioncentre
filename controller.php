@@ -356,7 +356,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
         }
         else if ($_SESSION['user_type'] == 'admin')
         {
-        	echo "<script type='text/javascript'> document.location='admin_dashboard.php?id=$id'; </script>";
+        	echo "<script type='text/javascript'> document.location='admin/admin_dashboard.php'; </script>";
         }
      }
 
