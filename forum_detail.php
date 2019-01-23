@@ -27,6 +27,7 @@ $forum_title = $row['forum_title'];
 $forum_desc = $row['forum_desc'];
 $forum_date = date( 'd M Y h:i A', strtotime($row['forum_date']) );
 $forum_user = $row['forum_user'];
+$img = 'admin.jpg';
 
 $sql_img = "SELECT * FROM `parent` WHERE `user_id` = '$forum_user'";
 $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));
@@ -138,6 +139,7 @@ else
             while($row = mysqli_fetch_array($res)){
               $com_desc = $row['com_desc'];
               $com_user = $row['com_user'];
+
               if ($com_user == $_SESSION['user_id'])
               {
                 $username = 'You';
@@ -166,11 +168,17 @@ else
                 else{
                   $sql_img = "SELECT * FROM `tuition` WHERE `user_id` = '$com_user'";
                   $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));                    
-                
-                  $row_img = mysqli_fetch_array($sql_img);
-                  $img = $row_img['tuition_img'];
+                  
+                  if(mysqli_num_rows($sql_img)>0){
+                    $row_img = mysqli_fetch_array($sql_img);
+                    $img = $row_img['tuition_img'];
+                  }
+                  else{
+                    $img = 'admin.jpg';
+                  }
                 }
               }
+
               if($i%2 == 0){
                 $color = "background-color: #E7EBEE";
               }
@@ -191,12 +199,20 @@ else
               <!-- <div class="review-block-name">Package Taken : <a href="#"><?php echo $package_taken; ?></a></div> -->
             </div>
             <div class="col-sm-9">            
-              <!-- <div class="review-block-title"><?php echo $rating['review_title']; ?></div> -->
+              <!-- <div class="review-block-title"><?php //echo $rating['review_title']; ?></div> -->
               <br>
               <div class="review-block-description"><?php echo wordwrap($com_desc,100,"<br>\n"); ?></div><br>
+              <?php
+                if ($com_user == $_SESSION['user_id'] || $_SESSION['user_type'] == 'admin')
+                {
+              ?>
+                    <button name="del_comm" onclick="window.location='controller.php?DEL_COMM=<?php echo $row['com_id']; ?>&FORUM=<?php echo $forum_id; ?>';" class="btn btn-danger pull-right">Delete</button>
+              <?php
+                }
+              ?>
             </div>
             <!-- <div class="col-sm-12"> -->
-              <!-- <div class="review-block-date">By <a href="#"><?php echo $username; ?></a><span style="float: right;"><?php echo $com_date; ?></span></div> -->
+              <!-- <div class="review-block-date">By <a href="#"><?php //echo $username; ?></a><span style="float: right;"><?php //echo $com_date; ?></span></div> -->
             <!-- </div> -->
           </div>
           </div>
