@@ -343,7 +343,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
         {
             echo "<script type='text/javascript'> document.location='parent_profile.php?parentid=$usr_id'; </script>";
         }
-        else  //tuition
+        else if ($_SESSION['user_type'] == 'tuition')
         {
             $sql = "SELECT `tuition_id` FROM `tuition` WHERE `user_id` = '$usr_id'";
             $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -353,6 +353,10 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
             $id = $row['tuition_id'];
 
             echo "<script type='text/javascript'> document.location='tuition_profile.php?id=$id'; </script>";
+        }
+        else if ($_SESSION['user_type'] == 'admin')
+        {
+        	echo "<script type='text/javascript'> document.location='admin_dashboard.php?id=$id'; </script>";
         }
      }
 
