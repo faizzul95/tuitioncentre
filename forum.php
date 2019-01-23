@@ -138,7 +138,7 @@ if(isset($_SESSION['student_id']) )
                       $row_img = mysqli_fetch_array($sql_img);
                       $img = $row_img['parent_img'];
                   }
-                  else ($forum_user_type == 'tuition')
+                  elseif ($forum_user_type == 'tuition')
                   {
                       $sql_img = "SELECT * FROM `tuition` WHERE `user_id` = '$forum_user_id'";
                       $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  

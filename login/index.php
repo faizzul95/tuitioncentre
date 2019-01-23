@@ -34,6 +34,7 @@
             </label>
             <input style="color: #C0C0C0;" type="password" name="password" required autocomplete="off"/>
           </div>
+           <span style="float: left"><u><a href="register.php">Register</a></u></span>
           <span style="float: right"><u><a onclick="forgot()">Forgot password</a></u></span>
           <button type="submit" name="signin" class="button button-block"/>LOGIN</button>
           
