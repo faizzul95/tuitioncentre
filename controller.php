@@ -612,6 +612,9 @@ if(isset($_GET['DEL_FORUM']))
     $sql_del = "DELETE FROM `forum` WHERE `forum_id` = '$forum_id'";
     $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
 
+    $sql_del = "DELETE FROM `comment` WHERE `com_forum_id` = '$forum_id'";
+    $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
+
     if( $res_del )
     {
         echo "<script type='text/javascript'>alert('Forum deleted Successfully');</script>";
@@ -621,6 +624,26 @@ if(isset($_GET['DEL_FORUM']))
     {
         echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
         echo "<script type='text/javascript'> document.location='forum.php'; </script>";
+    }
+}
+
+if(isset($_GET['DEL_COMM']))
+{
+    $com_id = $_GET['DEL_COMM'];
+    $forum_id = $_GET['FORUM'];
+
+    $sql_del = "DELETE FROM `comment` WHERE `com_id` = '$com_id'";
+    $res_del = mysqli_query($myConnection,$sql_del) or die(mysqli_error($myConnection));
+
+    if( $res_del )
+    {
+        echo "<script type='text/javascript'>alert('Comment deleted Successfully');</script>";
+        echo "<script type='text/javascript'> document.location='forum_detail.php?forum_id=$forum_id'; </script>";
+    }
+    else 
+    {
+        echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+        echo "<script type='text/javascript'> document.location='forum_detail.php?forum_id=$forum_id'; </script>";
     }
 }
 

@@ -138,13 +138,17 @@ if(isset($_SESSION['student_id']) )
                       $row_img = mysqli_fetch_array($sql_img);
                       $img = $row_img['parent_img'];
                   }
-                  else
+                  else ($forum_user_type == 'tuition')
                   {
                       $sql_img = "SELECT * FROM `tuition` WHERE `user_id` = '$forum_user_id'";
                       $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  
 
                       $row_img = mysqli_fetch_array($sql_img);
                       $img = $row_img['tuition_img']; 
+                  }
+                  else
+                  {
+                    $img = 'admin.jpg';
                   }
 
                   if($forum_user == $_SESSION['user_id'])
@@ -175,7 +179,7 @@ if(isset($_SESSION['student_id']) )
                   </div>
                   <!-- end .aplicant-details-show -->
                   <?php
-                  if($forum_user == $_SESSION['user_id'])
+                  if($forum_user == $_SESSION['user_id'] || $_SESSION['user_type'] == 'admin')
                   {
                   	?>
                   		<button name="del_forum" onclick="window.location='controller.php?DEL_FORUM=<?php echo $row['forum_id']; ?>';" class="btn btn-danger pull-right">Delete</button>&nbsp
