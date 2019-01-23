@@ -31,7 +31,7 @@
 
          <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Login</h1>
 
           <ol class="breadcrumb">

@@ -148,16 +148,18 @@
 		<div class="row">
 			<div class="col-sm-10">
 				<hr/>
-				<div class="review-block">		
 				<?php
 				$tuition_id = $_GET['tuition_id'];
 				$ratinguery = "SELECT * FROM `tuition_review` INNER JOIN `student` ON `student`.`student_id` = `tuition_review`.`student_id` INNER JOIN `tuition_package` ON `tuition_package`.`tuition_id` = `tuition_review`.`tuition_id` AND `tuition_package`.`package_id` = `tuition_review`.`package_id` WHERE `tuition_review`.`tuition_id` = '$tuition_id'";
 				$ratingResult = mysqli_query($myConnection,$ratinguery) or die("database error:". mysqli_error($myConnection));
 				while($rating = mysqli_fetch_array($ratingResult)){
+				?>
+				<div class="review-block">		
+				<?php
 					$posted_by = $rating['student_name'];
 					$package_taken = $rating['package_name'];	
 					$date=date_create($rating['review_created']);
-					$reviewDate = date_format($date,"M d, Y");
+					$reviewDate = date_format($date,"d M Y h:i A");
 					$img = $rating['student_img'];
 				?>				
 					<div class="row">

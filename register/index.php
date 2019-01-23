@@ -142,35 +142,35 @@
             <input style="color: #C0C0C0;" type="text" name="tuition_address" required autocomplete="off"/>
           </div>
 
-           <div class="top-row">
+           <!-- <div class="top-row">
             <div class="field-wrap">
               <label>
                 State <span class="req">*</span>
-              </label>
+              </label> -->
               <!-- <input  type="text" name="ic_no" required autocomplete="off" required /> -->
-              <select name="tuition_state" id="tuition_state" onchange="state_change()" required>
-                <option value="">Choose State</option>
+              <!-- <select name="tuition_state" id="tuition_state" onchange="state_change()" required>
+                <option value="">Choose State</option> -->
                   <?php
-                    foreach ($states as $s) {
-                      $ss = $s['geo_state'];
-                      echo "<option value='$ss'>$ss</option>";
-                    }
+                    // foreach ($states as $s) {
+                    //   $ss = $s['geo_state'];
+                    //   echo "<option value='$ss'>$ss</option>";
+                    // }
                   ?>
-              </select>
-            </div>
+              <!-- </select>
+            </div> -->
             
             <!-- <div class="top-row"> -->
-            <div class="field-wrap">
+           <!--  <div class="field-wrap">
               <label>
                 District <span class="req">*</span>
-              </label>
+              </label> -->
               <!-- <input  type="text" name="ic_no" required autocomplete="off" required /> -->
-              <select name="tuition_dist" id="tuition_dist" onchange="dist_change()" required>
+              <!-- <select name="tuition_dist" id="tuition_dist" onchange="dist_change()" required>
                 <option value="">-- Choose District --</option>
               </select>
-            </div>
+            </div> -->
 
-            <div class="field-wrap">
+            <!-- <div class="field-wrap">
               <label>
                 Area <span class="req">*</span>
               </label>
@@ -178,7 +178,7 @@
                 <option value="">-- Choose Area --</option>
               </select>
             </div>
-          </div>
+          </div> -->
           <input type="hidden" name="lat" value="<?php echo $lat; ?>">
           <input type="hidden" name="lon" value="<?php echo $lon; ?>">
           <button name="register_tuition" type="submit" class="button button-block"/>REGISTER</button>
@@ -271,4 +271,4 @@
 
 </html>
 
-
+

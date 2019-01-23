@@ -1,6 +1,8 @@
 <?php session_start(); 
 include_once("connection.php");
-
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 // echo '<pre>';
 // var_dump($_SESSION);
 // echo '</pre>';
@@ -69,20 +71,20 @@ if (isset($_GET['payment_id']))
       
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Payment</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li><a href="#">Tuition Profile</a></li>
-            <li class="active">Apply Package</li>
+            
+            <li class="active">Make payment</li>
           </ol>
 
         </div> <!-- end .container -->
 
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="job-registration job-registration full-width">
+      <div id="page-content" class="job-registration job-registration full-width" style="line-height: 1.5 !important;">
         <div class="container">
           <div class="row">
             <div class="col-sm-12 page-content mt30">
@@ -91,7 +93,7 @@ if (isset($_GET['payment_id']))
 
 
                   <h4 class=" client-registration-title">Payment
-                    <span>Payment</span>
+                    <span>INFORMATION</span>
 
                   </h4>
 

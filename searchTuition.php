@@ -50,7 +50,7 @@ $lon = $_POST['lon'];
 
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Tuition Search</h1>
 
           <ol class="breadcrumb">
@@ -63,7 +63,7 @@ $lon = $_POST['lon'];
       </div> <!-- end .header-page-title -->
       <!-- Page Content -->
 
-      <div id="page-content" class="page-content pt60">
+      <div id="page-content" class="page-content pt60"  style="line-height: 1.5 !important;">
         <div class="container">
           <div class="row">
             <div class="col-sm-4 page-sidebar">

@@ -1,6 +1,9 @@
 <?php 
  include_once("connection.php");
  session_start(); 
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
  $user_id = $_SESSION['user_id'];
  $sql = "select * from `student` where `user_id` = '$user_id'";
@@ -87,7 +90,7 @@
         <div class="container">
           <h1>Profile Update</h1>
           <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li class="active">Profile Update</li>
           </ol>
         </div> <!-- end .container -->
@@ -95,7 +98,7 @@
       </div> <!-- end .header-page-title -->
 
       <div id="page-content">
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <div class="page-content">
             <div class="">
 
@@ -128,7 +131,7 @@
                         ?>
                       </div> <!-- end .agent-profile-picture -->
 
-                      <div class="candidate-general-info">
+                      <div class="candidate-general-info"  style="line-height: 1.5 !important;">
                         <form action="#">
                           <div class="title clearfix">
                             <h6>General Information</h6>
@@ -149,7 +152,7 @@
                     </div> <!-- end .3col grid layout -->
 
                     <div class="col-md-8">
-                      <div class="job-reg-form">
+                      <div class="job-reg-form"  style="line-height: 1.5 !important;">
                         <form action="controller.php" method="post" enctype="multipart/form-data" >
                           
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">

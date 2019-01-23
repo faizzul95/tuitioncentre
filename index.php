@@ -26,6 +26,7 @@ if( isset($_GET['check']) )
     // echo $lon."<br>";
 }
 
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -57,31 +58,33 @@ if( isset($_GET['check']) )
       <!-- end #header -->
 
       <!-- Page Content -->
-      <div id="page-content" style="background-image: url('img/tutor.jpg');">
+      <div id="page-content" style="line-height: 1.5 !important;">
 
         <div class="index-page-search-content">
           <div id="owl-demo" class="owl-carousel owl-theme">
 
+           <div class="item"
+              style="background: url('./img/library111.jpg') center center no-repeat; background-size: cover;"></div>
             <div class="item"
-              style="background: url('./img/home-bg.jpg') center center no-repeat; background-size: cover;"></div>
-            <div class="item"
-              style="background: url('./img/home-bg2.jpg') center center no-repeat; background-size: cover;"></div>
+              style="background: url('./img/nii.jpg') center center no-repeat; background-size: cover;"></div>
             <div class="item"
               style="background: url('./img/home-bg3.jpg') center center no-repeat; background-size: cover;"></div>
 
           </div>
-          <div class="container">
+          <div class="container"  style="line-height: 1.5 !important;">
             <div class="search-holder">
-              <h1>TUITION CENTRE</h1>
+              <h1><img src="img/logo1.png" alt="" width="180" height="180">TUITION CENTRE</h1>
               <h2>SEARCH AVAILABLE TUITION CENTRE</h2>
-
+              
               <div id="header-search">
                 <div class="header-search-bar">
                   <div class="">
                     <form method="post" action="searchTuition.php">
                       <div class="basic-form clearfix">
                         <div class="hsb-input-1">
-                          <input type="hidden" name="lat" value="<?php echo $lat; ?>">
+                        
+                        
+                        <input type="hidden" name="lat" value="<?php echo $lat; ?>">
                           <input type="hidden" name="lon" value="<?php echo $lon; ?>">
                           <select name="area" required>
                             <!-- <option value="">Select Area</option> -->
@@ -150,25 +153,39 @@ if( isset($_GET['check']) )
                             </select>
                           </div>
                         </div>
-                        <div class="hsb-submit">
+                        <div class="hsb-submit"  style="line-height: 1.5 !important;">
                           <!-- <button style="width:100%;" name="view_tuition_center" class="login100-form-btn">Submit</button> -->
-                          <input type="submit" name="view_tuition_center" value="Search" class="btn btn-default">
+                          <input type="submit" name="view_tuition_center" value="Search" class="btn btn-default" style="height: 40px; width: 100px">
+                          <span id='check_loc' hidden><?php echo $ch; ?></span><br>
+
                           <!-- <button type="submit" name="view_tuition_center" class="btn btn-default btn-block"><i class="fa fa-search"></i><span>Search</span></button> -->
                           <!-- <a href="search.php">Search</a> -->
                         </div>
                       </div>
                     </form>
-                  </div>
+                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-        </div>
+ </div>
 
         <!-- end .container -->
-
-
+<section class="section-padding gray-bg">
+  <div class="container">
+    <div class="section-header text-left">
+      <br><br><center><h2><b>Are you looking for tuition centre? or are you provide tuition centre services?</b> <span></span></h2></center>
+      <p><br>
+      <u><b><h2>Parents/Students</u></b></h2>
+      <img src="img/ibu.jpg" alt="" width="400" height="300"></a><h5>Are you looking for a tuition centre? We have lots of tuition centre for your selection. You can search according to subject and nearest location.</h5><br><br>
+      <u><b><h2> Tuition centre</u></b></h2>
+      <img src="img/tuitionce.jpg" alt="" width="400" height="300"></a>
+     <h5>Would you like to get more exposure for your tuition centre? </h5><br><br>
+      
+      </p>
+    </div>
+    <div class="row"> 
+</div>
       </div>
 
       <!-- Footer Start -->
@@ -180,19 +197,18 @@ if( isset($_GET['check']) )
 
     <!-- Scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/jquery.ba-outside-events.min.js"></script>
-    <script src="js/jquery.responsive-tabs.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <script src="js/jquery.fitvids.js"></script>
-    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="js/jquery.inview.min.js"></script>
+      <script src="js/bootstrap.js"></script>
+      <script src="js/jquery.ba-outside-events.min.js"></script>
+      <script src="js/jquery.responsive-tabs.js"></script>
+      <script src="js/jquery.flexslider-min.js"></script>
+      <script src="js/jquery.fitvids.js"></script>
+      <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+      <script src="js/jquery.inview.min.js"></script>
 
-    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <!-- <script src="js/scripts.js"></script> -->
-    
-    <span id='check_loc' hidden><?php echo $ch; ?></span><br>
+      <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+      <script src="js/owl.carousel.min.js"></script>
+      <script src="js/scripts.js"></script>
+      
     <script type="text/javascript">
       $( document ).ready(function (){
           if ( $('#check_loc').text() != 'fal' ){
@@ -215,5 +231,9 @@ if( isset($_GET['check']) )
       }
 
     </script>
+    
+    
     </body>
   </html>
+
+

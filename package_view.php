@@ -26,6 +26,7 @@ $email = $row['tuition_email'];
 $telno = $row['tuition_telno'];
 $name = $row['tuition_name'];
 $address = $row['tuition_address'];
+$tuition_img = $row['tuition_img'];
 
 ?>
 
@@ -54,25 +55,25 @@ $address = $row['tuition_address'];
   <body>
     <div id="main-wrapper">
       <header id="header">
-        <div class="header-top-bar">
+        <div class="header-top-bar" style="line-height: 55px !important; font-family: Raleway, sans-serif !important;">
          <?php include 'header.php'; ?>
         </div>
         <!-- end .header-top-bar -->
       </header> <!-- end #header -->
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-          <div class="container">
+          <div class="container" style="line-height: 1.5 !important; font-family: Raleway, sans-serif !important;">
             <h1>Package View</h1>
             <ol class="breadcrumb">
               <li><a href="index.php">Home</a></li>
-              <li href="searchTuition.php">Tuition Search</li>
+              
               <li class="active">Package View</li>
             </ol>
           </div> <!-- end .container -->
         </div>
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="candidate-profile">
+      <div id="page-content" class="candidate-profile" style="line-height: 1.5 !important; font-family: Raleway, sans-serif !important;">
         <div class="container">
           <div class="page-content mt30 mb30">
             <div class="">
@@ -82,9 +83,10 @@ $address = $row['tuition_address'];
                     <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
                         <!-- <img src="img/content/candidate-profile.jpg" alt=""> -->
-                        <div class="upload-img-field">
+                        <img src="profile_pic/<?php echo $tuition_img; ?>" alt="">
+                        <!-- <div class="upload-img-field"> -->
 
-                        </div>
+                        <!-- </div> -->
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">
@@ -165,19 +167,39 @@ $address = $row['tuition_address'];
                   <!-- end .aplicant-details-show -->
                   
                   <?php
-                  if ($count < $capacity)
-                  {
-                  ?>
-                    <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
-                  <?php
+                  if (isset($_SESSION['user_type'])){
+                    if ($_SESSION['user_type'] != 'tuition')
+                    {
+                      if ($count < $capacity)
+                      {
+                      ?>
+                        <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
+                      <?php
+                      }
+                      else
+                      {
+                        ?>
+                        <button disabled class="btn btn-info pull-right">Full</button>
+                        <?php
+                      }
+                    }
                   }
-                  else
-                  {
+                  else{
+                    if ($count < $capacity)
+                    {
                     ?>
-                    <button disabled class="btn btn-info pull-right">Full</button>
+                      <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
                     <?php
+                    }
+                    else
+                    {
+                      ?>
+                      <button disabled class="btn btn-info pull-right">Full</button>
+                      <?php
+                    }
                   }
-                  ?>
+
+                    ?>
               </div> <!-- end .language-print -->
 
                 

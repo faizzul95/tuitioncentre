@@ -34,8 +34,8 @@
 
          <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
-          <h1>Sign Up for Tuition Centre</h1>
+        <div class="container" style="line-height: 1.5 !important;">
+          <h1>Sign Up</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
@@ -47,7 +47,7 @@
       </div> <!-- end .header-page-title -->
 
       <!-- process content -->
-      <div class="process-content">
+      <div class="process-content" style="line-height: 1.5 !important;">
         <div class="container">
 
           <!-- SIgn Up -->

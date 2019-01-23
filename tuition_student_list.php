@@ -18,6 +18,10 @@
   $tuition_id = $row['tuition_id'];
 }
 
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
+
  // $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
  // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  // $row = mysqli_fetch_array($sql_usr);
@@ -67,7 +71,7 @@
       </header> <!-- end #header -->
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Package Student List</h1>
 
           <ol class="breadcrumb">
@@ -79,7 +83,7 @@
 
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="candidate-profile">
+      <div id="page-content" class="candidate-profile" style="line-height: 1.5 !important;">
         <div class="container">
           <div class="page-content mt30 mb30">
             <div class="">
@@ -88,11 +92,19 @@
               <div class="tab-pane active" id="candidate-profile">
                 <div class="row">
         
-                  <div class="col-md-8">
+                  <div class="col-md-12">
                     <div class="candidate-description">
 
                       <div class="candidate-details">
                         <div class="candidate-title">
+                         Print from : <input type="date" name="dt_from" id="dt_from"> to : <input type="date" name="dt_to" id="dt_to"><br>
+                                    Payment Status : <input type="radio" name="ss" value="all" style="margin: 5px" checked>All <input style="margin: 5px" type="radio" name="ss" value="paid">Paid 
+                                                     <input type="radio" name="ss" style="margin: 5px" value="unpaid">Unpaid 
+                                                    
+                                    <button style="float: right" class="btn btn-default" onclick="print_list(<?php echo $package_id; ?>)">Print</button>
+                                    <br><span id="ss"></span>
+                                    <br><br><br>
+                         
                           <h5>List Of Students</h5>
                           <h6>Package : <?php echo $package_name; ?></h6>
                         </div>
@@ -119,7 +131,7 @@
              
                              ?>
 
-                                <table class="table table-bordered">
+                                <table class="table table-bordered table-responsive">
                                       <thead>
                                         <tr class="bg-primary">
                                           <th scope="col"><center>No</center></th>
@@ -185,9 +197,7 @@
 
                                       </tbody>
                                     </table>
-                                    Print from : <input type="date" name="dt_from" id="dt_from"> to : <input type="date" name="dt_to" id="dt_to">
-                                    <button style="float: right" class="btn btn-default" onclick="print_list(<?php echo $package_id; ?>)">Print</button>
-
+                                    
 
 
                       </div> <!-- end .candidate-details -->
@@ -225,7 +235,10 @@
 
       <script type="text/javascript">
         $('#tags').tagsInput();
-
+        $('input[name=ss]').change(function(){
+            var value = $( 'input[name=ss]:checked' ).val();
+            $('#ss').val(value);
+        });
       </script>
 
       <script type="text/javascript">
@@ -255,12 +268,15 @@
           var url = "print_list.php?package_id=";
           var dt_from = $('#dt_from').val();
           var dt_to = $('#dt_to').val();
+          var ss = $('#ss').val();
 
           url = url.concat(package_id);
           url = url.concat("&from=");
           url = url.concat(dt_from);
           url = url.concat("&to=");
           url = url.concat(dt_to);
+          url = url.concat("&status=");
+          url = url.concat(ss);
 
           window.open(url, "_blank", "resizable=yes,top=100,left=500,width=800,height=800");
         }

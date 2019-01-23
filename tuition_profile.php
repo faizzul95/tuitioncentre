@@ -1,8 +1,13 @@
-<?php session_start(); 
+<?php 
+
+ session_start(); 
+ include_once("connection.php");
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
  $usid = $_SESSION['user_id'];
  $tuition_id = $_SESSION['tuition_id'];
- include_once("connection.php");
  $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);
@@ -53,7 +58,7 @@
       </header> <!-- end #header -->
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Tuition Profil</h1>
 
           <ol class="breadcrumb">
@@ -65,7 +70,7 @@
 
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="candidate-profile">
+      <div id="page-content" class="candidate-profile"  style="line-height: 1.5 !important;">
         <div class="container">
           <div class="page-content mt30 mb30">
             <div class="">

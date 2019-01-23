@@ -43,7 +43,7 @@ body {
   color: #262626;
   font-size: 14px;
   font-family: 'Raleway', sans-serif;
-  line-height: 20px;
+  line-height: 55px;
   cursor: default;
   background: #262626;
 }
@@ -262,7 +262,7 @@ select,textarea,input[type="text"],input[type="url"],input[type="tel"],input[typ
   display: block;
   padding: 9px 15px;
   width: 100%;
-  height: 100%;
+  /*height: 100%;*/
   border: 1px solid #ccc;
   -webkit-border-radius: 3px;
   border-radius: 0;
@@ -3461,7 +3461,7 @@ html[xmlns] .slides {
 #header .header-notification-bar {
   position: relative;
   width: 100%;
-  padding: 15px 0;
+  padding: px 0;
   height: auto;
   border-bottom: 1px solid #ddd;
   background-color: #fff;
@@ -6788,3 +6788,5 @@ ul.client-applicants-tab li  a:hover,ul.client-applicants-tab li  a:focus {
 .alternate-row-color{
   
 }
+
+

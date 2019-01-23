@@ -1,9 +1,12 @@
 <?php 
 
  session_start(); 
+ include_once("connection.php");
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
  $parent_user_id = $_SESSION['user_id'];
- include_once("connection.php");
  // $sql = "SELECT * FROM `student` WHERE `user_id` = '$user_id'";
  // $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  // $row = mysqli_fetch_array($sql_usr);
@@ -52,10 +55,10 @@
       </header> <!-- end #header -->
       <div class="header-page-title clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Register Child</h1>
           <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
+            
             <li class="active">Register Child</li>
           </ol>
         </div> <!-- end .container -->
@@ -64,7 +67,7 @@
 
       <div id="page-content">
         <div class="container">
-          <div class="page-content">
+          <div class="page-content"  style="line-height: 1.5 !important;">
             <div class="">
 
               <!--<ul class="nav nav-tabs">-->
@@ -83,11 +86,9 @@
                       <div class="motijob-sidebar">
                       <div class="candidate-profile-picture">
 
-                        <div class="upload-img-field">
+                        <div class="upload-img-field"></div>
 
-                        </div>
-
-                        <a class="btn btn-default" href="#">Upload a Picture</a>
+                        <!-- <a class="btn btn-default" href="#">Upload a Picture</a> -->
                       </div> <!-- end .agent-profile-picture -->
 
                       <div class="candidate-general-info">
@@ -102,7 +103,7 @@
                             <li><strong>Gender:</strong><input type="text" placeholder="[gender]"></li>
                             <li><strong>Date of Birth:</strong><input type="text" placeholder="[date of birth]"></li>
                             <li><strong>Tel:</strong><input type="text" placeholder="[telephone number]"></li>
-                            <li><strong>Mob:</strong><input type="text" placeholder="[mobile number]"></li>
+                            <li><strong>Phone:</strong><input type="text" placeholder="[mobile number]"></li>
                             <li><strong>Email:</strong><input type="text" placeholder="[email address]"></li>
                           </ul>
                         </form>

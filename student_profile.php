@@ -1,6 +1,9 @@
 <?php 
  include_once("connection.php");
  session_start(); 
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
  $usid = $_SESSION['user_id'];
  $student_id = $_SESSION['student_id'];
@@ -62,12 +65,12 @@
       </header> <!-- end #header -->
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Student Profile</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li class="active">Profil</li>
+            <li class="active">Profile</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -84,7 +87,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="motijob-sidebar">
-                      <div class="candidate-profile-picture">
+                      <div class="candidate-profile-picture"  style="line-height: 1.5 !important;">
                         <img src="profile_pic/<?php echo $student_img; ?>" alt="">
                         <!-- <div class="upload-img-field">
 
@@ -92,7 +95,7 @@
                         <a href="#"><?php echo $name; ?></a>
                       </div> <!-- end .agent-profile-picture -->
 
-                      <div class="candidate-general-info">
+                      <div class="candidate-general-info"  style="line-height: 1.5 !important;"> 
                         <div class="title clearfix">
                             <h6>General Information</h6>
                             <a class="pull-right" href="student_profile-update.php"><i class="fa fa-edit"></i>Update</a>

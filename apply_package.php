@@ -1,6 +1,6 @@
 <?php session_start(); 
+//date_default_timezone_set("Asia/Kuala Lumpur");
 include_once("connection.php");
-
 // echo '<pre>';
 // var_dump($_SESSION);
 // echo '</pre>';
@@ -14,6 +14,10 @@ else
   echo "<script type='text/javascript'>alert('No Student Id is set ! Please Log In Again');</script>";
   echo "<script type='text/javascript'> document.location='login.php'; </script>";
 }
+
+// if ( !isset( $_SESSION['user_id'] ) ){
+//   header('Location: login.php');
+// }
 
 if (isset($_GET['package_id']))
 {
@@ -34,6 +38,8 @@ if (isset($_GET['package_id']))
   $student_telno = $row['student_telno'];
   $student_email = $row['student_email'];
 }
+
+$today = date("Y-m-d");
 ?>
 <!doctype html>
 <html lang="en">
@@ -68,12 +74,12 @@ if (isset($_GET['package_id']))
       
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container"  style="line-height: 1.5 !important;">
           <h1>Apply Package</h1>
 
           <ol class="breadcrumb">
             <li><a href="index.php">Home</a></li>
-            <li><a href="#">Tuition Profile</a></li>
+            
             <li class="active">Apply Package</li>
           </ol>
 
@@ -81,7 +87,7 @@ if (isset($_GET['package_id']))
 
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="job-registration job-registration full-width">
+      <div id="page-content" class="job-registration job-registration full-width" style="line-height: 1.5 !important;">
         <div class="container">
           <div class="row">
             <div class="col-sm-12 page-content mt30">
@@ -89,7 +95,7 @@ if (isset($_GET['package_id']))
                 <div class="tab-pane active" id="agency-profile-tab">
 
 
-                  <h4 class=" client-registration-title">Register Package
+                  <h4 class=" client-registration-title">Register 
                     <span>Information</span>
 
                   </h4>
@@ -99,6 +105,7 @@ if (isset($_GET['package_id']))
                       <form action="controller.php" class="default-form" method="post">
                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" >
                        <input type="hidden" name="package_id" value="<?php echo $package_id; ?>" >
+                       <input type="hidden" name="student_email" value="<?php echo $student_email; ?>">
                         <div class="single-content">
                           <label><span>*</span>Student Name</label>
                           <div class="company-name">
@@ -116,7 +123,7 @@ if (isset($_GET['package_id']))
                         <div class="single-content">
                           <label><span>*</span>Student Email</label>
                           <div class="company-name">
-                            <input type="text" name="student_email" value="<?php echo $student_email; ?>">
+                            <input type="text" name="student_email" disabled value="<?php echo $student_email; ?>">
                           </div>
                         </div> <!-- end .single-content -->
 
@@ -124,7 +131,7 @@ if (isset($_GET['package_id']))
                         <div class="single-content">
                           <label><span>*</span>Start Date</label>
                           <div class="company-name">
-                            <input type="Date" name="start_date" placeholder="" required>
+                            <input type="Date" name="start_date" placeholder="" min="<?php echo $today; ?>" value="<?php echo $today; ?>" required>
                           </div>
                         </div> <!-- end .single-content -->
 

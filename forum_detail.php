@@ -1,4 +1,7 @@
 <?php session_start(); 
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
 if(isset($_SESSION['user_id'])) 
 {
@@ -22,7 +25,7 @@ $row = mysqli_fetch_array($sql_forum);
 
 $forum_title = $row['forum_title'];
 $forum_desc = $row['forum_desc'];
-$forum_date = date( 'd-M-Y', strtotime($row['forum_date']) );
+$forum_date = date( 'd M Y h:i A', strtotime($row['forum_date']) );
 $forum_user = $row['forum_user'];
 
 $sql_img = "SELECT * FROM `parent` WHERE `user_id` = '$forum_user'";
@@ -91,7 +94,7 @@ else
       </header> <!-- end #header -->
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-          <div class="container">
+          <div class="container" style="line-height: 1.5 !important;">
             <h1>Forum Detail</h1>
             <ol class="breadcrumb">
               <li><a href="index.php">Home</a></li>
@@ -101,7 +104,7 @@ else
         </div>
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="candidate-profile">
+      <div id="page-content" class="candidate-profile" style="line-height: 1.5 !important;">
         <div class="container">
           <div class="page-content mt30 mb30">
             <div class="">
@@ -143,7 +146,7 @@ else
               {
                 $username = $row['user_username'];
               }
-              $com_date = date( 'd-M-Y', strtotime($row['com_date']) );
+              $com_date = date( 'd M Y h:i A', strtotime($row['com_date']) );
 
               $sql_img = "SELECT * FROM `parent` WHERE `user_id` = '$com_user'";
               $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));
@@ -156,8 +159,17 @@ else
                 $sql_img = "SELECT * FROM `student` WHERE `user_id` = '$com_user'";
                 $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));  
 
-                $row_img = mysqli_fetch_array($sql_img);
-                $img = $row_img['student_img'];
+                if(mysqli_num_rows($sql_img)>0){
+                  $row_img = mysqli_fetch_array($sql_img);
+                  $img = $row_img['student_img'];
+                }
+                else{
+                  $sql_img = "SELECT * FROM `tuition` WHERE `user_id` = '$com_user'";
+                  $sql_img = mysqli_query($myConnection,$sql_img) or die(mysqli_error($myConnection));                    
+                
+                  $row_img = mysqli_fetch_array($sql_img);
+                  $img = $row_img['tuition_img'];
+                }
               }
               if($i%2 == 0){
                 $color = "background-color: #E7EBEE";
@@ -192,14 +204,16 @@ else
       </div>
         <?php } ?>
         <br>
-      <div class="col-sm-9">
-        <form action="controller.php" method="post">
-          <input type="hidden" name="forum_id" value="<?php echo $forum_id; ?>">
-          <input type="hidden" name="">
-          <textarea rows="4" name="new_com"></textarea><br>
-          <input type="submit" name="comm" value="Comment" style="float: right">
-        </form>
-    </div>
+      <div class="row">
+        <div class="col-sm-9">
+          <form action="controller.php" method="post">
+            <input type="hidden" name="forum_id" value="<?php echo $forum_id; ?>">
+            <input type="hidden" name="">
+            <textarea rows="4" name="new_com"></textarea><br>
+            <input type="submit" name="comm" value="Comment" style="float: right">
+          </form>
+        </div>
+      </div>
     </div>  
   </div>
 </div>

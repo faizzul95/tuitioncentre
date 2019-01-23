@@ -1,8 +1,12 @@
 <?php 
 
   session_start(); 
-  $user_id = $_SESSION['user_id'];
   include_once("connection.php");
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
+
+  $user_id = $_SESSION['user_id'];
 
   $sql = "SELECT * FROM `parent` WHERE `user_id` = '$user_id'";
   $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
@@ -68,7 +72,7 @@
       </header> <!-- end #header -->
       <div class="header-page-title clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Profile Update</h1>
           <ol class="breadcrumb">
             <li><a href="#">Home</a></li>
@@ -106,7 +110,7 @@
                         <!-- <a class="btn btn-default" href="controller.php?UPLOAD_PIC=<?php echo $user_id; ?>&PARENT=<?php echo $parent_id; ?>">Upload a Picture</a> -->
                       </div> <!-- end .agent-profile-picture -->
 
-                      <div class="candidate-general-info">
+                      <div class="candidate-general-info"  style="line-height: 1.5 !important;">
                         <form action="#">
                           <div class="title clearfix">
                             <h6>General Information</h6>
@@ -127,7 +131,7 @@
                     </div> <!-- end .3col grid layout -->
 
                     <div class="col-md-8">
-                      <div class="job-reg-form">
+                      <div class="job-reg-form"  style="line-height: 1.5 !important;">
                         <form action="controller.php" method="post" enctype="multipart/form-data" >
                           
                         <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">

@@ -1,10 +1,13 @@
 <?php 
 
  session_start(); 
+ include_once("connection.php");
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
  $user_id = $_SESSION['user_id'];
 
- include_once("connection.php");
  $sql = "SELECT * FROM `parent` WHERE `user_id` = '$user_id'";
  $sql_usr = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
  $row = mysqli_fetch_array($sql_usr);
@@ -59,12 +62,12 @@
       </header> <!-- end #header -->
       <div class="header-page-title job-registration clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container"  style="line-height: 1.5 !important;">
           <h1>Profile (Parent)</h1>
 
           <ol class="breadcrumb">
-            <li><a href="index.php">Home</a></li>
-            <li class="active">Profil (Parent)</li>
+            
+            <li class="active">Profile (Parent)</li>
           </ol>
 
         </div> <!-- end .container -->
@@ -80,8 +83,8 @@
               <div class="tab-pane active" id="candidate-profile">
                 <div class="row">
                   <div class="col-md-4">
-                    <div class="motijob-sidebar">
-                      <div class="candidate-profile-picture">
+                    <div class="motijob-sidebar" style="line-height: 1.5 !important;">
+                      <div class="candidate-profile-picture" >
                         <img src="profile_pic/<?php echo $parent_img; ?>" alt="">
                         <!-- <img src="img/content/candidate-profile.jpg" alt=""> -->
                        <!--  <div class="upload-img-field">
@@ -110,7 +113,7 @@
                   <div class="col-md-8">
                     <div class="candidate-description">
 
-                      <div class="candidate-details">
+                      <div class="candidate-details"  style="line-height: 1.5 !important;">
                         <div class="candidate-title">
                           <h5>List Of Children</h5>
                         </div>

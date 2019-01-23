@@ -4,9 +4,12 @@
 <?php 
 
   session_start(); 
-
-  $user_id = $_SESSION['user_id'];
   include_once("connection.php");
+  if ( !isset( $_SESSION['user_id'] ) ){
+    header('Location: login.php');
+  }
+  
+  $user_id = $_SESSION['user_id'];
  
   $tuition_id = $_SESSION['tuition_id'];
   $sql = "SELECT * FROM `tuition` WHERE `tuition_id` = '$tuition_id'";
@@ -95,7 +98,7 @@
 
       <div id="page-content">
         <div class="container">
-          <div class="page-content">
+          <div class="page-content"  style="line-height: 1.5 !important;">
             <div class="">
 
               <!--<ul class="nav nav-tabs">-->

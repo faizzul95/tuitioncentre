@@ -1,6 +1,9 @@
 <?php 
 session_start();
 include("connection.php");
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
 if(isset($_SESSION['user_id'])) 
 {
@@ -37,7 +40,7 @@ if(isset($_SESSION['student_id']) )
     <![endif]-->
   </head>
 
-  <body>
+  <body >
     <div id="main-wrapper" class="our-agents-content">
 
       <!-- HEADER -->
@@ -46,9 +49,9 @@ if(isset($_SESSION['student_id']) )
       </header>
       <!-- end #header -->
 
-      <div class="header-page-title job-registration clearfix">
+      <div class="header-page-title job-registration clearfix"  style="line-height: 1.5 !important;">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Forum</h1>
 
           <ol class="breadcrumb">
@@ -61,16 +64,16 @@ if(isset($_SESSION['student_id']) )
       </div> <!-- end .header-page-title -->
       <!-- Page Content -->
 
-      <div id="page-content" class="page-content pt60" >
+      <div id="page-content" class="page-content pt60"  style="line-height: 1.5 !important;">
         <div class="container">
           <div class="row">
             <div class="col-sm-4 page-sidebar">
               <aside>
                 <div class="white-container mb0">
                   <div class="widget sidebar-widget jobs-search-widget">
-                    <h5 class="widget-title">Search</h5> 
+                    <h5 class="widget-title">Create Forum</h5> 
                     <div class="widget-content">
-                      <span class="search-tex">Create Forum</span>
+                      <span class="search-tex"></span>
                     <form method="post" action="controller.php">
                     	Title : <input type="text" name="forum_title" ><br>
                     	Description : <textarea rows="4" cols="50" name="forum_desc">
@@ -116,6 +119,7 @@ if(isset($_SESSION['student_id']) )
                   $forum_user = $row['forum_user'];
                   $forum_user_type = $row['user_type'];
                   $forum_user_id = $row['user_id'];
+                  $forum_date = date( 'd M Y h:i A', strtotime($row['forum_date']) );
                   // echo $forum_user_type;
 
                   if($forum_user_type == 'student')
@@ -145,13 +149,12 @@ if(isset($_SESSION['student_id']) )
 
                   if($forum_user == $_SESSION['user_id'])
                   {
-                  	$username = 'You';
+                    $username = 'You';
                   }
                   else
                   {
-                  	$username = $row['user_username'];
+                    $username = $row['user_username'];
                   }
-                  $forum_date = $row['forum_date'];
                ?>
          
               <div class="candidate-description client-description applicants-content">
@@ -212,9 +215,9 @@ if(isset($_SESSION['student_id']) )
       </div> <!-- end #page-content -->
 
       <!-- Footer Start -->
-      <footer id="footer">
+      <!-- <footer id="footer"> -->
         <?php include 'footer.php'; ?>
-      </footer>
+      <!-- </footer> -->
       <!-- end #footer -->
 
     </div>

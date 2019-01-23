@@ -170,7 +170,7 @@ if (isset($_POST['reg_prt_info']))
     
     $row = mysqli_fetch_array($check_prt);
     $pic = $row['parent_img'];
-    if ( $pic != 'user.png' and empty(basename($_FILES["pro_pic"]["name"])) )
+    if ( $pic != 'user.png' && empty(basename($_FILES["pro_pic"]["name"])) && mysqli_num_rows($check_prt)>0 )
     {
         $prt_img = $pic;
     }
@@ -250,12 +250,19 @@ if (isset($_POST['register_tuition']))
     $tuition_telno = $_POST['tuition_telno'];
     $tuition_email = $_POST['tuition_email'];
     $tuition_address = $_POST['tuition_address'];
-    $tuition_state = $_POST['tuition_state'];
-    $tuition_dist = $_POST['tuition_dist'];
-    $tuition_area = $_POST['tuition_city'];
+    // $tuition_state = $_POST['tuition_state'];
+    // $tuition_dist = $_POST['tuition_dist'];
+    // $tuition_area = $_POST['tuition_city'];
     $lat = $_POST['lat'];
     $lon = $_POST['lon'];
 
+    $sql_loc = "SELECT `geoloc`.*, sqrt( power({$lat}-`geoloc`.`geo_lat`,2) + power({$lon}-`geoloc`.`geo_lon`,2) ) as dist FROM `geoloc` ORDER BY dist ASC";
+    $sql_geo = mysqli_query($myConnection,$sql_loc) or die(mysqli_error($myConnection));
+    $row = mysqli_fetch_array($sql_geo);
+
+    $tuition_area = $row['geo_city'];
+    $tuition_state = $row['geo_state'];
+    $tuition_dist = $row['geo_dist'];
 
     $sql_usr = "SELECT * FROM `user` WHERE `user_username`='$username' ";
     $res_usr = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
@@ -660,8 +667,29 @@ if(isset($_POST['std_register_package']))
         $name = $row['student_name'];
 
         // mail function
-         $message = "Hi $name,\nKelas anda akan bermula pada : ".$start_date;
-         $subject = "PENDAFTARAN TUISYEN";
+        $sql = "SELECT * FROM `tuition_package` INNER JOIN `tuition` ON `tuition`.`tuition_id` = `tuition_package`.`tuition_id` WHERE `tuition_package`.`package_id` = '$package_id'";
+        $sql_tuit = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+        $row = mysqli_fetch_assoc($sql_tuit);
+
+        $tuition_name = $row['tuition_name'];
+        $package_name = $row['package_name'];
+
+        $subject = "PENDAFTARAN TUISYEN ".strtoupper($tuition_name)." : PAKEJ ".strtoupper($package_name);
+        $message = "Hi $name,\nKelas anda akan bermula pada : ".date( 'd M Y', strtotime($start_date) );
+
+        $sql = "SELECT * FROM `tuition_package_subject` INNER JOIN `master_subject` ON `master_subject`.`subject_id` = `tuition_package_subject`.`subject_id` WHERE `tuition_package_subject`.`package_id` = '$package_id'";
+        $sql_sub = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+        while( $row = mysqli_fetch_assoc($sql_sub) ){
+            $sub = $row['subject_name'];
+            $start_time = date( 'h:i A', strtotime($row['subject_start_hour']) );
+            $end_time = date( 'h:i A', strtotime($row['subject_end_hour']) );
+            $day = $row['subject_day'];
+
+            $message .= "\n\t{$sub} : {$day}({$start_time} - {$end_time})";
+        }
+
+
+
 
          mail($email, $subject, $message);
 

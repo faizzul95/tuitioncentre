@@ -1,5 +1,8 @@
 <?php session_start(); 
 include_once("connection.php");
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
 if(isset($_GET['p_id']))
 {
@@ -38,6 +41,13 @@ if(isset($_GET['p_id']))
     <!--[if IE 9]>
     <script src="js/media.match.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      .h::-webkit-scrollbar {
+    /*width: 0px;*/
+    background: transparent; /* make scrollbar transparent */
+    }
+
+    </style>
   </head>
 
   <body>
@@ -62,7 +72,7 @@ if(isset($_GET['p_id']))
 
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="job-registration job-registration full-width">
+      <div id="page-content" class="job-registration job-registration full-width" style="line-height: 1.5 !important;">
         <div class="container">
           <div class="row">
             <div class="col-sm-12 page-content mt30">
@@ -80,27 +90,30 @@ if(isset($_GET['p_id']))
                       <!-- <form class="default-form"> -->
                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" >
 
-                       <div class="single-content">
+                       <div class="single-content h" style="overflow-y: scroll;">
                           <label>Package Name :</label>
                           <div class="company-name">
                             <input type="text" name="package_name" value="<?php echo $package_name; ?>" disabled>
                           </div>
                         </div>
 
-                        <div class="single-content">
+                        <div class="single-content h" style="overflow-y: auto;">
                           <label>Package Price :</label>
                           <div class="company-name">
                             <input type="text" name="package_price" value="<?php echo $package_price; ?>" disabled>
                           </div>
                         </div>
 
-                        <div class="single-content">
-                          <label><span>*</span>Package Subject</label>
+                        <div class="single-content" style="height: 100px !important; overflow-y: scroll;">
+                          <label style="height: 100px"><span>*</span>Package Subject</label>
                           <div class="company-name">
                             <?php
                               $sql = "SELECT * FROM `tuition_package_subject` inner join `master_subject` on `master_subject`.`subject_id` = `tuition_package_subject`.`subject_id` where `package_id` = '$package_id'";
 
                               $sql_subject = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                              if (mysqli_num_rows($sql_subject)==0){
+                                echo "No Subject Registered";
+                              }
                               $package_desc = '';
                               while ($row = mysqli_fetch_array($sql_subject))
                               {
@@ -113,7 +126,7 @@ if(isset($_GET['p_id']))
                           </div>
                         </div>
 
-                        <div class="single-content">
+                        <div class="single-content h" style="overflow-y: scroll;">
                           <label><span>*</span>Package Capacity :</label>
                           <div class="company-name">
                             <?php
@@ -171,4 +184,4 @@ if(isset($_GET['p_id']))
     </script>
 
   </body>
-</html>
+</html>

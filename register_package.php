@@ -46,7 +46,7 @@ else
       
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Register Package</h1>
 
           <ol class="breadcrumb">
@@ -59,7 +59,7 @@ else
 
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="job-registration job-registration full-width">
+      <div id="page-content" class="job-registration job-registration full-width"  style="line-height: 1.5 !important;">
         <div class="container">
           <div class="row">
             <div class="col-sm-12 page-content mt30">

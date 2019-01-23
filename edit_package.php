@@ -1,5 +1,8 @@
 <?php session_start(); 
 include_once("connection.php");
+if ( !isset( $_SESSION['user_id'] ) ){
+  header('Location: login.php');
+}
 
 if(isset($_GET['p_id']))
 {
@@ -44,6 +47,13 @@ else
     <!--[if IE 9]>
     <script src="js/media.match.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      .h::-webkit-scrollbar {
+    /*width: 0px;*/
+    background: transparent; /* make scrollbar transparent */
+    }
+
+    </style>
   </head>
 
   <body>
@@ -55,7 +65,7 @@ else
       
       <div class="header-page-title  clearfix">
         <div class="title-overlay"></div>
-        <div class="container">
+        <div class="container" style="line-height: 1.5 !important;">
           <h1>Update Package</h1>
 
           <ol class="breadcrumb">
@@ -68,7 +78,7 @@ else
 
       </div> <!-- end .header-page-title -->
 
-      <div id="page-content" class="job-registration job-registration full-width">
+      <div id="page-content" class="job-registration job-registration full-width" style="line-height: 1.5 !important;">
         <div class="container">
           <div class="row">
             <div class="col-sm-12 page-content mt30">
@@ -76,7 +86,7 @@ else
                 <div class="tab-pane active" id="agency-profile-tab">
 
 
-                  <h4 class=" client-registration-title">Register Package
+                  <h4 class=" client-registration-title">Update Package
                     <span>Information</span>
 
                   </h4>
@@ -85,29 +95,29 @@ else
                     <div class="table-responsive">
                       <form action="controller.php" class="default-form" method="post">
                        <input type="hidden" name="tuition_id" value="<?php echo $_SESSION['user_id']; ?>" >
-                        <div class="single-content">
+                        <div class="single-content h" style="overflow-y: scroll;">
                           <label><span>*</span>Package Name</label>
                           <div class="company-name">
-                            <input type="text" name="package_name" placeholder="" required="" value="<?php echo $package_name; ?>">
+                            <input type="text" name="package_name" placeholder="" required value="<?php echo $package_name; ?>">
                           </div>
                         </div> <!-- end .single-content -->
 
-                        <div class="single-content">
+                        <div class="single-content h" style="overflow-y: scroll;">
                           <label><span>*</span>Package Capacity</label>
                           <div class="company-name">
-                            <input type="text" name="package_capacity" placeholder="" required="" value="<?php echo $package_capacity; ?>">
+                            <input type="text" name="package_capacity" placeholder="" required value="<?php echo $package_capacity; ?>">
                           </div>
                         </div> <!-- end .single-content -->
 
-                        <div class="single-content">
+                        <div class="single-content h" style="overflow-y: scroll;">
                           <label><span>*</span>Package Price</label>
                           <div class="company-name">
                             <input type="text" name="package_price" placeholder="" required value="<?php echo $package_price; ?>">
                           </div>
                         </div> <!-- end .single-content -->
 
-                        <div class="single-content">
-                          <label><span>*</span>Package Subject</label>
+                        <div class="single-content" style="overflow-y: scroll; height: 100px">
+                          <label style="height: 100px;"><span>*</span>Package Subject</label>
                           <div class="company-name">
                             <?php
 
