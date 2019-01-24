@@ -74,6 +74,7 @@ else
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
@@ -206,7 +207,7 @@ else
                 if ($com_user == $_SESSION['user_id'] || $_SESSION['user_type'] == 'admin')
                 {
               ?>
-                    <button name="del_comm" onclick="window.location='controller.php?DEL_COMM=<?php echo $row['com_id']; ?>&FORUM=<?php echo $forum_id; ?>';" class="btn btn-danger pull-right">Delete</button>
+                    <button name="del_comm" onclick="window.location='controller.php?DEL_COMM=<?php echo $row['com_id']; ?>&FORUM=<?php echo $forum_id; ?>';" class="btn btn-sm pull-right glyphicon glyphicon-trash"> Delete</button>
               <?php
                 }
               ?>
@@ -226,7 +227,7 @@ else
             <input type="hidden" name="forum_id" value="<?php echo $forum_id; ?>">
             <input type="hidden" name="">
             <textarea rows="4" name="new_com"></textarea><br>
-            <input type="submit" name="comm" value="Comment" style="float: right">
+            <input type="submit" name="comm" value="Comment" class="btn btn-sm" style="float: right">
           </form>
         </div>
       </div>

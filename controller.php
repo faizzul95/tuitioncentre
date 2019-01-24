@@ -1016,3 +1016,27 @@ if(isset($_GET['forgotpass']))
     }
 
 }
+
+if(isset($_POST['feedback'])){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $user_type = $_POST['user_type'];
+    $subject = $_POST['subject'];
+    $msg = $_POST['message'];
+
+    $query ="INSERT INTO `feedback` (`feedback_name`, `feedback_email`, `feedback_subject`, `feedback_message`, `user_type`)
+                    VALUES ('$name', '$email', '$subject', '$msg', '$user_type')";
+    $res = mysqli_query($myConnection,$query) or die(mysqli_error($myConnection));
+
+    if ( $res )
+    {
+        echo "<script type='text/javascript'>alert('Feedback sent sucessfully. Thank you for your feedback');</script>";
+        echo "<script type='text/javascript'> document.location='contact_us.php'; </script>";
+    }
+    else
+    {
+        echo "<script type='text/javascript'>alert('Feedback sending fail. Please try again.');</script>";
+        echo "<script type='text/javascript'> document.location='contact_us.php'; </script>";
+    }
+
+}

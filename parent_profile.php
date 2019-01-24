@@ -39,6 +39,8 @@ if ( !isset( $_SESSION['user_id'] ) ){
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
@@ -162,8 +164,8 @@ if ( !isset( $_SESSION['user_id'] ) ){
                                           <th scope="row"><center><?php echo $count; ?></center></th>
                                           <td><center><?php echo $row['student_name']; ?></center></td>
                                           <td><center><?php echo $row['student_ic']; ?></center></td>
-                                          <td><center><button class="btn btn-default" onclick="location.href='controller.php?VIEW_STD=<?php echo $student_id; ?>';">View</button></center></td>
-                                          <td><center><button onclick="location.href='index.php?student_id=<?php echo $row['student_id']; ?>';" class="btn btn-info">Apply</button></center></td>
+                                          <td><center><button class="btn btn-sm glyphicon glyphicon-eye-open" onclick="location.href='controller.php?VIEW_STD=<?php echo $student_id; ?>';"> View</button></center></td>
+                                          <td><center><button onclick="location.href='index.php?student_id=<?php echo $row['student_id']; ?>';" class="btn btn-info">Apply <i class="fa fa-check-square-o"></i></button></center></td>
                                         </tr>
                                         <?php
                                         $count++;

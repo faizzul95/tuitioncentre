@@ -28,6 +28,7 @@ if(isset($_SESSION['student_id']) )
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
@@ -182,11 +183,11 @@ if(isset($_SESSION['student_id']) )
                   if($forum_user == $_SESSION['user_id'] || $_SESSION['user_type'] == 'admin')
                   {
                   	?>
-                  		<button name="del_forum" onclick="window.location='controller.php?DEL_FORUM=<?php echo $row['forum_id']; ?>';" class="btn btn-danger pull-right">Delete</button>&nbsp
+                  		<button name="del_forum" onclick="window.location='controller.php?DEL_FORUM=<?php echo $row['forum_id']; ?>';" class="btn btn-sm pull-right glyphicon glyphicon-trash"> Delete</button>&nbsp
                   	<?php
                   }
                   ?>
-                  <button type="button" onclick="window.location='forum_detail.php?forum_id=<?php echo $row['forum_id'] ?>';" class="btn btn-default pull-right">View Forum</button>&nbsp
+                  <button type="button" onclick="window.location='forum_detail.php?forum_id=<?php echo $row['forum_id'] ?>';" class="btn btn-default pull-right glyphicon glyphicon-eye-open"> View</button>&nbsp
 
                   <!-- <button class="btn btn-default pull-right">Apply</button> -->
                 </div> <!-- end .language-print -->

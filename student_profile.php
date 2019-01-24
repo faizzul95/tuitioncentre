@@ -42,7 +42,9 @@ if ( !isset( $_SESSION['user_id'] ) ){
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
     <link rel="stylesheet" href="css/styles.css">
@@ -170,38 +172,38 @@ if ( !isset( $_SESSION['user_id'] ) ){
                                             if ( $row['payment_status'] == 'UNPAID')
                                             { 
                                             ?>
-                                                <button class="btn btn-default" onclick="location.href='pay_package.php?payment_id=<?php echo $row['payment_id']; ?>';">Pay</button> 
+                                                <button class="btn btn-sm" onclick="location.href='pay_package.php?payment_id=<?php echo $row['payment_id']; ?>';">Pay <i class='far fa-money-bill-alt'></i></button> 
                                             <?php
                                             }
                                             elseif ( $row['payment_status'] == 'PENDING') 
                                             { ?>
-                                                Pending
+                                                Pending <i class="material-icons">timelapse</i>
                                             <?php
                                             }
                                             elseif( $row['payment_status'] == 'PAID' && $today >= $startDate && !$reviewed)  //paid and after start date
                                             { 
                                               ?>
-                                                Confirmed<br>
-                                                <button class="btn btn-default" onclick="location.href='review_package.php?package_id=<?php echo $row['package_id']; ?>';">Review</button>
+                                                Confirmed <i class="fa fa-check-square-o"></i><br>
+                                                <button class="btn btn-sm" onclick="location.href='review_package.php?package_id=<?php echo $row['package_id']; ?>';">Review <i class="material-icons">rate_review</i></button>
                                             <?php
                                             }
                                             elseif( $row['payment_status'] == 'PAID' && $today >= $startDate && $reviewed) //paid and reviewed
                                             {
                                               ?>
-                                                Confirmed <br> Reviewed
+                                                Confirmed <i class="fa fa-check-square-o"></i><br> Reviewed <i class="material-icons">star_border</i>
                                               <?php
                                             }
                                             else
                                             {
                                               ?>
-                                              Confirmed
+                                              Confirmed <i class="fa fa-check-square-o"></i>
                                               <?php
                                             }
 
                                             if ($today <= $startDate)
                                             {
                                               ?>
-                                              <br><br><button class="btn btn-danger" onclick="cancel_package(<?php echo $row['list_id']; ?>, <?php echo $row['payment_id']; ?>)">Cancel</button>
+                                              <br><br><button class="btn btn-danger" onclick="cancel_package(<?php echo $row['list_id']; ?>, <?php echo $row['payment_id']; ?>)">Cancel <i class="material-icons">cancel</i></button>
                                               <?php
                                             }
                                             ?>

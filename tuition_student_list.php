@@ -48,6 +48,9 @@ if ( !isset( $_SESSION['user_id'] ) ){
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
@@ -97,13 +100,13 @@ if ( !isset( $_SESSION['user_id'] ) ){
 
                       <div class="candidate-details">
                         <div class="candidate-title">
-                         Print from : <input type="date" name="dt_from" id="dt_from"> to : <input type="date" name="dt_to" id="dt_to"><br>
+                         Print from : <input type="date" name="dt_from" id="dt_from"> to : <input type="date" name="dt_to" id="dt_to"><br><br>
                                     Payment Status : <input type="radio" name="ss" value="all" style="margin: 5px" checked>All <input style="margin: 5px" type="radio" name="ss" value="paid">Paid 
                                                      <input type="radio" name="ss" style="margin: 5px" value="unpaid">Unpaid 
                                                     
-                                    <button style="float: right" class="btn btn-default" onclick="print_list(<?php echo $package_id; ?>)">Print</button>
+                                    <button style="float: right" class="btn btn-sm" onclick="print_list(<?php echo $package_id; ?>)"><i class="material-icons">local_printshop</i></button>
                                     <br><span id="ss"></span>
-                                    <br><br><br>
+                                    <br><br><hr>
                          
                           <h5>List Of Students</h5>
                           <h6>Package : <?php echo $package_name; ?></h6>
@@ -161,7 +164,7 @@ if ( !isset( $_SESSION['user_id'] ) ){
                                             ?>
                                         <tr>
                                           <th scope="row"><center><?php echo $no; ?></center></th>
-                                          <td><center><?php echo $std_name; ?></center></td>
+                                          <td><center><?php echo $std_name." ".$payment_id; ?></center></td>
                                           <td><center><?php echo $std_gender; ?></center></td>
                                           <td><center><?php echo $std_telno; ?></center></td>
                                           <td><center><?php echo $std_email; ?></center></td>
@@ -177,8 +180,8 @@ if ( !isset( $_SESSION['user_id'] ) ){
                                             elseif ( $payment_status == 'PENDING') 
                                             { ?>
                                                 <center>
-                                                  <button class="btn btn-default" onclick="approve_pay(<?php echo $payment_id; ?>, <?php echo $package_id; ?>)">Approve</button> <br>&nbsp
-                                                  <button class="btn btn-default" onclick="view_receipt('<?php echo $payment_receipt; ?>')">View Receipt</button>
+                                                  <button class="btn btn-default" onclick="approve_pay(<?php echo $payment_id; ?>, <?php echo $package_id; ?>)">Approve <i class="fa fa-check-square-o"></i></button> <br>&nbsp
+                                                  <button class="btn btn-sm glyphicon glyphicon-eye-open" onclick="view_receipt('<?php echo $payment_receipt; ?>')"> Receipt</button>
                                                 </center>
                                             <?php
                                             }
@@ -190,7 +193,7 @@ if ( !isset( $_SESSION['user_id'] ) ){
                                             ?>
                                           </td>
                                           <td>
-                                            <center><button class="btn btn-danger" onclick="remove_student(<?php echo $list_id; ?>, <?php echo $package_id; ?>)">Remove</button> </center>
+                                            <center><button class="btn btn-sm glyphicon glyphicon-trash" onclick="remove_student(<?php echo $list_id; ?>, <?php echo $package_id; ?>)"> Remove</button> </center>
                                           </td>
                                         </tr>
                                          <?php $no++;  }  //end while ?>

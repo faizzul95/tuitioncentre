@@ -59,7 +59,7 @@ include("connection.php");
                   <div class="widget-content">
                     <!-- <p></p> -->
 
-                    <form class="mt30">
+                    <form class="mt30" action="controller.php" method="post">
 
                       <?php
                         if(isset($_SESSION['user_id'])) // If session is not set then redirect to Login Page
@@ -97,7 +97,7 @@ include("connection.php");
                         <textarea class="form-control" name="message" rows="5" placeholder="How can we help you?"></textarea>
                       </div>
 
-                      <button type="submit" class="btn btn-default" style="line-height: 1.5 !important;"><i class="fa fa-envelope-o"></i> Send Message</button>
+                      <button type="submit" class="btn btn-primary" name="feedback" style="line-height: 1.5 !important;"><i class="fa fa-envelope-o"></i> Send Message</button>
                     </form>
                   </div>
                 </div>

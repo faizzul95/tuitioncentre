@@ -35,6 +35,9 @@ if ( !isset( $_SESSION['user_id'] ) ){
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous'>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
@@ -170,12 +173,12 @@ if ( !isset( $_SESSION['user_id'] ) ){
                                           <td><center><?php echo $price; ?></center></td>
                                           <td><center><?php echo $capacity; ?></center></td>
                                           <td>
-                                            <center><button class="btn btn-default" onclick="location.href = 'add_package_subject.php?p_id=<?php echo $id; ?>';">Add Subject</button> &nbsp; 
-                                            <button class="btn btn-default" onclick="location.href = 'view_package_subject.php?p_id=<?php echo $id; ?>';">View</button> </center>
+                                            <center><button class="btn btn-sm" onclick="location.href = 'add_package_subject.php?p_id=<?php echo $id; ?>';">Add Subject <i class="material-icons">playlist_add</i></button> &nbsp; 
+                                            <button class="btn btn-default btn-sm glyphicon glyphicon-eye-open" onclick="location.href = 'view_package_subject.php?p_id=<?php echo $id; ?>';"> View</button> </center>
                                           </td>
                                           <td>
-                                            <center><button class="btn btn-default" onclick="location.href = 'edit_package.php?p_id=<?php echo $id; ?>';">Update</button> &nbsp; 
-                                            <button class="btn btn-danger" onclick="remove_package(<?php echo $id; ?>)">Remove</button> </center>
+                                            <center><button class="btn btn-default" onclick="location.href = 'edit_package.php?p_id=<?php echo $id; ?>';">Update <i class='far fa-edit'></i></button> &nbsp; 
+                                            <button class="btn btn-sm glyphicon glyphicon-trash" onclick="remove_package(<?php echo $id; ?>)"> Remove</button> </center>
                                           </td>
                                         </tr>
                                          <?php $no ++;  } ?>

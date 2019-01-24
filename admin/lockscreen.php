@@ -51,7 +51,7 @@
                         <div class="form-group">
                             <input class="form-control placeholder-no-fix" type="password" autocomplete="off" required placeholder="Password" name="password" /> </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn red uppercase">Login</button>
+                            <button type="submit" name="lock" class="btn red uppercase">Login</button>
                         </div>
                     </form>
                 </div>
