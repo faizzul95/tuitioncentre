@@ -203,7 +203,7 @@ if ( !isset( $_SESSION['user_id'] ) ){
                                             if ($today <= $startDate)
                                             {
                                               ?>
-                                              <br><br><button class="btn btn-danger" onclick="cancel_package(<?php echo $row['list_id']; ?>, <?php echo $row['payment_id']; ?>)">Cancel <i class="material-icons">cancel</i></button>
+                                              <br><br><button class="btn btn-sm btn-danger" onclick="cancel_package(<?php echo $row['list_id']; ?>, <?php echo $row['payment_id']; ?>)">Cancel</button>
                                               <?php
                                             }
                                             ?>

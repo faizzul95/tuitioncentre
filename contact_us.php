@@ -22,6 +22,11 @@ include("connection.php");
 
     <link rel="stylesheet" href="assets/css/main.css" />
 
+    <style type="text/css">
+      ::placeholder{
+        /*color: #000 !important;*/
+      }
+    </style>
   </head>
 
   <body>
@@ -68,11 +73,11 @@ include("connection.php");
                           <input type="hidden" name="user_type" value="<?php echo($_SESSION['user_type']); ?>" class="form-control">
 
                         <div class="form-group">
-                          <input type="text" name="name" value="<?php echo($_SESSION['name']); ?>" class="form-control" placeholder="Name">
+                          <input type="text" name="name" value="<?php echo($_SESSION['name']); ?>" class="form-control" placeholder="Name" style="background-color: #fff; border-color: #000;">
                         </div>
 
                         <div class="form-group">
-                          <input type="text" name="email" value="<?php echo($_SESSION['email']); ?>" class="form-control" placeholder="Email">
+                          <input type="text" name="email" value="<?php echo($_SESSION['email']); ?>" class="form-control" placeholder="Email"  style="background-color: #fff; border-color: #000;">
                         </div>
 
                        <?php } else { ?>
@@ -80,24 +85,24 @@ include("connection.php");
                         <input type="hidden" name="user_type" value="general" class="form-control" placeholder="">
 
                         <div class="form-group">
-                          <input type="text" name="name"  class="form-control" placeholder="Name">
+                          <input type="text" name="name"  class="form-control" placeholder="Name" style="background-color: #fff; border-color: #000;">
                         </div>
 
                         <div class="form-group">
-                          <input type="text" name="email" class="form-control" placeholder="Email">
+                          <input type="text" name="email" class="form-control" placeholder="Email" style="background-color: #fff; border-color: #000;">
                         </div>
 
                       <?php }  ?>
 
                       <div class="form-group">
-                        <input type="text" name="subject" class="form-control" placeholder="Subject">
+                        <input type="text" name="subject" class="form-control" placeholder="Subject" style="background-color: #fff; border-color: #000;">
                       </div>
 
                       <div class="form-group">
-                        <textarea class="form-control" name="message" rows="5" placeholder="How can we help you?"></textarea>
+                        <textarea class="form-control" name="message" rows="5" placeholder="How can we help you?" style="background-color: #fff; border-color: #000;"></textarea>
                       </div>
 
-                      <button type="submit" class="btn btn-primary" name="feedback" style="line-height: 1.5 !important;"><i class="fa fa-envelope-o"></i> Send Message</button>
+                      <button type="submit" class="btn btn-primary" name="feedback" style="line-height: 1.5 !important; color: #fff !important"><i class="fa fa-envelope-o"></i> Send Message</button>
                     </form>
                   </div>
                 </div>
