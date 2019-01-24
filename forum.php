@@ -76,8 +76,8 @@ if(isset($_SESSION['student_id']) )
                     <div class="widget-content">
                       <span class="search-tex"></span>
                     <form method="post" action="controller.php">
-                    	Title : <input type="text" name="forum_title" ><br>
-                    	Description : <textarea rows="4" cols="50" name="forum_desc">
+                    	Title : <input type="text" name="forum_title" required><br>
+                    	Description : <textarea rows="4" cols="50" name="forum_desc" required>
                     	</textarea><br>
                       <input type="submit" name="create_forum" value="Create Forum" class="btn btn-default">
                     </div>
@@ -196,24 +196,6 @@ if(isset($_SESSION['student_id']) )
               </div> <!-- end .candidate-description -->
 
               <?php }  ?>
-              <!-- end loop here -->
-
-             <!--  <div class="pagination-content clearfix">
-                <p>Displaying 10 out of 50 items</p>
-
-                <nav>
-                  <ul class="list-inline">
-                    <li><a class="btn btn-default first" href="#">first</a></li>
-                    <li><a class="btn btn-default previous" href="#">Previous</a></li>
-                    <li class="active"><a class="number" href="#">1</a></li>
-                    <li><a class="number" href="#">2</a></li>
-                    <li><a class="number" href="#">3</a></li>
-                    <li><a class="number" href="#">4</a></li>
-                    <li><a class="btn btn-default next" href="#">Next</a></li>
-                    <li><a class="btn btn-default last" href="#">Last</a></li>
-                  </ul>
-                </nav>
-              </div> -->
             </div> <!-- end .page-content -->
           </div>
         </div> <!-- end .container -->

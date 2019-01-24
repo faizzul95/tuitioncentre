@@ -20,7 +20,7 @@
 <body>
   <form method="post" action="controller.php?feedback_id=<?php echo $id; ?>" role="form">
   <div class="modal-body">
-    <input type="hidden" name="feedback_id" value="<?php echo $id; ?>" />
+    <input type="hidden" name="feed_id" value="<?php echo $id; ?>" />
     <input type="hidden" name="feedback_name" value="<?php echo $row['feedback_name'];?>">
     <input type="hidden" name="feedback_email" value="<?php echo $row['feedback_email'];?>">
     <table class="table table-bordered">

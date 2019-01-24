@@ -314,12 +314,12 @@
                                                                 <td><center><?php echo $capacity; ?></center></td>
                                                                 <td>
                                                                 <center>
-                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#productview" data-whatever="<?php echo $id; ?>"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                                                    <button type="button" class="btn btn-success" data-placement="top" title="View Subject" data-toggle="modal" data-target="#productview" data-whatever="<?php echo $id; ?>"><span class="glyphicon glyphicon-eye-open"></span></button>
                                                                 </center>
                                                                 </td>
                                                                 <td>
                                                                 <center>
-                                                                    <button class="btn btn-success" onclick="location.href = 'view_student_list.php?p_id=<?php echo $id; ?>&t_id=<?php echo $tuition_id; ?>';"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                                                    <button class="btn btn-success" data-placement="top" title="View Student List" onclick="location.href = 'view_student_list.php?p_id=<?php echo $id; ?>&t_id=<?php echo $tuition_id; ?>';"><span class="glyphicon glyphicon-eye-open"></span></button>
                                                                 </center>
                                                                 </td>
                                                             </tr>

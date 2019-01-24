@@ -330,7 +330,7 @@
                                                                 <td><center><?php echo ucwords($gender); ?></center></td>
                                                                 <td> 
                                                                 <center>
-                                                                    <button class="btn btn-danger" onclick="delete_data(<?php echo $id; ?>)">
+                                                                    <button class="btn btn-danger" onclick="delete_data(<?php echo $id; ?>)" data-placement="top" title="Delete">
                                                                       <span class="glyphicon glyphicon-trash"></span> 
                                                                     </button>
                                                                 </center>

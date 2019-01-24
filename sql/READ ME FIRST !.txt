@@ -1,0 +1,1 @@
+Tambah feedback_status(varchar,15) dekat table feedback.

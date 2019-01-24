@@ -327,12 +327,12 @@
                                                                 <!-- <td><center><?php echo $rating; ?></center></td> -->
                                                                 <td>
                                                                 <center>
-                                                                    <button class="btn btn-success" onclick="location.href = 'package_list.php?p_id=<?php echo $id; ?>';"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                                                    <button class="btn btn-success" onclick="location.href = 'package_list.php?p_id=<?php echo $id; ?>';" data-placement="top" title="View Package"><span class="glyphicon glyphicon-eye-open"></span></button>
                                                                 </center>
                                                                 </td>
                                                                 <td> 
                                                                 <center>
-                                                                    <button class="btn btn-danger" onclick="delete_data(<?php echo $id; ?>)">
+                                                                    <button class="btn btn-danger" onclick="delete_data(<?php echo $id; ?>)" data-placement="top" title="Delete">
                                                                       <span class="glyphicon glyphicon-trash"></span> 
                                                                     </button>
                                                                 </center>

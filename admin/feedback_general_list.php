@@ -41,7 +41,15 @@
             {
                 if(confirm("Delete this data ?"))
                 {
-                    window.location = "controller.php?DEL_DATA="+id;
+                    window.location = "controller.php?fedDel="+id;
+                }
+            }
+
+            function updateStatus(id)
+            {
+                if(confirm("Mark as read this feedback ?"))
+                {
+                    window.location = "controller.php?fedRead="+id;
                 }
             }
 
@@ -298,12 +306,13 @@
                                                     <th> Date/Time </th>
                                                     <th> Subject </th>
                                                     <th> Message </th>
+                                                    <th> Status </th>
                                                     <th> Action </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                              <?php
-                                                  $result = $myConnection->query("SELECT * FROM `feedback` WHERE user_type = 'general'") or die (mysqli_error($myConnection));
+                                                  $result = $myConnection->query("SELECT * FROM `feedback` WHERE user_type = 'general' ORDER BY `feedback_status` DESC") or die (mysqli_error($myConnection));
 
                                                 if($result!=FALSE)
                                                 {
@@ -316,6 +325,7 @@
                                                         $email = $row['feedback_email'];
                                                         $subject = $row['feedback_subject'];
                                                         $message = $row['feedback_message'];
+                                                        $status = $row['feedback_status'];
                                                         ?>
                                                             <tr>
                                                                 <td><center><?php echo $count; ?></center></td>
@@ -323,13 +333,25 @@
                                                                 <td><center><a href="mailto:<?php echo $email; ?>" target="_top"><?php echo $email; ?></a></center></td>
                                                                 <td><center><?php echo $time; ?></center></td>
                                                                 <td><center><?php echo $subject; ?></center></td>
-                                                                <td><center><?php echo $message; ?></center></td>
+                                                                <td>
+                                                                    <center>
+                                                                        <button type="button" class="btn btn-success" data-toggle="modal" data-placement="top" title="View Message" data-target="#messageview" data-backdrop="static" data-whatever="<?php echo $id; ?>" >
+                                                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                                                        </button>
+                                                                    </center>
+                                                                </td>
+                                                                <td><center><?php echo $status; ?></center></td>
                                                                 <td> 
                                                                 <center>
-                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#productview" data-whatever="<?php echo $id; ?>" >
+                                                                    <?php if($status != "Read" && $status != "Read & Reply") {?>
+                                                                        <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Mark as read" onclick="updateStatus(<?php echo $id; ?>)">
+                                                                          <span class="glyphicon glyphicon-ok"></span> 
+                                                                        </button>
+                                                                    <?php } ?>
+                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-placement="top" title="Reply" data-target="#productview" data-whatever="<?php echo $id; ?>" >
                                                                         <span class="glyphicon glyphicon-share"></span>
                                                                     </button>
-                                                                    <button class="btn btn-danger" onclick="delete_data(<?php echo $id; ?>)">
+                                                                    <button class="btn btn-danger" data-placement="top" title="Delete" onclick="delete_data(<?php echo $id; ?>)">
                                                                       <span class="glyphicon glyphicon-trash"></span> 
                                                                     </button>
                                                                 </center>
@@ -393,7 +415,7 @@
 </html>
 
 
- <!-- Modal -->
+  <!-- Modal reply feedback -->
    <div class="modal fade" id="productview" tabindex="-1" role="dialog" aria-labelledby="productviewLabel" aria-hidden="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -415,6 +437,41 @@
             $.ajax({
                 type: "GET",
                 url: "reply_feedback.php",
+                data: dataString,
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    modal.find('.modal-body').html(data);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+    })
+</script>
+
+
+<!-- modal view message -->
+ <div class="modal fade" id="messageview" tabindex="-1" role="dialog" aria-labelledby="productviewLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <center><h3 class="modal-title" id="productviewLabel">Message</h3></center>
+          </div>
+            <div class="modal-body">...</div>
+        </div>
+    </div>
+   </div>
+   <script>
+    $('#messageview').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var recipient = button.data('whatever') // Extract info from data-* attributes
+          var modal = $(this);
+          var dataString = 'id=' + recipient;
+
+            $.ajax({
+                type: "GET",
+                url: "view_feedback_message.php",
                 data: dataString,
                 cache: false,
                 success: function (data) {

@@ -44,9 +44,6 @@
 			<section id="banner">
 				<div class="inner"><br><br>
 					<h1>Frequently asked questions (FAQ)</h1>
-					<!-- <b><p></h2>Tuition centre website is a Malaysia-based tuition centre agency. We understand the importance of academic performance in Malaysia and believe that all children can improve upon meeting the key tutor whom will guide them on the path to success, so parents and students can find the best tuition centre based on review and rating for each tuition centre. -->
-					<!-- Parents and students who are looking for tuition centre for FREE! Can find many of qualified teachers and tutors specializing in a wide range of subjects. We've already helped myriads of students and parents to get the tuition centre according to they need, upgrading their scores in school. -->
-<!-- Qualified tuition centre are welcomed to join our website.</h2> </b><br><br></p> -->
 				</div>
 				<video autoplay loop muted playsinline src="images/banner.mp4"></video>
 			</section>
@@ -56,7 +53,7 @@
 		<!-- Highlights -->
 			<section class="wrapper">
 				<div class="inner">
-          <h2>GENERAL</h2>
+          <h2><font color="red">GENERAL</font></h2>
           <div class="candidate-description client-description applicants-content">
 
                 <div class="language-print client-des clearfix q_title">
@@ -84,7 +81,7 @@
 
           </div> <!-- end .candidate-description -->
 
-          <h2>PARENTS / STUDENTS</h2>
+          <h2><font color="red">PARENTS / STUDENTS </font></h2>
           <div class="candidate-description client-description applicants-content">
 
                 <div class="language-print client-des clearfix q_title">
@@ -189,7 +186,7 @@
           </div> <!-- end .candidate-description -->
 
 
-          <h2>TUITION CENTRE</h2>
+          <h2><font color="red"> TUITION CENTRE </font></h2>
           <div class="candidate-description client-description applicants-content">
 
                 <div class="language-print client-des clearfix q_title">
@@ -245,7 +242,7 @@
 
                 <div class="language-print client-des clearfix q_title">
                   <!-- <div class="clearfix"> -->
-                    <div class="pull-left">
+                    <div class="pull-left">TUITION CENTRE
                       <h5>What are the benefits to join the tuition centre network?</h5>
                     </div>
                   <!-- </div> -->
@@ -256,9 +253,9 @@
                   <div class="toggle-content-client">
                     <p>Once you register with our tuition centre network, you are entitled to enjoy the following
 					benefits: <br>
-					&nbsp &nbsp &nbsp -- Your tuition centre’s profile will be posted in our website, and searchable by the parents or
+					&nbsp &nbsp &nbsp 1) Your tuition centre’s profile will be posted in our website, and searchable by the parents or
 					students through our website.<br>
-					&nbsp &nbsp &nbsp -- You can view the list of student’s registration for each package that you have.</p>
+					&nbsp &nbsp &nbsp 2) You can view the list of student’s registration for each package that you have.</p>
                   </div>
                   <!-- end .toggle-content-client -->
 

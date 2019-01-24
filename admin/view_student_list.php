@@ -10,7 +10,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title> Admin | Student List</title>
+        <title> Admin | List Of Student</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="Preview page of Metronic Admin Theme #1 for colreorder extension demos" name="description" />
@@ -267,7 +267,7 @@
                                     <i class="fa fa-circle"></i>
                                 </li>
                                 <li>
-                                    <span>Student List</span>
+                                    <span>List Of Student</span>
                                 </li>
                             </ul>
                         </div>
@@ -287,7 +287,7 @@
                                     <div class="portlet-title">
                                         <div class="caption font-dark">
                                             <i class="icon-list font-dark"></i>
-                                            <span class="caption-subject bold uppercase">Student List</span>
+                                            <span class="caption-subject bold uppercase">List Of Student</span>
                                         </div>
                                         <!-- <div class="tools"> </div> -->
                                     </div>
@@ -354,7 +354,7 @@
                                                                     else  //paid
                                                                     { ?>
                                                                          <center>
-                                                                        <button class="btn btn-primary" onclick="view_receipt('<?php echo $payment_receipt; ?>')">PAID</button>
+                                                                        <button class="btn btn-primary" data-placement="top" title="View Receipt" onclick="view_receipt('<?php echo $payment_receipt; ?>')">PAID</button>
                                                                         </center>
                                                                     <?php
                                                                     } 

@@ -69,15 +69,60 @@ if(isset($_GET['userDel']))
 	}
 }
 
+// delete feedback
+if(isset($_GET['fedDel']))
+{
+	$feed_id = $_GET['fedDel'];
+
+	$sql_del = "DELETE FROM `feedback` WHERE `feedback_id` = '$feed_id'";
+	$res = mysqli_query($myConnection, $sql_del) or die (mysqli_error($myConnection));
+
+	if($res)
+	{
+		echo "<script type='text/javascript'>alert('Deleted');</script>";
+        echo "<script type='text/javascript'> window.location.href = window.history.back(); </script>";
+	}
+	else
+	{
+		 echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+         echo "<script type='text/javascript'> window.location.href = window.history.back(); </script>";
+	}
+}
+
+// update status feedback
+if(isset($_GET['fedRead']))
+{
+	$feed_id = $_GET['fedRead'];
+    $sql= "UPDATE `feedback` SET feedback_status = 'Read' WHERE `feedback_id` = '$feed_id'";
+    $result = mysqli_query($myConnection, $sql) or die (mysqli_error($myConnection));
+	if($sql)
+	{
+		// echo "<script type='text/javascript'>alert('Updated');</script>";
+        echo "<script type='text/javascript'> window.location.href = window.history.back(); </script>";
+	}
+	else
+	{
+		 echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
+         echo "<script type='text/javascript'> window.location.href = window.history.back(); </script>";
+	}
+}
+
+
+
 // mail function (reply feedback)
 if(isset($_POST['reply']))
 {
+	$feed_id = $_POST['feed_id'];
 	$msg = $_POST['reply_message'];
 	$email = $_POST['feedback_email'];
 
 	$title = 'Reply Feedback';
     $headers = "MIME-Version: 1.0" . "\r\n";
 	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+	// update status
+	$sql= "UPDATE `feedback` SET feedback_status = 'Read & Reply' WHERE `feedback_id` = '$feed_id'";
+    $result = mysqli_query($myConnection, $sql) or die (mysqli_error($myConnection));
 
 	// Additional headers
 	$headers .= 'From: Tuition Centre <tuitioncentre@gmail.com>' . "\r\n";
