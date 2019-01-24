@@ -34,12 +34,12 @@
                     <div class="notification-section text-right">
                       <ul class="list-inline">
 
-                         <?php  if($_SESSION['user_type'] != 'parent' && $_SESSION['user_type'] != 'tuition') { ?>
+                         <?php  if($_SESSION['user_type'] != 'admin' && $_SESSION['user_type'] != 'tuition' && $_SESSION['user_type'] != 'parent') { ?>
                            <li><a href="index.php">Home</a></li>
                           <?php }  ?>
 
                          <?php  if($_SESSION['user_type'] != 'admin') { ?>
-                         <!-- <li><a href="about.php">About us</a></li> -->
+                         <li><a href="about.php">About us</a></li>
  							           <li><a href="faq.php">FAQs</a></li>
                          <li><a href="contact_us.php">Contact Us</a></li>
                          <li><a href="forum.php">Forum</a></li>
