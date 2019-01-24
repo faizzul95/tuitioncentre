@@ -314,12 +314,12 @@
                                                                 <td><center><?php echo $capacity; ?></center></td>
                                                                 <td>
                                                                 <center>
-                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#productview" data-whatever="<?php echo $id; ?>" data-backdrop="static" ><span class="glyphicon glyphicon-eye-open"></span></button>
+                                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#productview" data-whatever="<?php echo $id; ?>"><span class="glyphicon glyphicon-eye-open"></span></button>
                                                                 </center>
                                                                 </td>
                                                                 <td>
                                                                 <center>
-                                                                    <button class="btn btn-success" onclick="location.href = 'view_student_list.php?p_id=<?php echo $id; ?>';"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                                                    <button class="btn btn-success" onclick="location.href = 'view_student_list.php?p_id=<?php echo $id; ?>&t_id=<?php echo $tuition_id; ?>';"><span class="glyphicon glyphicon-eye-open"></span></button>
                                                                 </center>
                                                                 </td>
                                                             </tr>
@@ -384,8 +384,8 @@
   <div class="modal fade" id="productview" tabindex="-1" role="dialog" aria-labelledby="productviewLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="productviewLabel">View Package</h5>
+          <div class="modal-header bg-primary">
+            <center><h3 class="modal-title" id="productviewLabel">View Subject</h3></center>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="window.location.reload()"><span aria-hidden="true">&times;</span></button>
           </div>
             <div class="modal-body">...</div>

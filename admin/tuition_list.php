@@ -282,7 +282,7 @@
                                                 <tr>
                                                     <th> No </th>
                                                     <th> Name </th>
-                                                    <th> Telphone Number </th>
+                                                    <th> Telephone Number </th>
                                                     <th> Email </th>
                                                     <th> Address </th>
                                                     <!-- <th> State </th> -->
@@ -319,7 +319,7 @@
                                                                 <td><center><?php echo $count; ?></center></td>
                                                                 <td><center><?php echo $name; ?></center></td>
                                                                 <td><center><?php echo $telno; ?></center></td>
-                                                                <td><center><?php echo $email; ?></center></td>
+                                                                <td><center><a href="mailto:<?php echo $email; ?>" target="_top"><?php echo $email; ?></a></center></td>
                                                                 <td><center><?php echo $address; ?></center></td>
                                                                 <!-- <td><center><?php echo $state; ?></center></td> -->
                                                                 <!-- <td><center><?php echo $district; ?></center></td> -->

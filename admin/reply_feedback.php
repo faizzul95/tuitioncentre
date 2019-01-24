@@ -35,7 +35,7 @@
         </tr>
         <tr>
           <td>Message</td>
-          <td><textarea rows="5" name="reply_message" class="form-control"></textarea></td>
+          <td><textarea rows="5" name="reply_message" class="form-control" required></textarea></td>
         </tr>             
        </tbody>
     </table>

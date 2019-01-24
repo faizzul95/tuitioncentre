@@ -11,10 +11,10 @@
     $result = mysqli_query($myConnection, "SELECT * FROM student");
     $student = mysqli_num_rows($result);
     
-    // $totalUser= $tuition + $parent + $student;
+    $totalUser= $tuition + $parent + $student;
 
-    $result = mysqli_query($myConnection, "SELECT * FROM user where user_type != 'admin'");
-    $totalUser = mysqli_num_rows($result);
+    // $result = mysqli_query($myConnection, "SELECT * FROM user where user_type != 'admin'");
+    // $totalUser = mysqli_num_rows($result);
 
     if (isset($_POST['lock']))
     {
