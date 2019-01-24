@@ -354,10 +354,12 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
         }
         else if ($_SESSION['user_type'] == 'tuition')
         {
-            $sql = "SELECT `tuition_id` FROM `tuition` WHERE `user_id` = '$usr_id'";
+            $sql = "SELECT * FROM `tuition` WHERE `user_id` = '$usr_id'";
             $sql_tuition = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
             $row = mysqli_fetch_array($sql_tuition);
             $_SESSION['tuition_id'] = $row['tuition_id'];
+            $_SESSION['name'] = $row['tuition_name'];
+            $_SESSION['email'] = $row['tuition_email'];
 
             $id = $row['tuition_id'];
 
@@ -365,7 +367,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
         }
         else if ($_SESSION['user_type'] == 'admin')
         {
-        	echo "<script type='text/javascript'> document.location='admin/admin_dashboard.php'; </script>";
+        	echo "<script type='text/javascript'> document.location='admin/'; </script>";
         }
      }
 

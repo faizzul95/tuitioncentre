@@ -65,6 +65,8 @@ include("connection.php");
                         if(isset($_SESSION['user_id'])) // If session is not set then redirect to Login Page
                         { ?>
 
+                          <input type="hidden" name="user_type" value="<?php echo($_SESSION['user_type']); ?>" class="form-control">
+
                         <div class="form-group">
                           <input type="text" name="name" value="<?php echo($_SESSION['name']); ?>" class="form-control" placeholder="Name">
                         </div>
@@ -74,6 +76,8 @@ include("connection.php");
                         </div>
 
                        <?php } else { ?>
+
+                        <input type="hidden" name="user_type" value="general" class="form-control" placeholder="">
 
                         <div class="form-group">
                           <input type="text" name="name"  class="form-control" placeholder="Name">

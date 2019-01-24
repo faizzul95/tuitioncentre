@@ -1,4 +1,5 @@
-<?php session_start(); 
+<?php 
+session_start(); 
 include_once("connection.php");
 if ( !isset( $_SESSION['user_id'] ) ){
   header('Location: login.php');

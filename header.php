@@ -3,9 +3,6 @@
 
           <div class="header-notification-bar">
             <div class="non-register-user">
-
-
-
               <div class="container">
                 <div class="row">
 
@@ -21,9 +18,8 @@
 
                             <ul class="list-inline">
                               
-                              
                                <li><a href="index.php">Home</a></li>
-                              <li><a href="about.php">About us</a></li>
+                               <li><a href="about.php">About us</a></li>
                                <li><a href="faq.php">FAQs</a></li>
                                <li><a href="contact_us.php">Contact Us</a></li>
                               <li><a href="login.php">Login</a></li>
@@ -39,35 +35,26 @@
                       <ul class="list-inline">
 
                          <?php  if($_SESSION['user_type'] != 'parent' && $_SESSION['user_type'] != 'tuition') { ?>
-                          
                            <li><a href="index.php">Home</a></li>
                           <?php }  ?>
 
-						          <?php  if($_SESSION['user_type'] == 'parent') { ?>
-                          <li><a href="about.php">About us</a></li>
-                        <?php } else if($_SESSION['user_type'] == 'student') { ?>
-                          <li><a href="about.php">About us</a></li>
-                        <?php } else { ?> 
-                          <li><a href="about.php">About us</a></li>
-                        <?php } ?>
- 							
+                         <?php  if($_SESSION['user_type'] != 'admin') { ?>
+                         <!-- <li><a href="about.php">About us</a></li> -->
+ 							           <li><a href="faq.php">FAQs</a></li>
+                         <li><a href="contact_us.php">Contact Us</a></li>
                          <li><a href="forum.php">Forum</a></li>
-                       
-                       <?php  if($_SESSION['user_type'] == 'parent') { ?>
-                          <li><a href="faq.php">FAQs</a></li>
-                        <?php } else if($_SESSION['user_type'] == 'student') { ?>
-                          <li><a href="faq.php">FAQs</a></li>
-                        <?php } else { ?> 
-                          <li><a href="faq.php">FAQs</a></li>
-                        <?php } ?>
+                         <?php }  ?>
                        
                         <?php  if($_SESSION['user_type'] == 'parent') { ?>
                           <li><a href="parent_profile.php">Profile</a></li>
                         <?php } else if($_SESSION['user_type'] == 'student') { ?>
                           <li><a href="student_profile.php">Profile</a></li>
-                        <?php } else { ?> 
+                        <?php } else if($_SESSION['user_type'] == 'tuition') { ?>
                           <li><a href="tuition_profile.php">Profile</a></li>
+                        <?php } else { ?> 
+                          <li><a href="admin/">Admin Panel</a></li>
                         <?php } ?>
+
                         <li><a href="logout.php">Logout</a></li>
                       </ul>
                     </div>
