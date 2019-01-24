@@ -1023,9 +1023,10 @@ if(isset($_POST['feedback'])){
     $user_type = $_POST['user_type'];
     $subject = $_POST['subject'];
     $msg = $_POST['message'];
+    $time = date('Y-m-d H:i:s');
 
-    $query ="INSERT INTO `feedback` (`feedback_name`, `feedback_email`, `feedback_subject`, `feedback_message`, `user_type`)
-                    VALUES ('$name', '$email', '$subject', '$msg', '$user_type')";
+    $query ="INSERT INTO `feedback` (`feedback_name`, `feedback_email`, `feedback_subject`, `feedback_message`, `feedback_timestamp`, `user_type`)
+                    VALUES ('$name', '$email', '$subject', '$msg', '$time', '$user_type')";
     $res = mysqli_query($myConnection,$query) or die(mysqli_error($myConnection));
 
     if ( $res )
