@@ -320,7 +320,7 @@
                                                             <tr>
                                                                 <td><center><?php echo $count; ?></center></td>
                                                                 <td><center><?php echo $name; ?></center></td>
-                                                                <td><center><?php echo $email; ?></center></td>
+                                                                <td><center><a href="mailto:<?php echo $email; ?>" target="_top"><?php echo $email; ?></a></center></td>
                                                                 <td><center><?php echo $time; ?></center></td>
                                                                 <td><center><?php echo $subject; ?></center></td>
                                                                 <td><center><?php echo $message; ?></center></td>
@@ -398,7 +398,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header bg-primary">
-            <h4 class="modal-title" id="productviewLabel">Reply</h4>
+            <center><h3 class="modal-title" id="productviewLabel">Reply Feedback</h3></center>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
             <div class="modal-body">...</div>
