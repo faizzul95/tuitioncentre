@@ -85,21 +85,21 @@ include("connection.php");
                         <input type="hidden" name="user_type" value="general" class="form-control" placeholder="">
 
                         <div class="form-group">
-                          <input type="text" name="name"  class="form-control" placeholder="Name" style="background-color: #fff; border-color: #000;">
+                          <input type="text" name="name"  class="form-control" placeholder="Name" style="background-color: #fff; border-color: #000;" required>
                         </div>
 
                         <div class="form-group">
-                          <input type="text" name="email" class="form-control" placeholder="Email" style="background-color: #fff; border-color: #000;">
+                          <input type="text" name="email" class="form-control" placeholder="Email" style="background-color: #fff; border-color: #000;" required>
                         </div>
 
                       <?php }  ?>
 
                       <div class="form-group">
-                        <input type="text" name="subject" class="form-control" placeholder="Subject" style="background-color: #fff; border-color: #000;">
+                        <input type="text" name="subject" class="form-control" placeholder="Subject" style="background-color: #fff; border-color: #000;" required>
                       </div>
 
                       <div class="form-group">
-                        <textarea class="form-control" name="message" rows="5" placeholder="How can we help you?" style="background-color: #fff; border-color: #000;"></textarea>
+                        <textarea class="form-control" name="message" rows="5" placeholder="How can we help you?" style="background-color: #fff; border-color: #000;" required></textarea>
                       </div>
 
                       <button type="submit" class="btn btn-primary" name="feedback" style="line-height: 1.5 !important; color: #fff !important"><i class="fa fa-envelope-o"></i> Send Message</button>
