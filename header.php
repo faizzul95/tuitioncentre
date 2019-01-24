@@ -6,7 +6,7 @@
               <div class="container">
                 <div class="row">
 
-                  <div class="col-md-7 col-sm-7">
+                  <div class="col-md-5 col-sm-5 col-lg-5">
                     <div class="logo-section">
                       <a href="index.php"><img src="img/logo1.png" alt="" width="70" height=770"></a>
                     </div>
@@ -30,7 +30,7 @@
                   <?php }
                   else { ?>
 
-                  <div class="col-md-5 col-sm-5">
+                  <div class="col-md-7 col-sm-7 col-lg-7">
                     <div class="notification-section text-right">
                       <ul class="list-inline">
 
