@@ -164,7 +164,7 @@ if ( !isset( $_SESSION['user_id'] ) ){
                                             ?>
                                         <tr>
                                           <th scope="row"><center><?php echo $no; ?></center></th>
-                                          <td><center><?php echo $std_name." ".$payment_id; ?></center></td>
+                                          <td><center><?php echo $std_name; ?></center></td>
                                           <td><center><?php echo $std_gender; ?></center></td>
                                           <td><center><?php echo $std_telno; ?></center></td>
                                           <td><center><?php echo $std_email; ?></center></td>

@@ -167,36 +167,47 @@ $tuition_img = $row['tuition_img'];
                   <!-- end .aplicant-details-show -->
                   
                   <?php
+                  $sql = "SELECT * FROM tuition_student_list WHERE `student_id` = '$student_id' AND `package_id` = '$id'";
+                  $sql_applied = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                  $check_applied = mysqli_num_rows($sql_applied);
+
                   if (isset($_SESSION['user_type'])){
                     if ($_SESSION['user_type'] != 'tuition')
                     {
-                      if ($count < $capacity)
-                      {
-                      ?>
-                        <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
-                      <?php
-                      }
-                      else
-                      {
+                      if ($check_applied == 0){
+                        if ($count < $capacity)
+                        {
                         ?>
-                        <button disabled class="btn btn-info pull-right">Full</button>
+                          <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
+                        <?php
+                        }
+                        else
+                        {
+                          ?>
+                          <button disabled class="btn btn-info pull-right">Full</button>
+                          <?php
+                        } 
+                      }
+                      else{
+                        ?>
+                          <button disabled class="btn btn-info pull-right">Applied</button>
                         <?php
                       }
                     }
                   }
                   else{
-                    if ($count < $capacity)
-                    {
+                    //if ($count < $capacity)
+                    //{
                     ?>
-                      <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button>
+                      <!-- <button onclick="location.href='apply_package.php?package_id=<?php echo $id; ?>';" class="btn btn-info pull-right">Apply</button> -->
                     <?php
-                    }
-                    else
-                    {
+                    //}
+                    //else
+                    //{
                       ?>
-                      <button disabled class="btn btn-info pull-right">Full</button>
+                      <button disabled class="btn btn-info pull-right">Please Log In</button>
                       <?php
-                    }
+                    //}
                   }
 
                     ?>

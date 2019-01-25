@@ -21,7 +21,6 @@ if (isset($_POST['register_student']))
     }
     else
     {   
-    
         $query_user="INSERT INTO `user` (`user_username`, `user_type`, `user_password`)
                     VALUES ('$username', '$user_type', '$password')";
         $reg_user = mysqli_query($myConnection,$query_user) or die(mysqli_error($myConnection));
@@ -91,6 +90,9 @@ if (isset($_POST['reg_std_info']))
             
             if($res_std)
             {
+                $_SESSION['name'] = $student_name;
+                $_SESSION['email'] = $student_email;
+
                 echo "<script type='text/javascript'>alert('Successfully Updated.');</script>";
                 echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
             }
@@ -183,6 +185,8 @@ if (isset($_POST['reg_prt_info']))
         
         if($res_prt)
         {
+            $_SESSION['name'] = $prt_name;
+            $_SESSION['email'] = $prt_email;
             echo "<script type='text/javascript'>alert('Successfully Updated.');</script>";
             echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
         }
@@ -200,6 +204,8 @@ if (isset($_POST['reg_prt_info']))
 
         if($res_prt)
         {
+            $_SESSION['name'] = $prt_name;
+            $_SESSION['email'] = $prt_email;
             echo "<script type='text/javascript'>alert('Successfully Registered.');</script>";
             echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
         }
