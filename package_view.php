@@ -167,13 +167,14 @@ $tuition_img = $row['tuition_img'];
                   <!-- end .aplicant-details-show -->
                   
                   <?php
-                  $sql = "SELECT * FROM tuition_student_list WHERE `student_id` = '$student_id' AND `package_id` = '$id'";
-                  $sql_applied = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
-                  $check_applied = mysqli_num_rows($sql_applied);
 
                   if (isset($_SESSION['user_type'])){
-                    if ($_SESSION['user_type'] != 'tuition')
+                    if ($_SESSION['user_type'] != 'tuition' && $_SESSION['user_type'] != 'admin')
                     {
+                      $sql = "SELECT * FROM tuition_student_list WHERE `student_id` = '$student_id' AND `package_id` = '$id'";
+                      $sql_applied = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+                      $check_applied = mysqli_num_rows($sql_applied);
+
                       if ($check_applied == 0){
                         if ($count < $capacity)
                         {

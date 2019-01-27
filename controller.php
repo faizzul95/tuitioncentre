@@ -318,8 +318,13 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
     
     $sql = "SELECT * FROM `admin` WHERE `admin_username` = '$username' AND `admin_password` = '$password'";
     $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+    $row = mysqli_fetch_array($res);
 
     if (mysqli_num_rows($res) > 0){
+        $_SESSION['user_id'] = $row['admin_id'];
+        $_SESSION['username'] = $row['admin_username'];
+        $_SESSION['user_type'] = 'admin';
+
         echo "<script type='text/javascript'> document.location='admin/'; </script>";
     }
     
