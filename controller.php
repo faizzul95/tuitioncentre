@@ -92,6 +92,7 @@ if (isset($_POST['reg_std_info']))
             {
                 $_SESSION['name'] = $student_name;
                 $_SESSION['email'] = $student_email;
+                $_SESSION['student_id'] = $student_id;
 
                 echo "<script type='text/javascript'>alert('Successfully Updated.');</script>";
                 echo "<script type='text/javascript'> document.location='student_profile.php'; </script>";
@@ -170,7 +171,7 @@ if (isset($_POST['reg_prt_info']))
     $sql_usr = "SELECT * FROM `parent` WHERE `user_id`='$user_id'";
     $check_prt = mysqli_query($myConnection,$sql_usr) or die(mysqli_error($myConnection));
     
-    $row = mysqli_fetch_array($check_prt);
+    $row = mysqli_fetch_assoc($check_prt);
     $pic = $row['parent_img'];
     if ( $pic != 'user.png' && empty(basename($_FILES["pro_pic"]["name"])) && mysqli_num_rows($check_prt)>0 )
     {
@@ -187,6 +188,7 @@ if (isset($_POST['reg_prt_info']))
         {
             $_SESSION['name'] = $prt_name;
             $_SESSION['email'] = $prt_email;
+            $_SESSION['parent_id'] = $row['parent_id'];
             echo "<script type='text/javascript'>alert('Successfully Updated.');</script>";
             echo "<script type='text/javascript'> document.location='parent_profile.php'; </script>";
         }
@@ -314,6 +316,13 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
      $username=mysqli_real_escape_string($myConnection, $_POST['username']);
      $password = mysqli_real_escape_string($myConnection, $_POST['password']);
     
+    $sql = "SELECT * FROM `admin` WHERE `admin_username` = '$username' AND `admin_password` = '$password'";
+    $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
+
+    if (mysqli_num_rows($res) > 0){
+        echo "<script type='text/javascript'> document.location='admin/'; </script>";
+    }
+    
      $sql = "SELECT * FROM `user` WHERE `user_username` = '$username' AND `user_password` = '$password'";
      $res = mysqli_query($myConnection,$sql) or die(mysqli_error($myConnection));
      $row = mysqli_fetch_array($res);
@@ -321,6 +330,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
      $username = $row['user_username'];
      $usr_id = $row['user_id'];
      $user_type = $row['user_type'];
+
 
      if (mysqli_num_rows($res)==0) { 
 
@@ -371,10 +381,7 @@ if(isset($_POST['signin']))   // it checks whether the user clicked login button
 
             echo "<script type='text/javascript'> document.location='tuition_profile.php?id=$id'; </script>";
         }
-        else if ($_SESSION['user_type'] == 'admin')
-        {
-        	echo "<script type='text/javascript'> document.location='admin/'; </script>";
-        }
+        
      }
 
 }
