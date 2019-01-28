@@ -117,7 +117,7 @@ if (isset($_POST['reg_std_info']))
             else
             {
                 echo "<script type='text/javascript'>alert('Fail, Please Try Again');</script>";
-                echo "<script type='text/javascript'> document.location='student_profile-update.php'; </script>";
+                echo "<script type='text/javascript'> document.location='parent_profile-update.php'; </script>";
             }
         }
 
@@ -131,6 +131,8 @@ if (isset($_POST['reg_std_info']))
 	    if($res_std)
 	    {
             $last_id = mysqli_insert_id($myConnection);
+            $_SESSION['name'] = $student_name;
+            $_SESSION['email'] = $student_email;
             $_SESSION['student_id'] = $last_id;
 
             $std_img = save_img('student',$last_id);

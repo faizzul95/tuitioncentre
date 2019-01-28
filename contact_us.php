@@ -67,7 +67,7 @@ include("connection.php");
                     <form class="mt30" action="controller.php" method="post">
 
                       <?php
-                        if(isset($_SESSION['user_id'])) // If session is not set then redirect to Login Page
+                        if(isset($_SESSION['user_id'])) 
                         { ?>
 
                           <input type="hidden" name="user_type" value="<?php echo($_SESSION['user_type']); ?>" class="form-control">
